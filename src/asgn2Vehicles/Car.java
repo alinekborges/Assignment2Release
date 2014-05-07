@@ -22,7 +22,7 @@ import asgn2Exceptions.VehicleException;
  */
 public class Car extends Vehicle {
 	
-	private boolean small; 
+	private boolean isSmall;
 
 	/**
 	 * The Car Constructor - small set at creation, not mutable. 
@@ -31,16 +31,27 @@ public class Car extends Vehicle {
 	 *        either queued or given entry to the carpark 
 	 * @param small - indicator whether car is regarded as small or not
 	 * @throws VehicleException if arrivalTime is <= 0  
+	 * @author Aline Borges
 	 */
 	public Car(String vehID, int arrivalTime, boolean small) throws VehicleException {
+		
+		super(vehID, arrivalTime);
+		if (arrivalTime <= 0) {
+			throw new VehicleException("Arrival Time must be greater than zero");
+		}
+
+		this.isSmall = small;
+		
 	}
 
 	/**
 	 * Boolean status indicating whether car is small enough for small 
 	 * car parking spaces  
 	 * @return true if small parking space, false otherwise
+	 * @author Aline Borges
 	 */
 	public boolean isSmall() {
+		return this.isSmall;
 	}
 
 	/* (non-Javadoc)
@@ -48,5 +59,10 @@ public class Car extends Vehicle {
 	 */
 	@Override
 	public String toString() {
+		if (this.isSmall) {
+			return "S";
+		} else {
+			return "C";
+		}
 	}
 }
