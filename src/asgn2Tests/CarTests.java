@@ -16,6 +16,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import asgn2Vehicles.Car;
+
 
 //testing commits from Aline's computer
 /**
@@ -23,16 +25,25 @@ import org.junit.Test;
  *
  */
 public class CarTests {
+	
+	
+	Car car;
 
+	private final String vehID = "AEG-2039";
+	private final boolean isSmall = true;
+	private final int arrivalTime = 100;
 	/**
 	 * @throws java.lang.Exception
+	 * @author Aline Borges
 	 */
 	@Before
 	public void setUp() throws Exception {
+		this.car = new Car(this.vehID, this.arrivalTime, this.isSmall);
 	}
 
 	/**
 	 * @throws java.lang.Exception
+	 * @author Aline Borges
 	 */
 	@After
 	public void tearDown() throws Exception {
@@ -40,14 +51,16 @@ public class CarTests {
 
 	/**
 	 * Test method for {@link asgn2Vehicles.Car#toString()}.
+	 * @author Aline Borges
 	 */
-	@Test
+	@Test 
 	public void testToString() {
 		fail("Not yet implemented"); // TODO
 	}
 
 	/**
 	 * Test method for {@link asgn2Vehicles.Car#Car(java.lang.String, int, boolean)}.
+	 * @author Aline Borges
 	 */
 	@Test
 	public void testCar() {
@@ -56,10 +69,11 @@ public class CarTests {
 
 	/**
 	 * Test method for {@link asgn2Vehicles.Car#isSmall()}.
+	 * @author Aline Borges
 	 */
 	@Test
 	public void testIsSmall() {
-		fail("Not yet implemented"); // TODO
+		assertEquals(true, this.car.isSmall());
 	}
 
 }
