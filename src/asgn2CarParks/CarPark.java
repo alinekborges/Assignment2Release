@@ -53,10 +53,13 @@ public class CarPark {
 	private boolean isFull;
 	private boolean isEmpty;
 	private int count;
+	
+	
 	private int numSmallCars;
 	private int numCars;
 	private int numMotorCycles;
 	private int numDissatisfied;
+	
 	private String status;
 	
 	
@@ -144,10 +147,27 @@ public class CarPark {
 	 * @author Aline Borges
 	 */
 	public void archiveQueueFailures(int time) throws VehicleException {
-		//iterate trough queue list
-		//check if they have stayed too long
-		//if yes, archive to queueFailures, classify unsatisfied and numInsatisfied++;
-	}
+			
+		//iterate from the end of the queue to the beggining.
+		//If one vehicle isn't queued for too long, we can assume no other vehicle is
+		for (int i=this.queue.size() - 1 ; i >= 0 ; i++ ) {
+			Vehicle v = this.queue.get(i);
+			int timeQueued = time - v.getArrivalTime();
+			if (timeQueued > Constants.MAXIMUM_QUEUE_TIME) {
+				v.exitQueuedState(time);
+				queue.remove(v);
+				archive.add(v);
+				this.numDissatisfied ++;
+				this.status += this.setVehicleMsg(v, "queue", "A");
+			} else {
+				break;
+			}
+			
+		
+		}
+		
+	}	
+	
 	
 	/**
 	 * Simple status showing whether carPark is empty
@@ -177,7 +197,14 @@ public class CarPark {
 	 * @author Aline Borges
 	 */
 	public void enterQueue(Vehicle v) throws SimulationException, VehicleException {
-		//TODO
+		
+		if (this.queueFull() == true) {
+			throw new SimulationException("Error trying to queue new vehicle. Queue is full");
+		} 
+		
+		v.enterQueuedState();
+		this.queue.add(v);
+		//TODO check this
 	}
 	
 	
@@ -192,7 +219,14 @@ public class CarPark {
 	 * @author Aline Borges
 	 */
 	public void exitQueue(Vehicle v,int exitTime) throws SimulationException, VehicleException {
-		//TODO
+		
+		if (v.isQueued() == false ) {
+			throw new SimulationException("Impossible to remove vehicle from the queue. Vehicle is not queued");
+		}
+		
+		v.exitQueuedState(exitTime);
+		queue.remove(v);
+		
 	}
 	
 	/**
@@ -365,7 +399,33 @@ public class CarPark {
 	 * @author Aline Borges
 	 */
 	public boolean spacesAvailable(Vehicle v) {
-		//TODO
+		if (v instanceof Car) {
+			if (((Car) v).isSmall() == false) {
+				if (this.getCarSpaces() > 0) {
+					return true;
+				} else {
+					return false;
+				}
+			} else {
+				if (this.getSmallCarSpaces() > 0) {
+					return true;
+				} else if (this.getCarSpaces() > 0) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+		}
+		//it's a motorcycle
+		else {
+			if (this.getMotorcycleSpaces() > 0) {
+				return true;
+			} else if (this.getSmallCarSpaces() > 0) {
+				return true;
+			} else  {
+				return true;
+			}
+		}
 	}
 
 
@@ -375,6 +435,7 @@ public class CarPark {
 	@Override
 	public String toString() {
 		//TODO
+		return null;
 	}
 
 	/**
@@ -423,4 +484,61 @@ public class CarPark {
 		}
 		return "|"+str+":"+source+">"+target+"|";
 	}
+	
+	/**
+	 * Helper to get the number of still available small car spaces,
+	 * considering that motorcycles can use this spaces
+	 * @return number of small car spaces still available
+	 */
+	private int getSmallCarSpaces(){
+		
+		//motorcycle is not full, so we don't need to worry
+		if (this.getMotorcycleSpaces() != 0) {
+			return this.maxSmallCarSpaces - this.numSmallCars;
+		} else {
+			int overflow = this.numMotorCycles - this.maxMotorCycleSpaces;
+			
+			int spaces = this.maxSmallCarSpaces - this.numSmallCars - overflow; 
+			if (spaces < 0) {
+				return 0;
+			} else {
+				return spaces;
+			}
+		}
+		
+	}
+	
+	/**
+	 * Helper function to get the number of spaces still available for motorcycles
+	 * considering the rules 
+	 * @return number of motorcycle spaces still available
+	 */
+	private int getMotorcycleSpaces() {
+		if (this.numMotorCycles >= this.maxMotorCycleSpaces) {
+			return 0;
+		} else {
+			return this.maxMotorCycleSpaces - this.numMotorCycles;
+		}
+	}
+	
+	/**
+	 * Helper functions to get the number of spaces still available for normal cars
+	 * considering the given rules
+	 * @return number of car spaces still available
+	 */
+	private int getCarSpaces() {
+	
+		if (this.getSmallCarSpaces() != 0) {
+			return this.maxCarSpaces - this.numCars;
+		} else {
+			int overflow = this.numSmallCars - this.maxSmallCarSpaces;
+			int spaces = this.maxCarSpaces - this.numCars - overflow;
+			if (spaces < 0) {
+				return 0;
+			} else {
+				return spaces;
+			}
+		}
+	}
+
 }
