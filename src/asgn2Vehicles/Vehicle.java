@@ -161,7 +161,6 @@ public abstract class Vehicle {
 			} else {
 				this.state = archivedState;
 				this.departureTime = departureTime;
-				// TODO
 			}
 		}
 	}
