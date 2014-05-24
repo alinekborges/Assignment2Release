@@ -50,8 +50,8 @@ public class CarPark {
 	private int maxQueueSize;
 	
 	//simulation variables
-	private boolean isFull;
-	private boolean isEmpty;
+	//private boolean isFull;
+	//private boolean isEmpty;
 	private int count;
 	
 	
@@ -92,9 +92,6 @@ public class CarPark {
 		this.maxQueueSize = maxQueueSize;
 		this.maxSmallCarSpaces = maxSmallCarSpaces;
 		
-		//initialize 
-		this.isEmpty = true;
-		this.isFull = false;
 		this.count = 0;
 		this.numCars = 0;
 		this.numMotorCycles = 0;
@@ -117,7 +114,18 @@ public class CarPark {
 	 * @author Aline Borges
 	 */
 	public void archiveDepartingVehicles(int time, boolean force) throws VehicleException, SimulationException {
-		//TODO
+//TODO
+		if (force == true) {
+			for (Vehicle v : this.carPark) {
+				this.unparkVehicle(v, time);
+				this.archiveNewVehicle(v);
+			}
+		}
+		
+		else {
+			
+		}
+		
 	}
 		
 	/**
@@ -175,7 +183,12 @@ public class CarPark {
 	 * @author Aline Borges
 	 */
 	public boolean carParkEmpty() {
-		return this.isEmpty;
+		if (this.carPark.size() == 0) {
+			return true;
+		} else {
+			return false;
+		}
+		
 	}
 	
 	/**
@@ -184,7 +197,8 @@ public class CarPark {
 	 * @author Aline Borges
 	 */
 	public boolean carParkFull() {
-		return this.isFull;
+		int totalSpaces = this.maxCarSpaces + this.maxMotorCycleSpaces + this.maxSmallCarSpaces;
+		if (this.carPark.size() > )
 	}
 	
 	/**
@@ -204,7 +218,6 @@ public class CarPark {
 		
 		v.enterQueuedState();
 		this.queue.add(v);
-		//TODO check this
 	}
 	
 	
@@ -347,7 +360,22 @@ public class CarPark {
 	 * @author Aline Borges
 	 */
 	public void parkVehicle(Vehicle v, int time, int intendedDuration) throws SimulationException, VehicleException {
-		//TODO
+		if (this.spacesAvailable(v) == false) {
+			throw new SimulationException("Error trying to park the vehicle, not enought suitable spaces");
+		}
+		
+		v.enterParkedState(time, intendedDuration);
+		this.carPark.add(v);
+		
+		if (v instanceof Car) {
+			if (((Car) v).isSmall() == false) {
+				this.numCars ++;
+			} else {	
+				this.numSmallCars++;
+			}
+		} else {
+			this.numMotorCycles++;
+		}
 	}
 
 	/**
@@ -360,7 +388,22 @@ public class CarPark {
 	 * @author Aline Borges
 	 */
 	public void processQueue(int time, Simulator sim) throws VehicleException, SimulationException {
-		//TODO
+		
+		List<Vehicle> vehiclesToPark = new ArrayList<Vehicle>();
+		
+		for (Vehicle v : this.queue) {
+			if (spacesAvailable(v) == true) {
+				vehiclesToPark.add(v);
+			} else {
+				break;
+			}
+		}
+		
+		for (Vehicle v : vehiclesToPark) {
+			exitQueue(v, time);
+			parkVehicle(v, time, sim.setDuration());
+		}
+		
 	}
 
 	/**
@@ -448,6 +491,21 @@ public class CarPark {
 	 */
 	public void tryProcessNewVehicles(int time,Simulator sim) throws VehicleException, SimulationException {
 		//TODO
+		
+		if (sim.newCarTrial() == true) {			
+			String id = "C" + count;			
+			Car v = new Car(id, time, sim.smallCarTrial());
+			processNewVehicle(v, time, sim);
+			count++;
+		}
+		
+		if (sim.motorCycleTrial() == true) {
+			String id = "MC" + count;
+			MotorCycle v = new MotorCycle(id, time);
+			processNewVehicle(v, time, sim);
+			count++;
+		}
+		
 	}
 
 	/**
@@ -460,7 +518,23 @@ public class CarPark {
 	 * @author Aline Borges
 	 */
 	public void unparkVehicle(Vehicle v,int departureTime) throws VehicleException, SimulationException {
-		//TODO
+		if (this.carPark.contains(v) == false ) {
+			throw new SimulationException("Error trying to unpark vehicle (it's not parked)");
+		}
+		
+		v.exitParkedState(departureTime);
+		this.carPark.remove(v);
+		
+		if (v instanceof Car) {
+			if (((Car) v).isSmall() == false) {
+				this.numCars --;
+			} else {
+				this.numSmallCars --;
+			}
+		} else {
+			this.numMotorCycles--;
+		}
+		
 	}
 	
 	/**
@@ -483,6 +557,23 @@ public class CarPark {
 			str += "M";
 		}
 		return "|"+str+":"+source+">"+target+"|";
+	}
+	
+	private void processNewVehicle(Vehicle v, int time, Simulator sim) throws SimulationException, VehicleException {
+		//TODO
+		
+		if (this.isFull)
+		
+		if (spacesAvailable(v) == true) {
+			parkVehicle(v, time, sim.setDuration());
+		} else {
+			if (this.queueFull() == false) {
+				enterQueue(v);
+			} else {
+				this.
+			}
+		}
+		
 	}
 	
 	/**
