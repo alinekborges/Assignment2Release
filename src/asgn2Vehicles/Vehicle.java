@@ -10,7 +10,6 @@
  */
 package asgn2Vehicles;
 
-import sun.tools.tree.ThisExpression;
 import asgn2Exceptions.VehicleException;
 import asgn2Simulators.Constants;
 
@@ -187,8 +186,6 @@ public abstract class Vehicle {
 						"exitQueuedState(): Vehicle exit queue time error");
 			} else {
 				this.exitQueueTime = exitTime;
-				this.state = newState;
-				// TODO
 			}
 		}
 	}
@@ -212,7 +209,6 @@ public abstract class Vehicle {
 	public int getDepartureTime() {
 		if (this.departureTime == 0) {
 			return 0;
-			// TODO
 		} else {
 			if (this.state == parkedState || this.state == archivedState) {
 				return this.departureTime;
@@ -279,20 +275,28 @@ public abstract class Vehicle {
 	 *         time exceeds max allowable
 	 */
 	public boolean isSatisfied() {
-		if (this.isSatisfied) {
+		if (wasParked()) {
+			// parked
 			return true;
 		} else {
-			if (this.state == parkedState) {
-				return true;
-			} else {
-				// if (this.state == queuedState) {
-				// // if (this.arrivalTime) {
-				// // TODO
-				// // }
-				// }
+			// Not parked
+			if (!wasParked() && !wasQueued()) {
+				// turned away
 				return false;
+			} else {
+				// was queued
+				if (!wasParked() && isQueued()) {
+					// waiting patiently in the queue
+					return true;
+				} else {
+					if (this.exitQueueTime > 0 && this.parkingTime == 0) {
+						// stayed too long in the queue
+						return false;
+					}
+				}
 			}
 		}
+		return true;
 	}
 
 	/*
@@ -302,7 +306,6 @@ public abstract class Vehicle {
 	 */
 	@Override
 	public String toString() {
-		// TODO
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append("Vehicle vehID: ");
 		stringBuilder.append(this.vehID);
@@ -310,7 +313,7 @@ public abstract class Vehicle {
 		stringBuilder.append("Arrival Time: ");
 		stringBuilder.append(this.arrivalTime);
 		stringBuilder.append("\n");
-		if(wasQueued()){
+		if (wasQueued()) {
 			stringBuilder.append("Exit from Queue: ");
 			stringBuilder.append(this.exitQueueTime);
 			stringBuilder.append("\n");
@@ -320,8 +323,7 @@ public abstract class Vehicle {
 			stringBuilder.append("Vehicle was not queued");
 		}
 		stringBuilder.append("\n");
-		if(wasParked())
-		{
+		if (wasParked()) {
 			stringBuilder.append("Entry to Car Park: ");
 			stringBuilder.append(this.parkingTime);
 			stringBuilder.append("\n");
@@ -330,12 +332,11 @@ public abstract class Vehicle {
 			stringBuilder.append("\n");
 			stringBuilder.append("Parking Time: ");
 			stringBuilder.append(this.departureTime - this.parkingTime);
-		}
-		else{
+		} else {
 			stringBuilder.append("Vehicle was not parked");
 		}
 		stringBuilder.append("\n");
-		if(isSatisfied){
+		if (isSatisfied) {
 			stringBuilder.append("Customer was satisfied");
 		} else {
 			stringBuilder.append("Customer was not satisfied");
@@ -345,17 +346,11 @@ public abstract class Vehicle {
 			stringBuilder.append("Car cannot use small parking space");
 		}
 		stringBuilder.append("\n");
-		
-		
+
 		/*
-		 * 	Vehicle vehID: C9
-			Arrival Time: 9
-			Vehicle was not queued
-			Entry to Car Park: 9
-			Exit from Car Park: 124
-			Parking Time: 115
-			Customer was satisfied
-			Car cannot use small parking space
+		 * Vehicle vehID: C9 Arrival Time: 9 Vehicle was not queued Entry to Car
+		 * Park: 9 Exit from Car Park: 124 Parking Time: 115 Customer was
+		 * satisfied Car cannot use small parking space
 		 */return stringBuilder.toString();
 	}
 
@@ -369,7 +364,7 @@ public abstract class Vehicle {
 		if (this.parkingTime == 0) {
 			return false;
 		} else {
-			if(this.state == parkedState){
+			if (this.state == parkedState) {
 				return true;
 			} else {
 				return true;
@@ -384,8 +379,8 @@ public abstract class Vehicle {
 	 * @return true if vehicle was or is in a queued state, false otherwise
 	 */
 	public boolean wasQueued() {
-		if (this.exitQueueTime == 0) {
-			return false;
+		if (this.exitQueueTime > 0) {
+			return true;
 		} else {
 			if (this.state == queuedState) {
 				return true;
