@@ -186,6 +186,7 @@ public abstract class Vehicle {
 						"exitQueuedState(): Vehicle exit queue time error");
 			} else {
 				this.exitQueueTime = exitTime;
+				this.state = newState;
 			}
 		}
 	}
@@ -275,6 +276,7 @@ public abstract class Vehicle {
 	 *         time exceeds max allowable
 	 */
 	public boolean isSatisfied() {
+		// TODO
 		if (wasParked()) {
 			// parked
 			return true;
