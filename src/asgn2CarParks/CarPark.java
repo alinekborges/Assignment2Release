@@ -123,6 +123,7 @@ public class CarPark {
 				Vehicle v = this.carPark.get(i);
 				this.unparkVehicle(v, time);
 				this.archiveNewVehicle(v);
+				status += this.setVehicleMsg(v, "P", "A");
 			}
 		}
 		
@@ -140,6 +141,7 @@ public class CarPark {
 			for (Vehicle v : toUnpark) {
 				this.unparkVehicle(v, time);
 				this.archiveNewVehicle(v);
+				status += this.setVehicleMsg(v, "P", "A");
 			}
 			
 			
@@ -164,6 +166,7 @@ public class CarPark {
 		}
 		
 		this.archive.add(v);
+		//status += this.setVehicleMsg(v, "", target)
 		
 	}
 	
@@ -174,7 +177,7 @@ public class CarPark {
 	 * @author Aline Borges
 	 */
 	public void archiveQueueFailures(int time) throws VehicleException {
-			
+		status = "";
 		//iterate from the end of the queue to the beggining.
 		//If one vehicle isn't queued for too long, we can assume no other vehicle is
 		for (int i=this.queue.size() - 1 ; i >= 0 ; i++ ) {
@@ -185,7 +188,7 @@ public class CarPark {
 				queue.remove(v);
 				archive.add(v);
 				this.numDissatisfied ++;
-				this.status += this.setVehicleMsg(v, "queue", "A");
+				this.status += this.setVehicleMsg(v, "Q", "A");
 			} else {
 				break;
 			}
@@ -343,16 +346,14 @@ public class CarPark {
 				str += "M";
 			}
 		}
-		
+		/*
 		str += "      ";
 		str += "SpacesAvailable::C:"+this.getCarSpaces()
 				+"::S:"+this.getSmallCarSpaces()
 				+"::M:"+this.getMotorcycleSpaces();
-		
+		*/
 		str += this.status;
-		
-		
-		
+
 		this.status="";
 			
 		return str+"\n";
@@ -423,7 +424,7 @@ public class CarPark {
 	public void processQueue(int time, Simulator sim) throws VehicleException, SimulationException {
 		
 		List<Vehicle> vehiclesToPark = new ArrayList<Vehicle>();
-		
+				
 		for (Vehicle v : this.queue) {
 			if (spacesAvailable(v) == true) {
 				vehiclesToPark.add(v);
@@ -433,8 +434,12 @@ public class CarPark {
 		}
 		
 		for (Vehicle v : vehiclesToPark) {
-			exitQueue(v, time);
-			parkVehicle(v, time, sim.setDuration());
+			if (spacesAvailable(v)){
+				exitQueue(v, time);
+				parkVehicle(v, time, sim.setDuration());
+				status += this.setVehicleMsg(v, "Q", "P");
+			}
+			
 		}
 		
 	}
@@ -445,7 +450,7 @@ public class CarPark {
 	 * @author Aline Borges
 	 */
 	public boolean queueEmpty() {
-		if (this.queue.isEmpty() == true) {
+		if (this.queue.size() == 0) {
 			return true;
 		}
 		else {
@@ -499,7 +504,7 @@ public class CarPark {
 			} else if (this.getSmallCarSpaces() > 0) {
 				return true;
 			} else  {
-				return true;
+				return false;
 			}
 		}
 	}
@@ -525,8 +530,7 @@ public class CarPark {
 	public void tryProcessNewVehicles(int time,Simulator sim) throws VehicleException, SimulationException {
 		//TODO
 		
-		//clean status message
-		this.status = "";
+		
 		
 		if (sim.newCarTrial() == true) {			
 			String id = "C" + count;			
@@ -602,11 +606,27 @@ public class CarPark {
 			this.archiveNewVehicle(v);
 		} else { 
 			if (this.spacesAvailable(v)){
+				boolean a =  this.queueEmpty();
 				if (this.queueEmpty() == true) {
 					int intendedDuration = sim.setDuration();
+					status += this.setVehicleMsg(v, "N", "P");
 					parkVehicle(v, time, intendedDuration);
 				} else {
+					if (this.queueFull() == false) {
+						this.enterQueue(v);
+						status += this.setVehicleMsg(v, "N", "Q");
+					} else {
+						status += this.setVehicleMsg(v, "N", "A");
+						this.archiveNewVehicle(v);
+					}
+				}
+			} else { //no spaces available for that car
+				if (this.queueFull() == false) {
 					this.enterQueue(v);
+					status += this.setVehicleMsg(v, "N", "Q");
+				} else {
+					status += this.setVehicleMsg(v, "N", "A");
+					this.archiveNewVehicle(v);
 				}
 			}
 		}
