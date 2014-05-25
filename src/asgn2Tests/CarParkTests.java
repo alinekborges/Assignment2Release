@@ -1196,7 +1196,7 @@ public class CarParkTests {
 	@Test
 	public void testQueueEmptyFullQueue() throws SimulationException,
 			VehicleException {
-		for (int i = 0; i < maxQueueSize - 2; i++) {
+		for (int i = 1; i <= maxQueueSize - 2; i++) {
 			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
 			carPark.enterQueue(car);
 		}
@@ -1213,7 +1213,7 @@ public class CarParkTests {
 	 */
 	@Test
 	public void testQueueFull() throws SimulationException, VehicleException {
-		for (int i = 0; i < maxQueueSize; i++) {
+		for (int i = 1; i <= maxQueueSize; i++) {
 			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
 			carPark.enterQueue(car);
 		}
@@ -1230,7 +1230,7 @@ public class CarParkTests {
 	@Test
 	public void testQueueFullAlmostFull() throws SimulationException,
 			VehicleException {
-		for (int i = 0; i < maxQueueSize - 1; i++) {
+		for (int i = 1; i <= maxQueueSize - 1; i++) {
 			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
 			carPark.enterQueue(car);
 		}
@@ -1350,7 +1350,7 @@ public class CarParkTests {
 	@Test
 	public void testSpacesAvailableNormalCarSpacesAlmostFull()
 			throws VehicleException, SimulationException {
-		for (int i = 0; i < maxCarSpaces - 1; i++) {
+		for (int i = 1; i <= maxCarSpaces - 1; i++) {
 			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
 			carPark.parkVehicle(car, i, defaultIntendedStay);
 		}
@@ -1369,7 +1369,7 @@ public class CarParkTests {
 	@Test
 	public void testSpacesAvailableSmallCarSpacesAlmostFull()
 			throws SimulationException, VehicleException {
-		for (int i = 0; i < maxSmallCarSpaces - 1; i++) {
+		for (int i = 1; i <= maxSmallCarSpaces - 1; i++) {
 			smallCar = new Car((vehicleID2 + Integer.toString(i)), i, true);
 			carPark.parkVehicle(smallCar, i, defaultIntendedStay);
 		}
@@ -1388,7 +1388,7 @@ public class CarParkTests {
 	@Test
 	public void testSpacesAvailableMotorCycleSpacesAlmostFull()
 			throws SimulationException, VehicleException {
-		for (int i = 0; i < maxMotorCycleSpaces - 1; i++) {
+		for (int i = 1; i <= maxMotorCycleSpaces - 1; i++) {
 			motorCycle = new MotorCycle((vehicleID3 + Integer.toString(i)), i);
 			carPark.parkVehicle(motorCycle, i, defaultIntendedStay);
 		}
@@ -1407,7 +1407,7 @@ public class CarParkTests {
 	@Test
 	public void testSpacesAvailableNormalCarSpacesFull()
 			throws SimulationException, VehicleException {
-		for (int i = 0; i < maxCarSpaces; i++) {
+		for (int i = 1; i <= maxCarSpaces; i++) {
 			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
 			carPark.parkVehicle(car, i, defaultIntendedStay);
 		}
@@ -1426,7 +1426,7 @@ public class CarParkTests {
 	@Test
 	public void testSpacesAvailableSmallCarSpacesFullAvailableNormalCarSpaces()
 			throws SimulationException, VehicleException {
-		for (int i = 0; i < maxSmallCarSpaces; i++) {
+		for (int i = 1; i <= maxSmallCarSpaces; i++) {
 			smallCar = new Car((vehicleID2 + Integer.toString(i)), i, true);
 			carPark.parkVehicle(smallCar, i, defaultIntendedStay);
 		}
@@ -1446,7 +1446,7 @@ public class CarParkTests {
 	@Test
 	public void testSpacesAvailableMotorCycleSpacesFullAvailableSmallCarSpaces()
 			throws SimulationException, VehicleException {
-		for (int i = 0; i < maxMotorCycleSpaces; i++) {
+		for (int i = 1; i <= maxMotorCycleSpaces; i++) {
 			motorCycle = new MotorCycle((vehicleID3 + Integer.toString(i)), i);
 			carPark.parkVehicle(motorCycle, i, defaultIntendedStay);
 		}
@@ -1466,11 +1466,11 @@ public class CarParkTests {
 	@Test
 	public void testSpacesAvailableSmallCarSpacesFullNormalCarSpacesAlmostFull()
 			throws SimulationException, VehicleException {
-		for (int i = 0; i < maxSmallCarSpaces; i++) {
+		for (int i = 1; i <= maxSmallCarSpaces; i++) {
 			smallCar = new Car((vehicleID2 + Integer.toString(i)), i, true);
 			carPark.parkVehicle(smallCar, i, defaultIntendedStay);
 		}
-		for (int i = 0; i < maxCarSpaces - 1; i++) {
+		for (int i = maxSmallCarSpaces + 1; i <= maxCarSpaces + maxSmallCarSpaces - 1; i++) {
 			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
 			carPark.parkVehicle(car, i, defaultIntendedStay);
 		}
@@ -1490,11 +1490,11 @@ public class CarParkTests {
 	@Test
 	public void testSpacesAvailableMotorCycleSpacesFullSmallCarSpacesAlmostFull()
 			throws SimulationException, VehicleException {
-		for (int i = 0; i < maxMotorCycleSpaces; i++) {
+		for (int i = 1; i <= maxMotorCycleSpaces; i++) {
 			motorCycle = new MotorCycle((vehicleID3 + Integer.toString(i)), i);
 			carPark.parkVehicle(motorCycle, i, defaultIntendedStay);
 		}
-		for (int i = 0; i < maxSmallCarSpaces - 1; i++) {
+		for (int i = 1; i <= maxSmallCarSpaces - 1; i++) {
 			smallCar = new Car((vehicleID2 + Integer.toString(i)), i, true);
 			carPark.parkVehicle(smallCar, i, defaultIntendedStay);
 		}
@@ -1514,11 +1514,11 @@ public class CarParkTests {
 	@Test
 	public void testSpacesAvailableSmallandNormalCarSpacesFull()
 			throws SimulationException, VehicleException {
-		for (int i = 0; i < maxSmallCarSpaces; i++) {
+		for (int i = 1; i <= maxSmallCarSpaces; i++) {
 			smallCar = new Car((vehicleID2 + Integer.toString(i)), i, true);
 			carPark.parkVehicle(smallCar, i, defaultIntendedStay);
 		}
-		for (int i = 0; i < maxCarSpaces; i++) {
+		for (int i = maxSmallCarSpaces + 1; i <= maxCarSpaces + maxSmallCarSpaces; i++) {
 			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
 			carPark.parkVehicle(car, i, defaultIntendedStay);
 		}
@@ -1537,11 +1537,11 @@ public class CarParkTests {
 	@Test
 	public void testSpacesAvailableMotorCycleAndSmallCarSpacesFull()
 			throws SimulationException, VehicleException {
-		for (int i = 0; i < maxMotorCycleSpaces; i++) {
+		for (int i = 1; i <= maxMotorCycleSpaces; i++) {
 			motorCycle = new MotorCycle((vehicleID3 + Integer.toString(i)), i);
 			carPark.parkVehicle(motorCycle, i, defaultIntendedStay);
 		}
-		for (int i = 0; i < maxSmallCarSpaces; i++) {
+		for (int i = 1; i <= maxSmallCarSpaces; i++) {
 			smallCar = new Car((vehicleID2 + Integer.toString(i)), i, true);
 			carPark.parkVehicle(smallCar, i, defaultIntendedStay);
 		}
@@ -1561,15 +1561,15 @@ public class CarParkTests {
 	@Test
 	public void testSpacesAvailableAllFullCarTriesToPark() throws SimulationException,
 			VehicleException {
-		for (int i = 0; i < maxCarSpaces; i++) {
+		for (int i = 1; i <= maxCarSpaces; i++) {
 			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
 			carPark.parkVehicle(car, i, defaultIntendedStay);
 		}
-		for (int j = maxCarSpaces; j < maxSmallCarSpaces + maxCarSpaces; j++) {
+		for (int j = maxCarSpaces + 1; j <= maxSmallCarSpaces + maxCarSpaces; j++) {
 			smallCar = new Car((vehicleID2 + Integer.toString(j)), j, true);
 			carPark.parkVehicle(smallCar, j, defaultIntendedStay);
 		}
-		for (int k = 0; k < maxMotorCycleSpaces; k++) {
+		for (int k = 1; k <= maxMotorCycleSpaces; k++) {
 			motorCycle = new MotorCycle((vehicleID3 + Integer.toString(k)), k);
 			carPark.parkVehicle(motorCycle, k, defaultIntendedStay);
 		}
@@ -1588,15 +1588,15 @@ public class CarParkTests {
 	@Test
 	public void testSpacesAvailableAllFullSmallCarTriesToPark()
 			throws SimulationException, VehicleException {
-		for (int i = 0; i < maxCarSpaces; i++) {
+		for (int i = 1; i <= maxCarSpaces; i++) {
 			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
 			carPark.parkVehicle(car, i, defaultIntendedStay);
 		}
-		for (int j = maxCarSpaces; j < maxSmallCarSpaces + maxCarSpaces; j++) {
+		for (int j = maxCarSpaces + 1; j <= maxSmallCarSpaces + maxCarSpaces; j++) {
 			smallCar = new Car((vehicleID2 + Integer.toString(j)), j, true);
 			carPark.parkVehicle(smallCar, j, defaultIntendedStay);
 		}
-		for (int k = 0; k < maxMotorCycleSpaces; k++) {
+		for (int k = 1; k <= maxMotorCycleSpaces; k++) {
 			motorCycle = new MotorCycle((vehicleID3 + Integer.toString(k)), k);
 			carPark.parkVehicle(motorCycle, k, defaultIntendedStay);
 		}
@@ -1615,15 +1615,15 @@ public class CarParkTests {
 	@Test
 	public void testSpacesAvailableAllFullMotorCycleTriesToPark()
 			throws SimulationException, VehicleException {
-		for (int i = 0; i < maxCarSpaces; i++) {
+		for (int i = 1; i <= maxCarSpaces; i++) {
 			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
 			carPark.parkVehicle(car, i, defaultIntendedStay);
 		}
-		for (int j = maxCarSpaces; j < maxSmallCarSpaces + maxCarSpaces; j++) {
+		for (int j = maxCarSpaces + 1; j <= maxSmallCarSpaces + maxCarSpaces; j++) {
 			smallCar = new Car((vehicleID2 + Integer.toString(j)), j, true);
 			carPark.parkVehicle(smallCar, j, defaultIntendedStay);
 		}
-		for (int k = 0; k < maxMotorCycleSpaces; k++) {
+		for (int k = 1; k <= maxMotorCycleSpaces; k++) {
 			motorCycle = new MotorCycle((vehicleID3 + Integer.toString(k)), k);
 			carPark.parkVehicle(motorCycle, k, defaultIntendedStay);
 		}
