@@ -625,7 +625,9 @@ public class MotorCycleTests {
 	 */
 	@Test
 	public void testIsSatisfied() {
-		fail("Not yet implemented"); // TODO
+		// TODO
+		//fail("Not yet implemented"); 
+		this.motorCycle.enterParkedState(this.parkingTime, this.exitTime);
 	}
 
 	/**

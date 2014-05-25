@@ -1091,20 +1091,14 @@ public class CarParkTests {
 	 * @throws VehicleException
 	 */
 	@Test
-	public void testProcessQueue() throws SimulationException, VehicleException {
-		//TODO NOT SURE IF I CAN FILL THE QUEUE WITH AN EMPTY CAR PARK
+	public void testProcessQueueQueueIsEmpty() throws SimulationException, VehicleException {
 		simulator = new Simulator();
-		for (int i = 1; i <= maxQueueSize; i++) {
-			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
-			carPark.enterQueue(car);
-		}
-		carPark.processQueue(maxQueueSize + 1, simulator);
+		carPark.processQueue(defaultArrival1, simulator);
+		assertTrue("testProcessQueueQueueIsEmpty() Error", carPark.queueEmpty());
 	}
-
+	
 	@Test
-	public void testProcessQueueSpacesForNone() throws SimulationException,
-			VehicleException {
-		// TODO Unsure if it's necessary to fill the car park first...
+	public void testProcessQueueQueueIsNotFullSpacesForAll() throws VehicleException, SimulationException{
 		for (int i = 1; i <= maxCarSpaces; i++) {
 			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
 			carPark.parkVehicle(car, i, defaultIntendedStay);
@@ -1117,8 +1111,49 @@ public class CarParkTests {
 			motorCycle = new MotorCycle((vehicleID3 + Integer.toString(k)), k);
 			carPark.parkVehicle(motorCycle, k, defaultIntendedStay);
 		}
-		simulator = new Simulator();
-		carPark.processQueue(defaultArrival1, simulator);
+		car = new Car(vehicleID1, i, false);
+	}
+
+	@Test
+	public void testProcessQueueQueueIsNotFullSpacesForSomeSpaceForFirstButNotLastLastIsNormalCar() throws SimulationException,
+			VehicleException {
+		// TODO
+	}
+	
+	@Test
+	public void testProcessQueueQueueIsNotFullSpacesForSomeSpaceForFirstButNotLastLastIsSmallCar() throws SimulationException,
+			VehicleException {
+		// TODO
+	}
+	
+	@Test
+	public void testProcessQueueQueueIsNotFullSpacesForSomeSpaceForFirstButNotLastLastIsSmallCarNormalCarSpaceAvailable() throws SimulationException,
+			VehicleException {
+		// TODO
+	}
+	
+	@Test
+	public void testProcessQueueQueueIsNotFullSpacesForSomeSpaceForFirstButNotLastLastIsMotorCycle() throws SimulationException,
+			VehicleException {
+		// TODO
+	}
+	
+	@Test
+	public void testProcessQueueQueueIsNotFullSpacesForSomeSpaceForFirstButNotLastLastIsMotorCycleSmallCarSpaceAvailable() throws SimulationException,
+			VehicleException {
+		// TODO
+	}
+	
+	@Test
+	public void testProcessQueueQueueIsNotFullSpacesForSomeSpaceForMiddleButNotFirstAndNotLast() throws SimulationException,
+			VehicleException {
+		// TODO
+	}
+	
+	@Test
+	public void testProcessQueueQueueIsNotFullSpacesForSomeSpaceForLastButNotFirst() throws SimulationException,
+			VehicleException {
+		// TODO
 	}
 
 	@Test
