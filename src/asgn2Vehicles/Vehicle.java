@@ -111,7 +111,7 @@ public abstract class Vehicle {
 				throw new VehicleException(
 						"enterParkedState(): Vehicle in incorrect state");
 			} else {
-				if (intendedDuration < Constants.DEFAULT_INTENDED_STAY_SD) {
+				if (intendedDuration < Constants.MINIMUM_STAY) {
 					throw new VehicleException(
 							"enterParkedState(): Intended duration is less than the minimum prescribed in asgnSimulators.Constants");
 				} else {
@@ -301,27 +301,6 @@ public abstract class Vehicle {
 	 */
 	@Override
 	public String toString() {
-		// TODO
-		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append("Vehicle vehID: ");
-		stringBuilder.append(this.vehID);
-		stringBuilder.append("\n");
-		stringBuilder.append("Arrival Time: ");
-		stringBuilder.append(this.arrivalTime);
-		stringBuilder.append("Entry to Car Park: ");
-		stringBuilder.append("Exit from Car Park: ");
-		stringBuilder.append("Parking Time: ");
-		
-		/*
-		 * 	Vehicle vehID: C9
-			Arrival Time: 9
-			Vehicle was not queued
-			Entry to Car Park: 9
-			Exit from Car Park: 124
-			Parking Time: 115
-			Customer was satisfied
-			Car cannot use small parking space
-		 */return stringBuilder.toString();
 	}
 
 	/**
