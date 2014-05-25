@@ -10,6 +10,7 @@
  */
 package asgn2Vehicles;
 
+import sun.tools.tree.ThisExpression;
 import asgn2Exceptions.VehicleException;
 import asgn2Simulators.Constants;
 
@@ -308,9 +309,43 @@ public abstract class Vehicle {
 		stringBuilder.append("\n");
 		stringBuilder.append("Arrival Time: ");
 		stringBuilder.append(this.arrivalTime);
-		stringBuilder.append("Entry to Car Park: ");
-		stringBuilder.append("Exit from Car Park: ");
-		stringBuilder.append("Parking Time: ");
+		stringBuilder.append("\n");
+		if(wasQueued()){
+			stringBuilder.append("Exit from Queue: ");
+			stringBuilder.append(this.exitQueueTime);
+			stringBuilder.append("\n");
+			stringBuilder.append("Queuing Time: ");
+			stringBuilder.append(this.arrivalTime - this.exitQueueTime);
+		} else {
+			stringBuilder.append("Vehicle was not queued");
+		}
+		stringBuilder.append("\n");
+		if(wasParked())
+		{
+			stringBuilder.append("Entry to Car Park: ");
+			stringBuilder.append(this.parkingTime);
+			stringBuilder.append("\n");
+			stringBuilder.append("Exit from Car Park: ");
+			stringBuilder.append(this.departureTime);
+			stringBuilder.append("\n");
+			stringBuilder.append("Parking Time: ");
+			stringBuilder.append(this.departureTime - this.parkingTime);
+		}
+		else{
+			stringBuilder.append("Vehicle was not parked");
+		}
+		stringBuilder.append("\n");
+		if(isSatisfied){
+			stringBuilder.append("Customer was satisfied");
+		} else {
+			stringBuilder.append("Customer was not satisfied");
+		}
+		stringBuilder.append("\n");
+		if (this.vehID.startsWith("C")) {
+			stringBuilder.append("Car cannot use small parking space");
+		}
+		stringBuilder.append("\n");
+		
 		
 		/*
 		 * 	Vehicle vehID: C9
