@@ -16,6 +16,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import asgn2Exceptions.VehicleException;
 import asgn2Vehicles.Car;
 
 
@@ -32,6 +33,8 @@ public class CarTests {
 	private final String vehID = "AEG-2039";
 	private final boolean isSmall = true;
 	private final int arrivalTime = 100;
+	private final int negativeArrivalTime = -1;
+	private final int arrivalTimeZero = 0;
 	/**
 	 * @throws java.lang.Exception
 	 * @author Aline Borges
@@ -39,14 +42,6 @@ public class CarTests {
 	@Before
 	public void setUp() throws Exception {
 		this.car = new Car(this.vehID, this.arrivalTime, this.isSmall);
-	}
-
-	/**
-	 * @throws java.lang.Exception
-	 * @author Aline Borges
-	 */
-	@After
-	public void tearDown() throws Exception {
 	}
 
 	/**
@@ -61,19 +56,54 @@ public class CarTests {
 	/**
 	 * Test method for {@link asgn2Vehicles.Car#Car(java.lang.String, int, boolean)}.
 	 * @author Aline Borges
+	 * @throws VehicleException 
 	 */
-	@Test
-	public void testCar() {
-		fail("Not yet implemented"); // TODO
+	@Test (expected = VehicleException.class)
+	public void testCarNegativeTime() throws VehicleException {
+		this.car = new Car(vehID, negativeArrivalTime, isSmall);
+	}
+	
+	/**
+	 * Test method for {@link asgn2Vehicles.Car#Car(java.lang.String, int, boolean)}.
+	 * @author Aline Borges
+	 * @throws VehicleException 
+	 */
+	@Test (expected = VehicleException.class)
+	public void testCarTimeZero() throws VehicleException {
+		this.car = new Car(vehID, arrivalTimeZero, isSmall);
+	}
+	
+	/**
+	 * Test method for {@link asgn2Vehicles.Car#Car(java.lang.String, int, boolean)}.
+	 * @author Aline Borges
+	 * @throws VehicleException 
+	 */
+	@Test (expected = VehicleException.class)
+	public void testCarTimeNormal() throws VehicleException {
+		this.car = new Car(vehID, arrivalTime, isSmall);
+		assertTrue(true);
 	}
 
 	/**
 	 * Test method for {@link asgn2Vehicles.Car#isSmall()}.
 	 * @author Aline Borges
+	 * @throws VehicleException 
 	 */
 	@Test
-	public void testIsSmall() {
-		assertEquals(true, this.car.isSmall());
+	public void testIsSmallTrue() throws VehicleException {
+		this.car = new Car(vehID, arrivalTime, true);
+		assertTrue( this.car.isSmall());
+	}
+	
+	/**
+	 * Test method for {@link asgn2Vehicles.Car#isSmall()}.
+	 * @author Aline Borges
+	 * @throws VehicleException 
+	 */
+	@Test
+	public void testIsSmallFalse() throws VehicleException {
+		this.car = new Car(vehID, arrivalTime, false);
+		assertFalse(this.car.isSmall());
 	}
 
 }

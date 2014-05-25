@@ -17,6 +17,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import asgn2Exceptions.VehicleException;
+import asgn2Simulators.Constants;
 import asgn2Vehicles.MotorCycle;
 
 /**
@@ -39,7 +40,7 @@ public class MotorCycleTests {
 	private final int negativeParkingTime = -10;
 	private final int boundaryArrivalTime = 0;
 	private final int exitTimeBeforeArrival = arrivalTime - 20;
-	private final int intendedLessThanMinimun = asgn2Simulators.Constants.MINIMUM_STAY;
+	private final int intendedLessThanMinimun = asgn2Simulators.Constants.MINIMUM_STAY - 1;
 	private final int exitTimeBeforeParking = parkingTime - 20;
 	private final int parkingTimeBeforeParking = 0;
 	private final int departureTimeBeforeLeaving = 0;
@@ -233,8 +234,21 @@ public class MotorCycleTests {
 	 * @throws VehicleException 
 	 */
 	@Test (expected = VehicleException.class)
-	public void testEnterParkedStateNotQueued() throws VehicleException {
+	public void testEnterParkedStateIntendedLessThanMinimum() throws VehicleException {
 		motorCycle.enterParkedState(this.parkingTime, this.intendedLessThanMinimun);
+		//asgn2Simulators.Constants.MINIMUM_STAY;
+	}
+	
+	/**
+	 * Test method for {@link asgn2Vehicles.Vehicle#enterParkedState(int, int)}.
+	 * Test if intended duration is less than minimun as defined in constants
+	 * @author Aline Borges
+	 * @throws VehicleException 
+	 */
+	@Test 
+	public void testEnterParkedStateIntendedEqualsToMinimum() throws VehicleException {
+		motorCycle.enterParkedState(this.parkingTime, Constants.MINIMUM_STAY );
+		assertTrue(true);
 		//asgn2Simulators.Constants.MINIMUM_STAY;
 	}
 	
@@ -621,14 +635,86 @@ public class MotorCycleTests {
 
 	/**
 	 * Test method for {@link asgn2Vehicles.Vehicle#isSatisfied()}.
+	 * Vehicle is new - not queued and parked straight away
+	 * Default state is "satisfied"
+	 * @author Aline Borges
+	 * @throws VehicleException 
+	 */
+	@Test
+	public void testIsSatisfiedNotQueuedParked() throws VehicleException {
+		this.motorCycle.enterParkedState(this.parkingTime, intendedDuration);
+		assertTrue(this.motorCycle.isSatisfied());
+	}
+	
+	/**
+	 * Test method for {@link asgn2Vehicles.Vehicle#isSatisfied()}.
+	 * Vehicle was turned away because queue is full
 	 * @author Aline Borges
 	 */
 	@Test
-	public void testIsSatisfied() {
-		// TODO
-		//fail("Not yet implemented"); 
-		this.motorCycle.enterParkedState(this.parkingTime, this.exitTime);
+	public void testIsSatisfiedNotQueuedNotParked() {
+		assertFalse(this.motorCycle.isSatisfied());
 	}
+	
+	/**
+	 * Test method for {@link asgn2Vehicles.Vehicle#isSatisfied()}.
+	 * Vehicle is new - not queued and parked straight away
+	 * Default state is "satisfied"
+	 * @author Aline Borges
+	 * @throws VehicleException 
+	 */
+	@Test
+	public void testIsSatisfiedQueuedParked() throws VehicleException {
+		this.motorCycle.enterQueuedState();
+		this.motorCycle.exitQueuedState(this.exitQueueTime);
+		this.motorCycle.enterParkedState(this.parkingTime, intendedDuration);
+		assertTrue(this.motorCycle.isSatisfied());
+	}
+	
+	/**
+	 * Test method for {@link asgn2Vehicles.Vehicle#isSatisfied()}.
+	 * Vehicle is new - not queued and parked straight away
+	 * Default state is "satisfied"
+	 * @author Aline Borges
+	 * @throws VehicleException 
+	 */
+	@Test
+	public void testIsSatisfiedQueuedNotParked() throws VehicleException {
+		this.motorCycle.enterQueuedState();
+		this.motorCycle.exitQueuedState(this.exitQueueTime);
+		assertTrue(this.motorCycle.isSatisfied());
+	}
+	
+	/**
+	 * Test method for {@link asgn2Vehicles.Vehicle#isSatisfied()}.
+	 * Vehicle is new - not queued and parked straight away
+	 * Default state is "satisfied"
+	 * @author Aline Borges
+	 * @throws VehicleException 
+	 */
+	@Test
+	public void testIsSatisfiedQueued() throws VehicleException {
+		this.motorCycle.enterQueuedState();
+		assertTrue(this.motorCycle.isSatisfied());
+	}
+	
+	/**
+	 * Test method for {@link asgn2Vehicles.Vehicle#isSatisfied()}.
+	 * Vehicle is new - not queued and parked straight away
+	 * Default state is "satisfied"
+	 * @author Aline Borges
+	 * @throws VehicleException 
+	 */
+	@Test
+	public void testIsSatisfiedParkedLeft() throws VehicleException {
+		this.motorCycle.enterParkedState(this.parkingTime, intendedDuration);
+		this.motorCycle.exitParkedState(this.exitTime);
+		assertTrue(this.motorCycle.isSatisfied());
+	}
+	
+	
+	
+	
 
 	/**
 	 * Test method for {@link asgn2Vehicles.Vehicle#toString()}.

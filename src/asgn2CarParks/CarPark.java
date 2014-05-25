@@ -425,9 +425,13 @@ public class CarPark {
 		
 		List<Vehicle> vehiclesToPark = new ArrayList<Vehicle>();
 				
-		for (Vehicle v : this.queue) {
+		for (int i=0 ; i<this.queue.size() ; i++) {
+			Vehicle v = this.queue.get(i);
 			if (spacesAvailable(v) == true) {
 				vehiclesToPark.add(v);
+				if (v instanceof MotorCycle) {
+					int a = 0;
+				}
 			} else {
 				break;
 			}
@@ -515,7 +519,7 @@ public class CarPark {
 	 */
 	@Override
 	public String toString() {
-		//TODO
+		
 		return null;
 	}
 
@@ -528,7 +532,7 @@ public class CarPark {
 	 * @author Aline Borges
 	 */
 	public void tryProcessNewVehicles(int time,Simulator sim) throws VehicleException, SimulationException {
-		//TODO
+		
 		
 		
 		

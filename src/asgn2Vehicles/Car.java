@@ -57,12 +57,8 @@ public class Car extends Vehicle {
 	/* (non-Javadoc)
 	 * @see asgn2Vehicles.Vehicle#toString()
 	 */
-	@Override
-	public String toString() {
-		if (this.isSmall) {
-			return "S";
-		} else {
-			return "C";
-		}
-	}
+	//@Override
+	//public String toString() {
+	//	return null;
+	//}
 }
