@@ -301,6 +301,27 @@ public abstract class Vehicle {
 	 */
 	@Override
 	public String toString() {
+		// TODO
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("Vehicle vehID: ");
+		stringBuilder.append(this.vehID);
+		stringBuilder.append("\n");
+		stringBuilder.append("Arrival Time: ");
+		stringBuilder.append(this.arrivalTime);
+		stringBuilder.append("Entry to Car Park: ");
+		stringBuilder.append("Exit from Car Park: ");
+		stringBuilder.append("Parking Time: ");
+		
+		/*
+		 * 	Vehicle vehID: C9
+			Arrival Time: 9
+			Vehicle was not queued
+			Entry to Car Park: 9
+			Exit from Car Park: 124
+			Parking Time: 115
+			Customer was satisfied
+			Car cannot use small parking space
+		 */return stringBuilder.toString();
 	}
 
 	/**
