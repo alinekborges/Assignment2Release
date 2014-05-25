@@ -111,7 +111,7 @@ public abstract class Vehicle {
 				throw new VehicleException(
 						"enterParkedState(): Vehicle in incorrect state");
 			} else {
-				if (intendedDuration < Constants.DEFAULT_INTENDED_STAY_SD) {
+				if (intendedDuration < Constants.MINIMUM_STAY) {
 					throw new VehicleException(
 							"enterParkedState(): Intended duration is less than the minimum prescribed in asgnSimulators.Constants");
 				} else {
@@ -301,6 +301,7 @@ public abstract class Vehicle {
 	 */
 	@Override
 	public String toString() {
+		return null;
 	}
 
 	/**
