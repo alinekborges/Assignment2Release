@@ -622,7 +622,12 @@ public class CarPark {
 		
 		//motorcycle is not full, so we don't need to worry
 		if (this.getMotorcycleSpaces() != 0) {
-			return this.maxSmallCarSpaces - this.numSmallCars;
+			int spaces =  this.maxSmallCarSpaces - this.numSmallCars;
+			if (spaces < 0) {
+				return 0;
+			} else {
+				return spaces;
+			}
 		} else {
 			int overflow = this.numMotorCycles - this.maxMotorCycleSpaces;
 			int spaces = this.maxSmallCarSpaces - this.numSmallCars - overflow; 
