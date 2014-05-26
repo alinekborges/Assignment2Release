@@ -17,99 +17,161 @@ import asgn2Exceptions.SimulationException;
 import asgn2Exceptions.VehicleException;
 
 /**
- * Class to operate the simulation, taking parameters and utility methods from the Simulator
- * to control the CarPark, and using Log to provide a record of operation. 
+ * Class to operate the simulation, taking parameters and utility methods from
+ * the Simulator to control the CarPark, and using Log to provide a record of
+ * operation.
+ * 
  * @author hogan
- *
+ * 
  */
 public class SimulationRunner {
 	private CarPark carPark;
 	private Simulator sim;
-	
+
 	private Log log;
-	
+
+	private static double meanStay = Constants.DEFAULT_INTENDED_STAY_MEAN;
+	private static double sdStay = Constants.DEFAULT_INTENDED_STAY_SD;
+	private static int seed = Constants.DEFAULT_SEED;
+	private static double carProb = Constants.DEFAULT_CAR_PROB;
+	private static double smallCarProb = Constants.DEFAULT_SMALL_CAR_PROB;
+	private static double mcProb = Constants.DEFAULT_MOTORCYCLE_PROB;
+
+	private static int maxCarSpaces = Constants.DEFAULT_MAX_CAR_SPACES;
+	private static int maxSmallCarSpaces = Constants.DEFAULT_MAX_SMALL_CAR_SPACES;
+	private static int maxMotorCycleSpaces = Constants.DEFAULT_MAX_MOTORCYCLE_SPACES;
+	private static int maxQueueSize = Constants.DEFAULT_MAX_QUEUE_SIZE;
+
 	/**
-	 * Constructor just does initialisation 
-	 * @param carPark CarPark currently used 
-	 * @param sim Simulator containing simulation parameters
-	 * @param log Log to provide logging services 
+	 * Constructor just does initialisation
+	 * 
+	 * @param carPark
+	 *            CarPark currently used
+	 * @param sim
+	 *            Simulator containing simulation parameters
+	 * @param log
+	 *            Log to provide logging services
 	 */
-	public SimulationRunner(CarPark carPark, Simulator sim,Log log) {
+	public SimulationRunner(CarPark carPark, Simulator sim, Log log) {
 		this.carPark = carPark;
 		this.sim = sim;
 		this.log = log;
 	}
-	
-	
+
 	/**
-	 * Method to run the simulation from start to finish. Exceptions are propagated upwards from Vehicle,
-	 * Simulation and Log objects as necessary 
-	 * @throws VehicleException if Vehicle creation or operation constraints violated 
-	 * @throws SimulationException if Simulation constraints are violated 
-	 * @throws IOException on logging failures
+	 * Method to run the simulation from start to finish. Exceptions are
+	 * propagated upwards from Vehicle, Simulation and Log objects as necessary
+	 * 
+	 * @throws VehicleException
+	 *             if Vehicle creation or operation constraints violated
+	 * @throws SimulationException
+	 *             if Simulation constraints are violated
+	 * @throws IOException
+	 *             on logging failures
 	 */
-	public void runSimulation() throws VehicleException, SimulationException, IOException {
-		this.log.initialEntry(this.carPark,this.sim);
-		for (int time=0; time<=Constants.CLOSING_TIME; time++) {
-			//queue elements exceed max waiting time
+	public void runSimulation() throws VehicleException, SimulationException,
+			IOException {
+		this.log.initialEntry(this.carPark, this.sim);
+		for (int time = 0; time <= Constants.CLOSING_TIME; time++) {
+			// queue elements exceed max waiting time
 			if (!this.carPark.queueEmpty()) {
 				this.carPark.archiveQueueFailures(time);
 			}
-			//vehicles whose time has expired
+			// vehicles whose time has expired
 			if (!this.carPark.carParkEmpty()) {
-				//force exit at closing time, otherwise normal
+				// force exit at closing time, otherwise normal
 				boolean force = (time == Constants.CLOSING_TIME);
 				this.carPark.archiveDepartingVehicles(time, force);
 			}
-			//attempt to clear the queue 
+			// attempt to clear the queue
 			if (!this.carPark.carParkFull()) {
-				this.carPark.processQueue(time,this.sim);
+				this.carPark.processQueue(time, this.sim);
 			}
 			// new vehicles from minute 1 until the last hour
-			if (newVehiclesAllowed(time)) { 
-				this.carPark.tryProcessNewVehicles(time,this.sim);
+			if (newVehiclesAllowed(time)) {
+				this.carPark.tryProcessNewVehicles(time, this.sim);
 			}
-			//Log progress 
-			this.log.logEntry(time,this.carPark);
+			// Log progress
+			this.log.logEntry(time, this.carPark);
 		}
 		this.log.finalise(this.carPark);
 	}
 
 	/**
-	 * Main program for the simulation 
-	 * @param args Arguments to the simulation 
+	 * Main program for the simulation
+	 * 
+	 * @param args
+	 *            Arguments to the simulation
 	 */
 	public static void main(String[] args) {
 		CarPark cp = new CarPark();
 		Simulator s = null;
-		Log l = null; 
-		try {
-			s = new Simulator();
-			l = new Log();
-		} catch (IOException | SimulationException e1) {
-			e1.printStackTrace();
-			System.exit(-1);
+		Log l = null;
+
+		if (args.length == 10) {
+			// Setup with cmd line args
+			
+			maxCarSpaces = Integer.parseInt(args[0]);
+			maxSmallCarSpaces = Integer.parseInt(args[1]);
+			maxMotorCycleSpaces = Integer.parseInt(args[2]);
+			maxQueueSize = Integer.parseInt(args[3]);
+
+			meanStay = Double.parseDouble(args[8]);
+			sdStay = Double.parseDouble(args[9]);
+			seed = Integer.parseInt(args[4]);
+			carProb = Double.parseDouble(args[5]);
+			smallCarProb = Double.parseDouble(args[6]);
+			mcProb = Double.parseDouble(args[7]);
+
+			cp = new CarPark(maxCarSpaces, maxSmallCarSpaces,
+					maxMotorCycleSpaces, maxQueueSize);
+			try {
+				s = new Simulator(seed, meanStay, sdStay, carProb,
+						smallCarProb, mcProb);
+				l = new Log();
+			} catch (IOException | SimulationException e1) {
+				e1.printStackTrace();
+				System.exit(-1);
+			}
+
+		} else {
+			if (args.length == 0) {
+				// Use Defaults
+				cp = new CarPark();
+				try {
+					s = new Simulator();
+					l = new Log();
+				} catch (IOException | SimulationException e1) {
+					e1.printStackTrace();
+					System.exit(-1);
+				}
+			} else {
+				// Insufficient arguments in args
+				System.out.println("ERROR: Not enough parameters");
+				System.exit(-1);
+			}
 		}
-		
-		//TODO: Implement Argument Processing 
-		
-		//Run the simulation 
-		SimulationRunner sr = new SimulationRunner(cp,s,l);
+
+		// Run the simulation
+		SimulationRunner sr = new SimulationRunner(cp, s, l);
 		try {
 			sr.runSimulation();
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.exit(-1);
-		} 
-	} 
+		}
+	}
 
 	/**
 	 * Helper method to determine if new vehicles are permitted
-	 * @param time int holding current simulation time
-	 * @return true if new vehicles permitted, false if not allowed due to simulation constraints. 
+	 * 
+	 * @param time
+	 *            int holding current simulation time
+	 * @return true if new vehicles permitted, false if not allowed due to
+	 *         simulation constraints.
 	 */
 	private boolean newVehiclesAllowed(int time) {
-		boolean allowed = (time >=1);
+		boolean allowed = (time >= 1);
 		return allowed && (time <= (Constants.CLOSING_TIME - 60));
 	}
 
