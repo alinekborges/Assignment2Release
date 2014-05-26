@@ -318,7 +318,7 @@ public abstract class Vehicle {
 			stringBuilder.append(this.exitQueueTime);
 			stringBuilder.append("\n");
 			stringBuilder.append("Queuing Time: ");
-			stringBuilder.append(this.arrivalTime - this.exitQueueTime);
+			stringBuilder.append(this.exitQueueTime - this.arrivalTime);
 		} else {
 			stringBuilder.append("Vehicle was not queued");
 		}
