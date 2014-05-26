@@ -1101,25 +1101,26 @@ public class CarParkTests {
 		carPark.processQueue(defaultArrival1, simulator);
 		assertTrue("testProcessQueueQueueIsEmpty() Error", carPark.queueEmpty());
 	}
-
+	
 	// Queue is not full & Spaces For All
 	@Test
 	public void testProcessQueueQueueIsNotFullSpacesForAll()
 			throws VehicleException, SimulationException {
 		simulator = new Simulator();
 		
-		for (int i = 1; i <= maxCarSpaces; i++) {
+		for (int i = 1; i <= maxCarSpaces - 2; i++) {
 			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
 			carPark.parkVehicle(car, i, defaultIntendedStay);
 		}
-		for (int j = maxCarSpaces + 1; j <= maxSmallCarSpaces + maxCarSpaces; j++) {
+		for (int j = maxCarSpaces + 1; j <= maxSmallCarSpaces + maxCarSpaces - 2; j++) {
 			smallCar = new Car((vehicleID2 + Integer.toString(j)), j, true);
 			carPark.parkVehicle(smallCar, j, defaultIntendedStay);
 		}
-		for (int k = 1; k <= maxMotorCycleSpaces; k++) {
+		for (int k = 1; k <= maxMotorCycleSpaces - 2; k++) {
 			motorCycle = new MotorCycle((vehicleID3 + Integer.toString(k)), k);
 			carPark.parkVehicle(motorCycle, k, defaultIntendedStay);
 		}
+		
 		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 1, false);
 		carPark.enterQueue(car);
 		smallCar = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 2,
@@ -1311,7 +1312,7 @@ public class CarParkTests {
 	}
 
 	@Test
-	public void testProcessQueueQueueIsNotFullSpacesForSomeSpaceForFirstButNotLastLastIsMotorCycleSmallCarSpaceAvailable()
+	public void testProcessQueueQueueIsNotFullSpacesForSomeSpaceForFirstButNotLastFirstIsMotorCycleSmallCarSpaceAvailable()
 			throws SimulationException, VehicleException {
 		simulator = new Simulator();
 		
@@ -1358,7 +1359,6 @@ public class CarParkTests {
 			throws SimulationException, VehicleException {
 		simulator = new Simulator();
 		
-		
 		for (int i = 1; i < maxCarSpaces; i++) {
 			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
 			carPark.parkVehicle(car, i, defaultIntendedStay);
@@ -1372,25 +1372,17 @@ public class CarParkTests {
 			carPark.parkVehicle(motorCycle, k, defaultIntendedStay);
 		}
 		
-		smallCar = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 1,
-				true);
-		carPark.enterQueue(smallCar);
 		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
-				+ maxCarSpaces + 2);
+				+ maxCarSpaces + 1);
 		carPark.enterQueue(motorCycle);
-		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 3, false);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 2, false);
 		carPark.enterQueue(car);
-		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 4, false);
-		carPark.enterQueue(car);
-		smallCar = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 5,
-				true);
-		carPark.enterQueue(smallCar);
 		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
-				+ maxCarSpaces + 6);
+				+ maxCarSpaces + 3);
 		carPark.enterQueue(motorCycle);
 
 		int queueSize = carPark.numVehiclesInQueue();
-		carPark.processQueue(maxSmallCarSpaces + maxCarSpaces + 7, simulator);
+		carPark.processQueue(maxSmallCarSpaces + maxCarSpaces + 4, simulator);
 		assertEquals(
 				"testProcessQueueQueueIsNotFullSpacesForSomeSpaceForMiddleButNotFirstAndNotLastMiddleIsNormalCar() Error",
 				queueSize, carPark.numVehiclesInQueue());
@@ -1416,12 +1408,331 @@ public class CarParkTests {
 		
 		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 1, false);
 		carPark.enterQueue(car);
+		smallCar = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 2,
+				true);
+		carPark.enterQueue(smallCar);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 3, false);
+		carPark.enterQueue(car);
+
+		int queueSize = carPark.numVehiclesInQueue();
+		carPark.processQueue(maxSmallCarSpaces + maxCarSpaces + 4, simulator);
+		assertEquals(
+				"testProcessQueueQueueIsNotFullSpacesForSomeSpaceForMiddleButNotFirstAndNotLastMiddleIsSmallCar() Error",
+				queueSize, carPark.numVehiclesInQueue());
+	}
+
+	@Test
+	public void testProcessQueueQueueIsNotFullSpacesForSomeSpaceForMiddleButNotFirstAndNotLastMiddleIsSmallCarNormalCarSpaceAvailable()
+			throws SimulationException, VehicleException {
+		simulator = new Simulator();
+		
+		for (int i = 1; i < maxCarSpaces; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.parkVehicle(car, i, defaultIntendedStay);
+		}
+		for (int j = maxCarSpaces + 1; j <= maxSmallCarSpaces + maxCarSpaces; j++) {
+			smallCar = new Car((vehicleID2 + Integer.toString(j)), j, true);
+			carPark.parkVehicle(smallCar, j, defaultIntendedStay);
+		}
+		for (int k = 1; k <= maxMotorCycleSpaces; k++) {
+			motorCycle = new MotorCycle((vehicleID3 + Integer.toString(k)), k);
+			carPark.parkVehicle(motorCycle, k, defaultIntendedStay);
+		}
+		
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 1);
+		carPark.enterQueue(motorCycle);
+		smallCar = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 2,
+				true);
+		carPark.enterQueue(smallCar);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 3);
+		carPark.enterQueue(motorCycle);
+
+		int queueSize = carPark.numVehiclesInQueue();
+		carPark.processQueue(maxSmallCarSpaces + maxCarSpaces + 4, simulator);
+		assertEquals(
+				"testProcessQueueQueueIsNotFullSpacesForSomeSpaceForMiddleButNotFirstAndNotLastMiddleIsSmallCarNormalCarSpaceAvailable() Error",
+				queueSize, carPark.numVehiclesInQueue());
+	}
+
+	@Test
+	public void testProcessQueueQueueIsNotFullSpacesForSomeSpaceForMiddleButNotFirstAndNotLastMiddleIsMotorCycle()
+			throws SimulationException, VehicleException {
+		simulator = new Simulator();
+		
+		for (int i = 1; i <= maxCarSpaces; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.parkVehicle(car, i, defaultIntendedStay);
+		}
+		for (int j = maxCarSpaces + 1; j <= maxSmallCarSpaces + maxCarSpaces; j++) {
+			smallCar = new Car((vehicleID2 + Integer.toString(j)), j, true);
+			carPark.parkVehicle(smallCar, j, defaultIntendedStay);
+		}
+		for (int k = 1; k < maxMotorCycleSpaces; k++) {
+			motorCycle = new MotorCycle((vehicleID3 + Integer.toString(k)), k);
+			carPark.parkVehicle(motorCycle, k, defaultIntendedStay);
+		}
+		
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 1, false);
+		carPark.enterQueue(car);
+		smallCar = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 2,
+				true);
+		carPark.enterQueue(smallCar);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 3);
+		carPark.enterQueue(motorCycle);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 4, false);
+		carPark.enterQueue(car);
+		smallCar = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 5,
+				true);
+		carPark.enterQueue(smallCar);
+
+		int queueSize = carPark.numVehiclesInQueue();
+		carPark.processQueue(maxSmallCarSpaces + maxCarSpaces + 6, simulator);
+		assertEquals(
+				"testProcessQueueQueueIsNotFullSpacesForSomeSpaceForMiddleButNotFirstAndNotLastMiddleIsMotorCycle() Error",
+				queueSize, carPark.numVehiclesInQueue());
+	}
+
+	@Test
+	public void testProcessQueueQueueIsNotFullSpacesForSomeSpaceForMiddleButNotFirstAndNotLastMiddleIsMotorCycleSmallCarSpaceAvailable()
+			throws SimulationException, VehicleException {
+		simulator = new Simulator();
+		
+		for (int i = 1; i <= maxCarSpaces; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.parkVehicle(car, i, defaultIntendedStay);
+		}
+		for (int j = maxCarSpaces + 1; j < maxSmallCarSpaces + maxCarSpaces; j++) {
+			smallCar = new Car((vehicleID2 + Integer.toString(j)), j, true);
+			carPark.parkVehicle(smallCar, j, defaultIntendedStay);
+		}
+		for (int k = 1; k <= maxMotorCycleSpaces; k++) {
+			motorCycle = new MotorCycle((vehicleID3 + Integer.toString(k)), k);
+			carPark.parkVehicle(motorCycle, k, defaultIntendedStay);
+		}
+		
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 1, false);
+		carPark.enterQueue(car);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 2);
+		carPark.enterQueue(motorCycle);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 3, false);
+		carPark.enterQueue(car);
+		
+		
+
+		int queueSize = carPark.numVehiclesInQueue();
+		carPark.processQueue(maxSmallCarSpaces + maxCarSpaces + 4, simulator);
+		assertEquals(
+				"testProcessQueueQueueIsNotFullSpacesForSomeSpaceForMiddleButNotFirstAndNotLastMiddleIsMotorCycleSmallCarSpaceAvailable() Error",
+				queueSize, carPark.numVehiclesInQueue());
+	}
+
+	@Test
+	public void testProcessQueueQueueIsNotFullSpacesForSomeSpaceForLastButNotFirstLastIsNormalCar()
+			throws SimulationException, VehicleException {
+		simulator = new Simulator();
+
+		for (int i = 1; i < maxCarSpaces; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.parkVehicle(car, i, defaultIntendedStay);
+		}
+		for (int j = maxCarSpaces + 1; j <= maxSmallCarSpaces + maxCarSpaces; j++) {
+			smallCar = new Car((vehicleID2 + Integer.toString(j)), j, true);
+			carPark.parkVehicle(smallCar, j, defaultIntendedStay);
+		}
+		for (int k = 1; k <= maxMotorCycleSpaces; k++) {
+			motorCycle = new MotorCycle((vehicleID3 + Integer.toString(k)), k);
+			carPark.parkVehicle(motorCycle, k, defaultIntendedStay);
+		}
+		
+		
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 1);
+		carPark.enterQueue(motorCycle);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 2);
+		carPark.enterQueue(motorCycle);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 3, false);
+		carPark.enterQueue(car);
+
+		int queueSize = carPark.numVehiclesInQueue();
+		carPark.processQueue(maxSmallCarSpaces + maxCarSpaces + 4, simulator);
+		assertEquals(
+				"testProcessQueueQueueIsNotFullSpacesForSomeSpaceForLastButNotFirstLastIsNormalCar() Error",
+				queueSize, carPark.numVehiclesInQueue());
+		
+	}
+
+	@Test
+	public void testProcessQueueQueueIsNotFullSpacesForSomeSpaceForLastButNotFirstLastIsSmallCar()
+			throws SimulationException, VehicleException {
+		simulator = new Simulator();
+		
+		for (int i = 1; i <= maxCarSpaces; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.parkVehicle(car, i, defaultIntendedStay);
+		}
+		for (int j = maxCarSpaces + 1; j < maxSmallCarSpaces + maxCarSpaces; j++) {
+			smallCar = new Car((vehicleID2 + Integer.toString(j)), j, true);
+			carPark.parkVehicle(smallCar, j, defaultIntendedStay);
+		}
+		for (int k = 1; k <= maxMotorCycleSpaces; k++) {
+			motorCycle = new MotorCycle((vehicleID3 + Integer.toString(k)), k);
+			carPark.parkVehicle(motorCycle, k, defaultIntendedStay);
+		}
+		
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 1, false);
+		carPark.enterQueue(car);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 2, false);
+		carPark.enterQueue(car);
+		smallCar = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 3,
+				true);
+		carPark.enterQueue(smallCar);
+
+		int queueSize = carPark.numVehiclesInQueue();
+		carPark.processQueue(maxSmallCarSpaces + maxCarSpaces + 4, simulator);
+		assertEquals(
+				"testProcessQueueQueueIsNotFullSpacesForSomeSpaceForLastButNotFirstLastIsSmallCar() Error",
+				queueSize, carPark.numVehiclesInQueue());
+	}
+
+	@Test
+	public void testProcessQueueQueueIsNotFullSpacesForSomeSpaceForLastButNotFirstLastIsSmallCarNormalCarSpaceAvailable()
+			throws SimulationException, VehicleException {
+		simulator = new Simulator();
+		
+		for (int i = 1; i <= maxCarSpaces; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.parkVehicle(car, i, defaultIntendedStay);
+		}
+		for (int j = maxCarSpaces + 1; j < maxSmallCarSpaces + maxCarSpaces; j++) {
+			smallCar = new Car((vehicleID2 + Integer.toString(j)), j, true);
+			carPark.parkVehicle(smallCar, j, defaultIntendedStay);
+		}
+		for (int k = 1; k <= maxMotorCycleSpaces; k++) {
+			motorCycle = new MotorCycle((vehicleID3 + Integer.toString(k)), k);
+			carPark.parkVehicle(motorCycle, k, defaultIntendedStay);
+		}
+		
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 1);
+		carPark.enterQueue(motorCycle);
 		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
 				+ maxCarSpaces + 2);
 		carPark.enterQueue(motorCycle);
 		smallCar = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 3,
 				true);
 		carPark.enterQueue(smallCar);
+		
+		
+
+		int queueSize = carPark.numVehiclesInQueue();
+		carPark.processQueue(maxSmallCarSpaces + maxCarSpaces + 4, simulator);
+		assertEquals(
+				"testProcessQueueQueueIsNotFullSpacesForSomeSpaceForLastButNotFirstLastIsSmallCarNormalCarSpaceAvailable() Error",
+				queueSize, carPark.numVehiclesInQueue());
+	}
+
+	@Test
+	public void testProcessQueueQueueIsNotFullSpacesForSomeSpaceForLastButNotFirstLastIsMotorCycle()
+			throws SimulationException, VehicleException {
+		simulator = new Simulator();
+		
+		for (int i = 1; i <= maxCarSpaces; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.parkVehicle(car, i, defaultIntendedStay);
+		}
+		for (int j = maxCarSpaces + 1; j <= maxSmallCarSpaces + maxCarSpaces; j++) {
+			smallCar = new Car((vehicleID2 + Integer.toString(j)), j, true);
+			carPark.parkVehicle(smallCar, j, defaultIntendedStay);
+		}
+		for (int k = 1; k < maxMotorCycleSpaces; k++) {
+			motorCycle = new MotorCycle((vehicleID3 + Integer.toString(k)), k);
+			carPark.parkVehicle(motorCycle, k, defaultIntendedStay);
+		}
+		
+		smallCar = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 1,
+				true);
+		carPark.enterQueue(smallCar);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 2, false);
+		carPark.enterQueue(car);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 3);
+		carPark.enterQueue(motorCycle);
+		
+		
+
+		int queueSize = carPark.numVehiclesInQueue();
+		carPark.processQueue(maxSmallCarSpaces + maxCarSpaces + 4, simulator);
+		assertEquals(
+				"testProcessQueueQueueIsNotFullSpacesForSomeSpaceForLastButNotFirstLastIsMotorCycle() Error",
+				queueSize, carPark.numVehiclesInQueue());
+	}
+
+	@Test
+	public void testProcessQueueQueueIsNotFullSpacesForSomeSpaceForLastButNotFirstLastIsMotorCycleSmallCarSpaceAvailable()
+			throws SimulationException, VehicleException {
+		simulator = new Simulator();
+		
+		for (int i = 1; i <= maxCarSpaces; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.parkVehicle(car, i, defaultIntendedStay);
+		}
+		for (int j = maxCarSpaces + 1; j < maxSmallCarSpaces + maxCarSpaces; j++) {
+			smallCar = new Car((vehicleID2 + Integer.toString(j)), j, true);
+			carPark.parkVehicle(smallCar, j, defaultIntendedStay);
+		}
+		for (int k = 1; k <= maxMotorCycleSpaces; k++) {
+			motorCycle = new MotorCycle((vehicleID3 + Integer.toString(k)), k);
+			carPark.parkVehicle(motorCycle, k, defaultIntendedStay);
+		}
+		
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 1, false);
+		carPark.enterQueue(car);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 2, false);
+		carPark.enterQueue(car);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 3);
+		carPark.enterQueue(motorCycle);
+		
+		int queueSize = carPark.numVehiclesInQueue();
+		carPark.processQueue(maxSmallCarSpaces + maxCarSpaces + 4, simulator);
+		assertEquals(
+				"testProcessQueueQueueIsNotFullSpacesForSomeSpaceForLastButNotFirstLastIsMotorCycleSmallCarSpaceAvailable() Error",
+				queueSize, carPark.numVehiclesInQueue());
+	}
+
+	// Something else
+
+	@Test
+	public void testProcessQueueQueueIsNotFullSpacesForNone()
+			throws SimulationException, VehicleException {
+		simulator = new Simulator();
+		
+		for (int i = 1; i <= maxCarSpaces; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.parkVehicle(car, i, defaultIntendedStay);
+		}
+		for (int j = maxCarSpaces + 1; j <= maxSmallCarSpaces + maxCarSpaces; j++) {
+			smallCar = new Car((vehicleID2 + Integer.toString(j)), j, true);
+			carPark.parkVehicle(smallCar, j, defaultIntendedStay);
+		}
+		for (int k = 1; k <= maxMotorCycleSpaces; k++) {
+			motorCycle = new MotorCycle((vehicleID3 + Integer.toString(k)), k);
+			carPark.parkVehicle(motorCycle, k, defaultIntendedStay);
+		}
+		
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 1, false);
+		carPark.enterQueue(car);
+		smallCar = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 2,
+				true);
+		carPark.enterQueue(smallCar);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 3);
+		carPark.enterQueue(motorCycle);
 		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 4, false);
 		carPark.enterQueue(car);
 		smallCar = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 5,
@@ -1434,163 +1745,866 @@ public class CarParkTests {
 		int queueSize = carPark.numVehiclesInQueue();
 		carPark.processQueue(maxSmallCarSpaces + maxCarSpaces + 7, simulator);
 		assertEquals(
-				"testProcessQueueQueueIsNotFullSpacesForSomeSpaceForMiddleButNotFirstAndNotLastMiddleIsSmallCar() Error",
+				"testProcessQueueQueueIsNotFullSpacesForNone() Error",
 				queueSize, carPark.numVehiclesInQueue());
 	}
 
-	@Test
-	public void testProcessQueueQueueIsNotFullSpacesForSomeSpaceForMiddleButNotFirstAndNotLastMiddleIsSmallCarNormalCarSpaceAvailable()
-			throws SimulationException, VehicleException {
-		// TODO
-	}
-
-	@Test
-	public void testProcessQueueQueueIsNotFullSpacesForSomeSpaceForMiddleButNotFirstAndNotLastMiddleIsMotorCycle()
-			throws SimulationException, VehicleException {
-		// TODO
-	}
-
-	@Test
-	public void testProcessQueueQueueIsNotFullSpacesForSomeSpaceForMiddleButNotFirstAndNotLastMiddleIsMotorCycleSmallCarSpaceAvailable()
-			throws SimulationException, VehicleException {
-		// TODO
-	}
-
-	@Test
-	public void testProcessQueueQueueIsNotFullSpacesForSomeSpaceForLastButNotFirstLastIsNormalCar()
-			throws SimulationException, VehicleException {
-		// TODO
-	}
-
-	@Test
-	public void testProcessQueueQueueIsNotFullSpacesForSomeSpaceForLastButNotFirstLastIsSmallCar()
-			throws SimulationException, VehicleException {
-		// TODO
-	}
-
-	@Test
-	public void testProcessQueueQueueIsNotFullSpacesForSomeSpaceForLastButNotFirstLastIsSmallCarNormalCarSpaceAvailable()
-			throws SimulationException, VehicleException {
-		// TODO
-	}
-
-	@Test
-	public void testProcessQueueQueueIsNotFullSpacesForSomeSpaceForLastButNotFirstLastIsMotorCycle()
-			throws SimulationException, VehicleException {
-		// TODO
-	}
-
-	@Test
-	public void testProcessQueueQueueIsNotFullSpacesForSomeSpaceForLastButNotFirstLastIsMotorCycleSmallCarSpaceAvailable()
-			throws SimulationException, VehicleException {
-		// TODO
-	}
-
-	// Something else
-
-	@Test
-	public void testProcessQueueQueueIsNotFullSpacesForNone()
-			throws SimulationException, VehicleException {
-		// TODO
-	}
-
+	
+	
+	
+	
+	
+	
+	
+	
+	// TODO THE DIVIDE
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	// Queue is full
 
-	// Queue is not full & Spaces For All
+	
 	@Test
 	public void testProcessQueueQueueIsFullSpacesForAll()
 			throws VehicleException, SimulationException {
+		simulator = new Simulator();
+		
+		for (int i = 1; i <= maxCarSpaces - 3; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.parkVehicle(car, i, defaultIntendedStay);
+		}
+		for (int j = maxCarSpaces + 1; j <= maxSmallCarSpaces + maxCarSpaces - 3; j++) {
+			smallCar = new Car((vehicleID2 + Integer.toString(j)), j, true);
+			carPark.parkVehicle(smallCar, j, defaultIntendedStay);
+		}
+		for (int k = 1; k <= maxMotorCycleSpaces - 4; k++) {
+			motorCycle = new MotorCycle((vehicleID3 + Integer.toString(k)), k);
+			carPark.parkVehicle(motorCycle, k, defaultIntendedStay);
+		}
+		
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 1, false);
+		carPark.enterQueue(car);
+		smallCar = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 2,
+				true);
+		carPark.enterQueue(smallCar);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 3);
+		carPark.enterQueue(motorCycle);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 4, false);
+		carPark.enterQueue(car);
+		smallCar = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 5,
+				true);
+		carPark.enterQueue(smallCar);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 6);
+		carPark.enterQueue(motorCycle);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 7);
+		carPark.enterQueue(motorCycle);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 8, false);
+		carPark.enterQueue(car);
+		smallCar = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 9,
+				true);
+		carPark.enterQueue(smallCar);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 10);
+		carPark.enterQueue(motorCycle);
+
+		carPark.processQueue(maxSmallCarSpaces + maxCarSpaces + 11, simulator);
+		assertTrue("testProcessQueueQueueIsFullSpacesForAll() Error",
+				carPark.queueEmpty());
+	}
+	
+	@Test
+	public void testProcessQueueQueueIsFullSpacesForSomeSpaceForFirstButNotLastFirstIsNormalCar()
+			throws SimulationException, VehicleException {
+		simulator = new Simulator();
+		
+		for (int i = 1; i < maxCarSpaces; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.parkVehicle(car, i, defaultIntendedStay);
+		}
+		for (int j = maxCarSpaces + 1; j <= maxSmallCarSpaces + maxCarSpaces; j++) {
+			smallCar = new Car((vehicleID2 + Integer.toString(j)), j, true);
+			carPark.parkVehicle(smallCar, j, defaultIntendedStay);
+		}
+		for (int k = 1; k <= maxMotorCycleSpaces; k++) {
+			motorCycle = new MotorCycle((vehicleID3 + Integer.toString(k)), k);
+			carPark.parkVehicle(motorCycle, k, defaultIntendedStay);
+		}
+		
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 1, false);
+		carPark.enterQueue(car);
+		smallCar = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 2,
+				true);
+		carPark.enterQueue(smallCar);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 3);
+		carPark.enterQueue(motorCycle);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 4, false);
+		carPark.enterQueue(car);
+		smallCar = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 5,
+				true);
+		carPark.enterQueue(smallCar);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 6);
+		carPark.enterQueue(motorCycle);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 7);
+		carPark.enterQueue(motorCycle);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 8, false);
+		carPark.enterQueue(car);
+		smallCar = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 9,
+				true);
+		carPark.enterQueue(smallCar);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 10);
+		carPark.enterQueue(motorCycle);
+
+		int queueSize = carPark.numVehiclesInQueue();
+		carPark.processQueue(maxSmallCarSpaces + maxCarSpaces + 11, simulator);
+		assertEquals(
+				"testProcessQueueQueueIsFullSpacesForSomeSpaceForFirstButNotLastFirstIsNormalCar() Error",
+				queueSize - 1, carPark.numVehiclesInQueue());
 	}
 
-	// Queue is full & Spaces for some
 	@Test
-	public void testProcessQueueQueueIsFullSpacesForSomeSpaceForFirstButNotLastLastIsNormalCar()
+	public void testProcessQueueQueueIsFullSpacesForSomeSpaceForFirstButNotLastFirstIsSmallCar()
 			throws SimulationException, VehicleException {
-		// TODO
+		simulator = new Simulator();
+		
+		for (int i = 1; i <= maxCarSpaces; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.parkVehicle(car, i, defaultIntendedStay);
+		}
+		for (int j = maxCarSpaces + 1; j < maxSmallCarSpaces + maxCarSpaces; j++) {
+			smallCar = new Car((vehicleID2 + Integer.toString(j)), j, true);
+			carPark.parkVehicle(smallCar, j, defaultIntendedStay);
+		}
+		for (int k = 1; k <= maxMotorCycleSpaces; k++) {
+			motorCycle = new MotorCycle((vehicleID3 + Integer.toString(k)), k);
+			carPark.parkVehicle(motorCycle, k, defaultIntendedStay);
+		}
+		
+		smallCar = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 1,
+				true);
+		carPark.enterQueue(smallCar);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 2, false);
+		carPark.enterQueue(car);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 3);
+		carPark.enterQueue(motorCycle);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 4, false);
+		carPark.enterQueue(car);
+		smallCar = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 5,
+				true);
+		carPark.enterQueue(smallCar);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 6);
+		carPark.enterQueue(motorCycle);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 7);
+		carPark.enterQueue(motorCycle);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 8, false);
+		carPark.enterQueue(car);
+		smallCar = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 9,
+				true);
+		carPark.enterQueue(smallCar);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 10);
+		carPark.enterQueue(motorCycle);
+
+		int queueSize = carPark.numVehiclesInQueue();
+		carPark.processQueue(maxSmallCarSpaces + maxCarSpaces + 11, simulator);
+		assertEquals(
+				"testProcessQueueQueueIsFullSpacesForSomeSpaceForFirstButNotLastFirstIsSmallCar() Error",
+				queueSize - 1, carPark.numVehiclesInQueue());
 	}
 
 	@Test
-	public void testProcessQueueQueueIsNotSpacesForSomeSpaceForFirstButNotLastLastIsSmallCar()
+	public void testProcessQueueQueueIsFullSpacesForSomeSpaceForFirstButNotLastFirstIsSmallCarNormalCarSpaceAvailable()
 			throws SimulationException, VehicleException {
-		// TODO
+		simulator = new Simulator();
+		
+		for (int i = 1; i < maxCarSpaces; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.parkVehicle(car, i, defaultIntendedStay);
+		}
+		for (int j = maxCarSpaces + 1; j <= maxSmallCarSpaces + maxCarSpaces; j++) {
+			smallCar = new Car((vehicleID2 + Integer.toString(j)), j, true);
+			carPark.parkVehicle(smallCar, j, defaultIntendedStay);
+		}
+		for (int k = 1; k <= maxMotorCycleSpaces; k++) {
+			motorCycle = new MotorCycle((vehicleID3 + Integer.toString(k)), k);
+			carPark.parkVehicle(motorCycle, k, defaultIntendedStay);
+		}
+		
+		smallCar = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 1,
+				true);
+		carPark.enterQueue(smallCar);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 2, false);
+		carPark.enterQueue(car);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 3);
+		carPark.enterQueue(motorCycle);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 4, false);
+		carPark.enterQueue(car);
+		smallCar = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 5,
+				true);
+		carPark.enterQueue(smallCar);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 6);
+		carPark.enterQueue(motorCycle);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 7);
+		carPark.enterQueue(motorCycle);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 8, false);
+		carPark.enterQueue(car);
+		smallCar = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 9,
+				true);
+		carPark.enterQueue(smallCar);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 10);
+		carPark.enterQueue(motorCycle);
+
+		int queueSize = carPark.numVehiclesInQueue();
+		carPark.processQueue(maxSmallCarSpaces + maxCarSpaces + 11, simulator);
+		assertEquals(
+				"testProcessQueueQueueIsFullSpacesForSomeSpaceForFirstButNotLastFirstIsSmallCarNormalCarSpaceAvailable() Error",
+				queueSize - 1, carPark.numVehiclesInQueue());
 	}
 
 	@Test
-	public void testProcessQueueQueueIsFullSpacesForSomeSpaceForFirstButNotLastLastIsSmallCarNormalCarSpaceAvailable()
+	public void testProcessQueueQueueIsFullSpacesForSomeSpaceForFirstButNotLastFirstIsMotorCycle()
 			throws SimulationException, VehicleException {
-		// TODO
+		simulator = new Simulator();
+		
+		
+		for (int i = 1; i <= maxCarSpaces; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.parkVehicle(car, i, defaultIntendedStay);
+		}
+		for (int j = maxCarSpaces + 1; j <= maxSmallCarSpaces + maxCarSpaces; j++) {
+			smallCar = new Car((vehicleID2 + Integer.toString(j)), j, true);
+			carPark.parkVehicle(smallCar, j, defaultIntendedStay);
+		}
+		for (int k = 1; k < maxMotorCycleSpaces; k++) {
+			motorCycle = new MotorCycle((vehicleID3 + Integer.toString(k)), k);
+			carPark.parkVehicle(motorCycle, k, defaultIntendedStay);
+		}
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 1);
+		carPark.enterQueue(motorCycle);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 2, false);
+		carPark.enterQueue(car);
+		smallCar = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 3,
+				true);
+		carPark.enterQueue(smallCar);
+		
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 4, false);
+		carPark.enterQueue(car);
+		smallCar = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 5,
+				true);
+		carPark.enterQueue(smallCar);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 6);
+		carPark.enterQueue(motorCycle);
+		smallCar = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 7,
+				true);
+		carPark.enterQueue(smallCar);
+		
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 8, false);
+		carPark.enterQueue(car);
+		smallCar = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 9,
+				true);
+		carPark.enterQueue(smallCar);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 10);
+		carPark.enterQueue(motorCycle);
+
+		int queueSize = carPark.numVehiclesInQueue();
+		carPark.processQueue(maxSmallCarSpaces + maxCarSpaces + 11, simulator);
+		assertEquals(
+				"testProcessQueueQueueIsFullSpacesForSomeSpaceForFirstButNotLastFirstIsMotorCycle() Error",
+				queueSize - 1, carPark.numVehiclesInQueue());
 	}
 
 	@Test
-	public void testProcessQueueQueueIsFullSpacesForSomeSpaceForFirstButNotLastLastIsMotorCycle()
+	public void testProcessQueueQueueIsFullSpacesForSomeSpaceForFirstButNotLastFirstIsMotorCycleSmallCarSpaceAvailable()
 			throws SimulationException, VehicleException {
-		// TODO
-	}
+		simulator = new Simulator();
+		
+		
+		for (int i = 1; i <= maxCarSpaces; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.parkVehicle(car, i, defaultIntendedStay);
+		}
+		for (int j = maxCarSpaces + 1; j < maxSmallCarSpaces + maxCarSpaces; j++) {
+			smallCar = new Car((vehicleID2 + Integer.toString(j)), j, true);
+			carPark.parkVehicle(smallCar, j, defaultIntendedStay);
+		}
+		for (int k = 1; k <= maxMotorCycleSpaces; k++) {
+			motorCycle = new MotorCycle((vehicleID3 + Integer.toString(k)), k);
+			carPark.parkVehicle(motorCycle, k, defaultIntendedStay);
+		}
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 1);
+		carPark.enterQueue(motorCycle);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 2, false);
+		carPark.enterQueue(car);
+		smallCar = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 3,
+				true);
+		carPark.enterQueue(smallCar);
+		
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 4, false);
+		carPark.enterQueue(car);
+		smallCar = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 5,
+				true);
+		carPark.enterQueue(smallCar);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 6);
+		carPark.enterQueue(motorCycle);
+		smallCar = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 7,
+				true);
+		carPark.enterQueue(smallCar);
+		
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 8, false);
+		carPark.enterQueue(car);
+		smallCar = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 9,
+				true);
+		carPark.enterQueue(smallCar);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 10);
+		carPark.enterQueue(motorCycle);
 
-	@Test
-	public void testProcessQueueQueueIsFullSpacesForSomeSpaceForFirstButNotLastLastIsMotorCycleSmallCarSpaceAvailable()
-			throws SimulationException, VehicleException {
-		// TODO
+		int queueSize = carPark.numVehiclesInQueue();
+		carPark.processQueue(maxSmallCarSpaces + maxCarSpaces + 11, simulator);
+		assertEquals(
+				"testProcessQueueQueueIsFullSpacesForSomeSpaceForFirstButNotLastFirstIsMotorCycle() Error",
+				queueSize - 1, carPark.numVehiclesInQueue());
 	}
 
 	@Test
 	public void testProcessQueueQueueIsFullSpacesForSomeSpaceForMiddleButNotFirstAndNotLastMiddleIsNormalCar()
 			throws SimulationException, VehicleException {
-		// TODO
+		simulator = new Simulator();
+		
+		for (int i = 1; i < maxCarSpaces; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.parkVehicle(car, i, defaultIntendedStay);
+		}
+		for (int j = maxCarSpaces + 1; j <= maxSmallCarSpaces + maxCarSpaces; j++) {
+			smallCar = new Car((vehicleID2 + Integer.toString(j)), j, true);
+			carPark.parkVehicle(smallCar, j, defaultIntendedStay);
+		}
+		for (int k = 1; k <= maxMotorCycleSpaces; k++) {
+			motorCycle = new MotorCycle((vehicleID3 + Integer.toString(k)), k);
+			carPark.parkVehicle(motorCycle, k, defaultIntendedStay);
+		}
+		
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 1);
+		carPark.enterQueue(motorCycle);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 2);
+		carPark.enterQueue(motorCycle);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 3);
+		carPark.enterQueue(motorCycle);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 4);
+		carPark.enterQueue(motorCycle);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 5, false);
+		carPark.enterQueue(car);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 6);
+		carPark.enterQueue(motorCycle);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 7);
+		carPark.enterQueue(motorCycle);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 8);
+		carPark.enterQueue(motorCycle);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 9);
+		carPark.enterQueue(motorCycle);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 10);
+		carPark.enterQueue(motorCycle);
+
+		int queueSize = carPark.numVehiclesInQueue();
+		carPark.processQueue(maxSmallCarSpaces + maxCarSpaces + 11, simulator);
+		assertEquals(
+				"testProcessQueueQueueIsFullSpacesForSomeSpaceForMiddleButNotFirstAndNotLastMiddleIsNormalCar() Error",
+				queueSize, carPark.numVehiclesInQueue());
 	}
 
 	@Test
 	public void testProcessQueueQueueIsFullSpacesForSomeSpaceForMiddleButNotFirstAndNotLastMiddleIsSmallCar()
 			throws SimulationException, VehicleException {
-		// TODO
+		simulator = new Simulator();
+		
+		for (int i = 1; i <= maxCarSpaces; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.parkVehicle(car, i, defaultIntendedStay);
+		}
+		for (int j = maxCarSpaces + 1; j < maxSmallCarSpaces + maxCarSpaces; j++) {
+			smallCar = new Car((vehicleID2 + Integer.toString(j)), j, true);
+			carPark.parkVehicle(smallCar, j, defaultIntendedStay);
+		}
+		for (int k = 1; k <= maxMotorCycleSpaces; k++) {
+			motorCycle = new MotorCycle((vehicleID3 + Integer.toString(k)), k);
+			carPark.parkVehicle(motorCycle, k, defaultIntendedStay);
+		}
+		
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 1, false);
+		carPark.enterQueue(car);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 2, false);
+		carPark.enterQueue(car);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 3, false);
+		carPark.enterQueue(car);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 4, false);
+		carPark.enterQueue(car);
+		smallCar = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 5,
+				true);
+		carPark.enterQueue(smallCar);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 6, false);
+		carPark.enterQueue(car);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 7, false);
+		carPark.enterQueue(car);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 8, false);
+		carPark.enterQueue(car);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 9, false);
+		carPark.enterQueue(car);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 10, false);
+		carPark.enterQueue(car);
+
+		int queueSize = carPark.numVehiclesInQueue();
+		carPark.processQueue(maxSmallCarSpaces + maxCarSpaces + 11, simulator);
+		assertEquals(
+				"testProcessQueueQueueIsFullSpacesForSomeSpaceForMiddleButNotFirstAndNotLastMiddleIsSmallCar() Error",
+				queueSize, carPark.numVehiclesInQueue());
 	}
 
 	@Test
 	public void testProcessQueueQueueIsFullSpacesForSomeSpaceForMiddleButNotFirstAndNotLastMiddleIsSmallCarNormalCarSpaceAvailable()
 			throws SimulationException, VehicleException {
-		// TODO
+		simulator = new Simulator();
+		
+		for (int i = 1; i < maxCarSpaces; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.parkVehicle(car, i, defaultIntendedStay);
+		}
+		for (int j = maxCarSpaces + 1; j <= maxSmallCarSpaces + maxCarSpaces; j++) {
+			smallCar = new Car((vehicleID2 + Integer.toString(j)), j, true);
+			carPark.parkVehicle(smallCar, j, defaultIntendedStay);
+		}
+		for (int k = 1; k <= maxMotorCycleSpaces; k++) {
+			motorCycle = new MotorCycle((vehicleID3 + Integer.toString(k)), k);
+			carPark.parkVehicle(motorCycle, k, defaultIntendedStay);
+		}
+		
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 1);
+		carPark.enterQueue(motorCycle);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 2);
+		carPark.enterQueue(motorCycle);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 3);
+		carPark.enterQueue(motorCycle);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 4);
+		carPark.enterQueue(motorCycle);
+		smallCar = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 5,
+				true);
+		carPark.enterQueue(smallCar);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 6);
+		carPark.enterQueue(motorCycle);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 7);
+		carPark.enterQueue(motorCycle);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 8);
+		carPark.enterQueue(motorCycle);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 9);
+		carPark.enterQueue(motorCycle);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 10);
+		carPark.enterQueue(motorCycle);
+
+		int queueSize = carPark.numVehiclesInQueue();
+		carPark.processQueue(maxSmallCarSpaces + maxCarSpaces + 11, simulator);
+		assertEquals(
+				"testProcessQueueQueueIsFullSpacesForSomeSpaceForMiddleButNotFirstAndNotLastMiddleIsSmallCarNormalCarSpaceAvailable() Error",
+				queueSize, carPark.numVehiclesInQueue());
 	}
 
 	@Test
 	public void testProcessQueueQueueIsFullSpacesForSomeSpaceForMiddleButNotFirstAndNotLastMiddleIsMotorCycle()
 			throws SimulationException, VehicleException {
-		// TODO
+		simulator = new Simulator();
+		
+		for (int i = 1; i <= maxCarSpaces; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.parkVehicle(car, i, defaultIntendedStay);
+		}
+		for (int j = maxCarSpaces + 1; j <= maxSmallCarSpaces + maxCarSpaces; j++) {
+			smallCar = new Car((vehicleID2 + Integer.toString(j)), j, true);
+			carPark.parkVehicle(smallCar, j, defaultIntendedStay);
+		}
+		for (int k = 1; k < maxMotorCycleSpaces; k++) {
+			motorCycle = new MotorCycle((vehicleID3 + Integer.toString(k)), k);
+			carPark.parkVehicle(motorCycle, k, defaultIntendedStay);
+		}
+		
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 1, false);
+		carPark.enterQueue(car);
+		smallCar = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 2,
+				true);
+		carPark.enterQueue(smallCar);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 3, false);
+		carPark.enterQueue(car);
+		smallCar = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 4,
+				true);
+		carPark.enterQueue(smallCar);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 5);
+		carPark.enterQueue(motorCycle);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 6, false);
+		carPark.enterQueue(car);
+		smallCar = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 7,
+				true);
+		carPark.enterQueue(smallCar);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 8, false);
+		carPark.enterQueue(car);
+		smallCar = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 9,
+				true);
+		carPark.enterQueue(smallCar);
+		smallCar = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 10,
+				true);
+		carPark.enterQueue(smallCar);
+
+		int queueSize = carPark.numVehiclesInQueue();
+		carPark.processQueue(maxSmallCarSpaces + maxCarSpaces + 11, simulator);
+		assertEquals(
+				"testProcessQueueQueueIsFullSpacesForSomeSpaceForMiddleButNotFirstAndNotLastMiddleIsMotorCycle() Error",
+				queueSize, carPark.numVehiclesInQueue());
 	}
 
 	@Test
 	public void testProcessQueueQueueIsFullSpacesForSomeSpaceForMiddleButNotFirstAndNotLastMiddleIsMotorCycleSmallCarSpaceAvailable()
 			throws SimulationException, VehicleException {
-		// TODO
+		simulator = new Simulator();
+		
+		for (int i = 1; i <= maxCarSpaces; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.parkVehicle(car, i, defaultIntendedStay);
+		}
+		for (int j = maxCarSpaces + 1; j < maxSmallCarSpaces + maxCarSpaces; j++) {
+			smallCar = new Car((vehicleID2 + Integer.toString(j)), j, true);
+			carPark.parkVehicle(smallCar, j, defaultIntendedStay);
+		}
+		for (int k = 1; k <= maxMotorCycleSpaces; k++) {
+			motorCycle = new MotorCycle((vehicleID3 + Integer.toString(k)), k);
+			carPark.parkVehicle(motorCycle, k, defaultIntendedStay);
+		}
+		
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 1, false);
+		carPark.enterQueue(car);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 2, false);
+		carPark.enterQueue(car);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 3, false);
+		carPark.enterQueue(car);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 4, false);
+		carPark.enterQueue(car);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 5);
+		carPark.enterQueue(motorCycle);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 6, false);
+		carPark.enterQueue(car);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 7, false);
+		carPark.enterQueue(car);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 8, false);
+		carPark.enterQueue(car);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 9, false);
+		carPark.enterQueue(car);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 10, false);
+		carPark.enterQueue(car);
+
+		int queueSize = carPark.numVehiclesInQueue();
+		carPark.processQueue(maxSmallCarSpaces + maxCarSpaces + 11, simulator);
+		assertEquals(
+				"testProcessQueueQueueIsFullSpacesForSomeSpaceForMiddleButNotFirstAndNotLastMiddleIsMotorCycleSmallCarSpaceAvailable() Error",
+				queueSize, carPark.numVehiclesInQueue());
 	}
 
 	@Test
 	public void testProcessQueueQueueIsFullSpacesForSomeSpaceForLastButNotFirstLastIsNormalCar()
 			throws SimulationException, VehicleException {
-		// TODO
+		simulator = new Simulator();
+
+		for (int i = 1; i < maxCarSpaces; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.parkVehicle(car, i, defaultIntendedStay);
+		}
+		for (int j = maxCarSpaces + 1; j <= maxSmallCarSpaces + maxCarSpaces; j++) {
+			smallCar = new Car((vehicleID2 + Integer.toString(j)), j, true);
+			carPark.parkVehicle(smallCar, j, defaultIntendedStay);
+		}
+		for (int k = 1; k <= maxMotorCycleSpaces; k++) {
+			motorCycle = new MotorCycle((vehicleID3 + Integer.toString(k)), k);
+			carPark.parkVehicle(motorCycle, k, defaultIntendedStay);
+		}
+		
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 1);
+		carPark.enterQueue(motorCycle);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 2);
+		carPark.enterQueue(motorCycle);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 3);
+		carPark.enterQueue(motorCycle);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 4);
+		carPark.enterQueue(motorCycle);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 5);
+		carPark.enterQueue(motorCycle);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 6);
+		carPark.enterQueue(motorCycle);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 7);
+		carPark.enterQueue(motorCycle);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 8);
+		carPark.enterQueue(motorCycle);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 9);
+		carPark.enterQueue(motorCycle);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 10, false);
+		carPark.enterQueue(car);
+
+		int queueSize = carPark.numVehiclesInQueue();
+		carPark.processQueue(maxSmallCarSpaces + maxCarSpaces + 11, simulator);
+		assertEquals(
+				"testProcessQueueQueueIsFullSpacesForSomeSpaceForLastButNotFirstLastIsNormalCar() Error",
+				queueSize, carPark.numVehiclesInQueue());
+		
 	}
 
 	@Test
 	public void testProcessQueueQueueIsFullSpacesForSomeSpaceForLastButNotFirstLastIsSmallCar()
 			throws SimulationException, VehicleException {
-		// TODO
+		simulator = new Simulator();
+		
+		for (int i = 1; i <= maxCarSpaces; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.parkVehicle(car, i, defaultIntendedStay);
+		}
+		for (int j = maxCarSpaces + 1; j < maxSmallCarSpaces + maxCarSpaces; j++) {
+			smallCar = new Car((vehicleID2 + Integer.toString(j)), j, true);
+			carPark.parkVehicle(smallCar, j, defaultIntendedStay);
+		}
+		for (int k = 1; k <= maxMotorCycleSpaces; k++) {
+			motorCycle = new MotorCycle((vehicleID3 + Integer.toString(k)), k);
+			carPark.parkVehicle(motorCycle, k, defaultIntendedStay);
+		}
+		
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 1, false);
+		carPark.enterQueue(car);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 2, false);
+		carPark.enterQueue(car);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 3, false);
+		carPark.enterQueue(car);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 4, false);
+		carPark.enterQueue(car);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 5, false);
+		carPark.enterQueue(car);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 6, false);
+		carPark.enterQueue(car);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 7, false);
+		carPark.enterQueue(car);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 8, false);
+		carPark.enterQueue(car);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 9, false);
+		carPark.enterQueue(car);
+		smallCar = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 10,
+				true);
+		carPark.enterQueue(smallCar);
+
+		int queueSize = carPark.numVehiclesInQueue();
+		carPark.processQueue(maxSmallCarSpaces + maxCarSpaces + 11, simulator);
+		assertEquals(
+				"testProcessQueueQueueIsFullSpacesForSomeSpaceForLastButNotFirstLastIsSmallCar() Error",
+				queueSize, carPark.numVehiclesInQueue());
 	}
 
 	@Test
 	public void testProcessQueueQueueIsFullSpacesForSomeSpaceForLastButNotFirstLastIsSmallCarNormalCarSpaceAvailable()
 			throws SimulationException, VehicleException {
-		// TODO
+		simulator = new Simulator();
+		
+		for (int i = 1; i <= maxCarSpaces; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.parkVehicle(car, i, defaultIntendedStay);
+		}
+		for (int j = maxCarSpaces + 1; j < maxSmallCarSpaces + maxCarSpaces; j++) {
+			smallCar = new Car((vehicleID2 + Integer.toString(j)), j, true);
+			carPark.parkVehicle(smallCar, j, defaultIntendedStay);
+		}
+		for (int k = 1; k <= maxMotorCycleSpaces; k++) {
+			motorCycle = new MotorCycle((vehicleID3 + Integer.toString(k)), k);
+			carPark.parkVehicle(motorCycle, k, defaultIntendedStay);
+		}
+		
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 1);
+		carPark.enterQueue(motorCycle);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 2);
+		carPark.enterQueue(motorCycle);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 3);
+		carPark.enterQueue(motorCycle);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 4);
+		carPark.enterQueue(motorCycle);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 5);
+		carPark.enterQueue(motorCycle);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 6);
+		carPark.enterQueue(motorCycle);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 7);
+		carPark.enterQueue(motorCycle);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 8);
+		carPark.enterQueue(motorCycle);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 9);
+		carPark.enterQueue(motorCycle);
+		smallCar = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 10,
+				true);
+		carPark.enterQueue(smallCar);
+		
+		int queueSize = carPark.numVehiclesInQueue();
+		carPark.processQueue(maxSmallCarSpaces + maxCarSpaces + 11, simulator);
+		assertEquals(
+				"testProcessQueueQueueIsFullSpacesForSomeSpaceForLastButNotFirstLastIsSmallCarNormalCarSpaceAvailable() Error",
+				queueSize, carPark.numVehiclesInQueue());
 	}
 
 	@Test
 	public void testProcessQueueQueueIsFullSpacesForSomeSpaceForLastButNotFirstLastIsMotorCycle()
 			throws SimulationException, VehicleException {
-		// TODO
+		simulator = new Simulator();
+		
+		for (int i = 1; i <= maxCarSpaces; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.parkVehicle(car, i, defaultIntendedStay);
+		}
+		for (int j = maxCarSpaces + 1; j <= maxSmallCarSpaces + maxCarSpaces; j++) {
+			smallCar = new Car((vehicleID2 + Integer.toString(j)), j, true);
+			carPark.parkVehicle(smallCar, j, defaultIntendedStay);
+		}
+		for (int k = 1; k < maxMotorCycleSpaces; k++) {
+			motorCycle = new MotorCycle((vehicleID3 + Integer.toString(k)), k);
+			carPark.parkVehicle(motorCycle, k, defaultIntendedStay);
+		}
+		
+		smallCar = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 1,
+				true);
+		carPark.enterQueue(smallCar);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 2, false);
+		carPark.enterQueue(car);
+		smallCar = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 3,
+				true);
+		carPark.enterQueue(smallCar);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 4, false);
+		carPark.enterQueue(car);
+		smallCar = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 5,
+				true);
+		carPark.enterQueue(smallCar);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 6, false);
+		carPark.enterQueue(car);
+		smallCar = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 7,
+				true);
+		carPark.enterQueue(smallCar);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 8, false);
+		carPark.enterQueue(car);
+		smallCar = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 9,
+				true);
+		carPark.enterQueue(smallCar);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 10);
+		carPark.enterQueue(motorCycle);
+		
+		
+
+		int queueSize = carPark.numVehiclesInQueue();
+		carPark.processQueue(maxSmallCarSpaces + maxCarSpaces + 11, simulator);
+		assertEquals(
+				"testProcessQueueQueueIsFullSpacesForSomeSpaceForLastButNotFirstLastIsMotorCycle() Error",
+				queueSize, carPark.numVehiclesInQueue());
 	}
 
 	@Test
 	public void testProcessQueueQueueIsFullSpacesForSomeSpaceForLastButNotFirstLastIsMotorCycleSmallCarSpaceAvailable()
 			throws SimulationException, VehicleException {
-		// TODO
+		simulator = new Simulator();
+		
+		for (int i = 1; i <= maxCarSpaces; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.parkVehicle(car, i, defaultIntendedStay);
+		}
+		for (int j = maxCarSpaces + 1; j < maxSmallCarSpaces + maxCarSpaces; j++) {
+			smallCar = new Car((vehicleID2 + Integer.toString(j)), j, true);
+			carPark.parkVehicle(smallCar, j, defaultIntendedStay);
+		}
+		for (int k = 1; k <= maxMotorCycleSpaces; k++) {
+			motorCycle = new MotorCycle((vehicleID3 + Integer.toString(k)), k);
+			carPark.parkVehicle(motorCycle, k, defaultIntendedStay);
+		}
+		
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 1, false);
+		carPark.enterQueue(car);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 2, false);
+		carPark.enterQueue(car);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 3, false);
+		carPark.enterQueue(car);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 4, false);
+		carPark.enterQueue(car);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 5, false);
+		carPark.enterQueue(car);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 6, false);
+		carPark.enterQueue(car);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 7, false);
+		carPark.enterQueue(car);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 8, false);
+		carPark.enterQueue(car);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 9, false);
+		carPark.enterQueue(car);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 10);
+		carPark.enterQueue(motorCycle);
+		
+		int queueSize = carPark.numVehiclesInQueue();
+		carPark.processQueue(maxSmallCarSpaces + maxCarSpaces + 11, simulator);
+		assertEquals(
+				"testProcessQueueQueueIsFullSpacesForSomeSpaceForLastButNotFirstLastIsMotorCycleSmallCarSpaceAvailable() Error",
+				queueSize, carPark.numVehiclesInQueue());
 	}
 
 	// Something else
@@ -1598,7 +2612,53 @@ public class CarParkTests {
 	@Test
 	public void testProcessQueueQueueIsFullSpacesForNone()
 			throws SimulationException, VehicleException {
-		// TODO
+		simulator = new Simulator();
+		
+		for (int i = 1; i <= maxCarSpaces; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.parkVehicle(car, i, defaultIntendedStay);
+		}
+		for (int j = maxCarSpaces + 1; j <= maxSmallCarSpaces + maxCarSpaces; j++) {
+			smallCar = new Car((vehicleID2 + Integer.toString(j)), j, true);
+			carPark.parkVehicle(smallCar, j, defaultIntendedStay);
+		}
+		for (int k = 1; k <= maxMotorCycleSpaces; k++) {
+			motorCycle = new MotorCycle((vehicleID3 + Integer.toString(k)), k);
+			carPark.parkVehicle(motorCycle, k, defaultIntendedStay);
+		}
+		
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 1, false);
+		carPark.enterQueue(car);
+		smallCar = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 2,
+				true);
+		carPark.enterQueue(smallCar);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 3);
+		carPark.enterQueue(motorCycle);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 4, false);
+		carPark.enterQueue(car);
+		smallCar = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 5,
+				true);
+		carPark.enterQueue(smallCar);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 6);
+		carPark.enterQueue(motorCycle);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 7, false);
+		carPark.enterQueue(car);
+		smallCar = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 8,
+				true);
+		carPark.enterQueue(smallCar);
+		motorCycle = new MotorCycle(vehicleID1, maxSmallCarSpaces
+				+ maxCarSpaces + 9);
+		carPark.enterQueue(motorCycle);
+		car = new Car(vehicleID1, maxSmallCarSpaces + maxCarSpaces + 10, false);
+		carPark.enterQueue(car);
+
+		int queueSize = carPark.numVehiclesInQueue();
+		carPark.processQueue(maxSmallCarSpaces + maxCarSpaces + 11, simulator);
+		assertEquals(
+				"testProcessQueueQueueIsFullSpacesForNone() Error",
+				queueSize, carPark.numVehiclesInQueue());
 	}
 
 	/**
