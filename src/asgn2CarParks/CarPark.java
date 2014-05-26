@@ -534,8 +534,6 @@ public class CarPark {
 	public void tryProcessNewVehicles(int time,Simulator sim) throws VehicleException, SimulationException {
 		
 		
-		
-		
 		if (sim.newCarTrial() == true) {			
 			String id = "C" + count;			
 			Car v = new Car(id, time, sim.smallCarTrial());
