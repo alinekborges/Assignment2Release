@@ -56,16 +56,6 @@ public class MotorCycleTests {
 	}
 
 	/**
-	 * @throws java.lang.Exception
-	 * @author Aline Borges
-	 */
-	@After
-	public void tearDown() throws Exception {
-		
-		//TODO
-	}
-
-	/**
 	 * Test method for {@link asgn2Vehicles.MotorCycle#MotorCycle(java.lang.String, int)}.
 	 * Tests exception for  negative values
 	 * @author Aline Borges
