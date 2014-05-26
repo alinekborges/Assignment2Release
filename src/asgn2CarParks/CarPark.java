@@ -130,8 +130,12 @@ public class CarPark {
 	public void archiveDepartingVehicles(int time, boolean force)
 			throws VehicleException, SimulationException {
 		if (force == true) {
-			for (int i = 0; i < this.carPark.size(); i++) {
-				Vehicle v = this.carPark.get(i);
+			List<Vehicle> toUnpark = new ArrayList<Vehicle>();
+			for (Vehicle v: this.carPark) {
+				toUnpark.add(v);
+			}
+			
+			for (Vehicle v : toUnpark) {				
 				this.unparkVehicle(v, time);
 				this.archiveNewVehicle(v);
 				status += this.setVehicleMsg(v, "P", "A");
@@ -206,10 +210,7 @@ public class CarPark {
 			int timeQueued = time - v.getArrivalTime();
 			if (timeQueued > Constants.MAXIMUM_QUEUE_TIME) {
 				failures.add(v);
-			} else {
-				break;
-			}
-
+			} 
 		}
 		
 		for (Vehicle v : failures) {
