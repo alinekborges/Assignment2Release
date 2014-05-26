@@ -129,8 +129,6 @@ public class CarPark {
 	 */
 	public void archiveDepartingVehicles(int time, boolean force)
 			throws VehicleException, SimulationException {
-		// TODO
-
 		if (force == true) {
 			for (int i = 0; i < this.carPark.size(); i++) {
 				Vehicle v = this.carPark.get(i);
@@ -144,11 +142,9 @@ public class CarPark {
 			List<Vehicle> toUnpark = new ArrayList<Vehicle>();
 			for (int i = 0; i < this.carPark.size(); i++) {
 				Vehicle v = this.carPark.get(i);
-				int t = v.getDepartureTime();
 				if (time >= v.getDepartureTime()) {
 					toUnpark.add(v);
 				}
-
 			}
 
 			for (Vehicle v : toUnpark) {
@@ -202,19 +198,26 @@ public class CarPark {
 		// iterate from the end of the queue to the beggining.
 		// If one vehicle isn't queued for too long, we can assume no other
 		// vehicle is
-		for (int i = this.queue.size() - 1; i >= 0; i++) {
+		
+		List<Vehicle> failures = new ArrayList<Vehicle>();
+		
+		for (int i = this.queue.size() - 1; i >= 0; i--) {
 			Vehicle v = this.queue.get(i);
 			int timeQueued = time - v.getArrivalTime();
 			if (timeQueued > Constants.MAXIMUM_QUEUE_TIME) {
-				v.exitQueuedState(time);
-				queue.remove(v);
-				archive.add(v);
-				this.numDissatisfied++;
-				this.status += this.setVehicleMsg(v, "Q", "A");
+				failures.add(v);
 			} else {
 				break;
 			}
 
+		}
+		
+		for (Vehicle v : failures) {
+			v.exitQueuedState(time);
+			queue.remove(v);
+			archive.add(v);
+			this.numDissatisfied++;
+			this.status += this.setVehicleMsg(v, "Q", "A");
 		}
 
 	}
@@ -243,7 +246,8 @@ public class CarPark {
 	public boolean carParkFull() {
 		int totalSpaces = this.maxCarSpaces + this.maxMotorCycleSpaces
 				+ this.maxSmallCarSpaces;
-		if (this.carPark.size() >= totalSpaces) {
+		int vehicles = this.numCars + this.numMotorCycles;
+		if (vehicles >= totalSpaces) {
 			return true;
 		} else {
 			return false;
@@ -326,7 +330,7 @@ public class CarPark {
 	 * @author Aline Borges
 	 */
 	public int getNumCars() {
-		return this.numCars + this.numSmallCars;
+		return this.numCars;
 	}
 
 	/**
@@ -384,10 +388,10 @@ public class CarPark {
 				str += "M";
 			}
 		}
-		/*
-		 * str += "      "; str += "SpacesAvailable::C:"+this.getCarSpaces()
-		 * +"::S:"+this.getSmallCarSpaces() +"::M:"+this.getMotorcycleSpaces();
-		 */
+		
+		  //str += "      "; str += "SpacesAvailable::C:"+this.getCarSpaces()
+		  //+"::S:"+this.getSmallCarSpaces() +"::M:"+this.getMotorcycleSpaces();
+		 
 		str += this.status;
 
 		this.status = "";
@@ -450,7 +454,8 @@ public class CarPark {
 		if (v instanceof Car) {
 			if (((Car) v).isSmall() == false) {
 				this.numCars++;
-			} else {
+			} else {			
+				this.numCars++;
 				this.numSmallCars++;
 			}
 		} else {
@@ -474,30 +479,37 @@ public class CarPark {
 	 */
 	public void processQueue(int time, Simulator sim) throws VehicleException,
 			SimulationException {
-
+		
+		
 		List<Vehicle> vehiclesToPark = new ArrayList<Vehicle>();
 
 		for (int i = 0; i < this.queue.size(); i++) {
-			Vehicle v = this.queue.get(i);
+			Vehicle v = this.queue.get(i);			
 			if (spacesAvailable(v) == true) {
 				vehiclesToPark.add(v);
-				if (v instanceof MotorCycle) {
-					int a = 0;
-				}
 			} else {
+				int a = 0;
 				break;
 			}
 		}
 
-		for (Vehicle v : vehiclesToPark) {
+		//Vehicle v = 
+		
+		//while()
+		
+		for (int i = 0; i < vehiclesToPark.size(); i++) {
+			Vehicle v = vehiclesToPark.get(i);
+			
 			if (spacesAvailable(v)) {
 				exitQueue(v, time);
 				parkVehicle(v, time, sim.setDuration());
 				status += this.setVehicleMsg(v, "Q", "P");
+			} else {
+				break;
 			}
 
 		}
-
+		
 	}
 
 	/**
@@ -539,6 +551,80 @@ public class CarPark {
 	 * @author Aline Borges
 	 */
 	public boolean spacesAvailable(Vehicle v) {
+		
+		if (v instanceof MotorCycle) {
+			if (this.numMotorCycles < this.maxMotorCycleSpaces){
+				return true;
+			} else {
+				//consider now the space motorcycles + car
+				int spaces = this.maxMotorCycleSpaces + this.maxSmallCarSpaces;
+				//consider now the vehicles motorcycles + small cars
+				int vehicles = this.numMotorCycles + this.numSmallCars;
+				if (vehicles < spaces) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+		}
+		
+		else {
+			if (((Car) v).isSmall() == true) {
+				if (this.numMotorCycles < this.maxMotorCycleSpaces) {
+					if (this.numCars < this.maxCarSpaces) {
+						return true;				
+					} else {
+						return false;
+					}
+				} else { //consider hole car park
+					int spaces = this.maxCarSpaces + this.maxMotorCycleSpaces + this.maxSmallCarSpaces;
+					int vehicles = this.numCars + this.numSmallCars + this.numMotorCycles;
+					
+					if (vehicles < spaces) {
+						return true;
+					} else {
+						return false;
+					}
+				}
+			} else {
+				if (((Car)v).isSmall() == true ) {
+					//check overflow_m = 0;
+					int overflow_m = 0;
+					if (this.numMotorCycles > this.maxMotorCycleSpaces) {
+						overflow_m = this.numMotorCycles - this.maxMotorCycleSpaces;
+					}
+					if ((this.numSmallCars + overflow_m) >= this.maxSmallCarSpaces) {
+						return false;
+					} else {
+						return true;
+					}
+					
+				} else { //car is big
+					//check overflow of motorcycle to small cars
+					int overflow_m = 0;
+					if (this.numMotorCycles > this.maxMotorCycleSpaces) {
+						overflow_m = this.numMotorCycles - this.maxMotorCycleSpaces; 
+					}
+					int overflow_s = 0;
+					if ((this.numSmallCars + overflow_m) > this.maxSmallCarSpaces) {
+						overflow_s = this.numSmallCars + overflow_m - this.maxSmallCarSpaces;
+					}
+					
+					int bigCars = this.numCars - this.numSmallCars;
+					int bigCarSpaces = this.maxCarSpaces - this.maxSmallCarSpaces;
+					if ( (bigCars+overflow_s) >= bigCarSpaces) {
+						return false;
+					} else {
+						return true;
+					}
+			
+				}
+			}
+			
+		}
+		
+		
+		/*
 		if (v instanceof Car) {
 			if (((Car) v).isSmall() == false) {
 				if (this.getCarSpaces() > 0) {
@@ -565,7 +651,7 @@ public class CarPark {
 			} else {
 				return false;
 			}
-		}
+		}*/
 	}
 
 	/*
@@ -595,8 +681,15 @@ public class CarPark {
 	public void tryProcessNewVehicles(int time,Simulator sim) throws VehicleException, SimulationException {
 	
 		if (sim.newCarTrial() == true) {
-			String id = "C" + count;
-			Car v = new Car(id, time, sim.smallCarTrial());
+			String id = "";
+			boolean isSmall = sim.smallCarTrial();
+			if (isSmall) {
+				id = "S";
+			} else {
+				id = "C";
+			}			
+			id += String.valueOf(count);
+			Car v = new Car(id, time, isSmall);
 			processNewVehicle(v, time, sim);
 			count++;
 		}
@@ -607,6 +700,27 @@ public class CarPark {
 			processNewVehicle(v, time, sim);
 			count++;
 		}
+
+	}
+	
+	private void processNewVehicle(Vehicle v, int time, Simulator sim)
+			throws SimulationException, VehicleException {
+		
+		if (this.spacesAvailable(v)) {
+			int intendedDuration = sim.setDuration();
+			status += this.setVehicleMsg(v, "N", "P");
+			parkVehicle(v, time, intendedDuration);				
+		} else { // no spaces available for that car
+			if (this.queueFull() == false) {
+				this.enterQueue(v);
+				status += this.setVehicleMsg(v, "N", "Q");
+			} else {
+				status += this.setVehicleMsg(v, "N", "A");
+				this.archiveNewVehicle(v);
+				this.numDissatisfied ++;
+			}
+		}
+		
 
 	}
 
@@ -638,6 +752,7 @@ public class CarPark {
 			if (((Car) v).isSmall() == false) {
 				this.numCars--;
 			} else {
+				this.numCars--;
 				this.numSmallCars--;
 			}
 		} else {
@@ -673,40 +788,7 @@ public class CarPark {
 		return "|" + str + ":" + source + ">" + target + "|";
 	}
 
-	private void processNewVehicle(Vehicle v, int time, Simulator sim)
-			throws SimulationException, VehicleException {
-		// TODO
-
-		if (this.queueFull() == true) {
-			this.archiveNewVehicle(v);
-		} else {
-			if (this.spacesAvailable(v)) {
-				boolean a = this.queueEmpty();
-				if (this.queueEmpty() == true) {
-					int intendedDuration = sim.setDuration();
-					status += this.setVehicleMsg(v, "N", "P");
-					parkVehicle(v, time, intendedDuration);
-				} else {
-					if (this.queueFull() == false) {
-						this.enterQueue(v);
-						status += this.setVehicleMsg(v, "N", "Q");
-					} else {
-						status += this.setVehicleMsg(v, "N", "A");
-						this.archiveNewVehicle(v);
-					}
-				}
-			} else { // no spaces available for that car
-				if (this.queueFull() == false) {
-					this.enterQueue(v);
-					status += this.setVehicleMsg(v, "N", "Q");
-				} else {
-					status += this.setVehicleMsg(v, "N", "A");
-					this.archiveNewVehicle(v);
-				}
-			}
-		}
-
-	}
+	
 
 	/**
 	 * Helper to get the number of still available small car spaces, considering
@@ -757,26 +839,26 @@ public class CarPark {
 	 * @return number of car spaces still available
 	 */
 	private int getCarSpaces() {
-
-		if (this.getSmallCarSpaces() != 0) {
-			return this.maxCarSpaces - this.numCars;
+		int carSpaces = this.maxCarSpaces - this.maxSmallCarSpaces;
+		if (this.getSmallCarSpaces() >= 0) {
+			return carSpaces - this.numCars - this.numSmallCars;
 		} else {
 			// if the motorcycles are taking up some space in small cars
 			if (this.getMotorcycleSpaces() == 0
 					&& this.getNumMotorCycles() > this.maxMotorCycleSpaces) {
 				int overflowMotorcycle = this.numMotorCycles
 						- this.maxMotorCycleSpaces;
-				int overflow = this.numSmallCars - this.maxSmallCarSpaces
+				int overflow = this.numSmallCars - carSpaces
 						- overflowMotorcycle;
-				int spaces = this.maxCarSpaces - this.numCars - overflow;
+				int spaces = carSpaces - this.numCars - this.numSmallCars - overflow;
 				if (spaces < 0) {
 					return 0;
 				} else {
 					return spaces;
 				}
 			} else {
-				int overflow = this.numSmallCars - this.maxSmallCarSpaces;
-				int spaces = this.maxCarSpaces - this.numCars - overflow;
+				int overflow = this.numSmallCars - carSpaces;
+				int spaces = carSpaces - this.numCars -this.numSmallCars - overflow;
 				if (spaces < 0) {
 					return 0;
 				} else {
