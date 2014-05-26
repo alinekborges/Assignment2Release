@@ -14,7 +14,9 @@ import static org.junit.Assert.*;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 import asgn2CarParks.CarPark;
 import asgn2Exceptions.SimulationException;
@@ -23,12 +25,13 @@ import asgn2Simulators.Constants;
 import asgn2Simulators.Simulator;
 import asgn2Vehicles.Car;
 import asgn2Vehicles.MotorCycle;
-import asgn2Vehicles.Vehicle;
 
 /**
  * @author Lucas
  * 
  */
+
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class CarParkTests {
 
 	private static final int maxCarSpaces = 100;
@@ -64,12 +67,15 @@ public class CarParkTests {
 	private static CarPark carPark;
 	private static Simulator simulator;
 
+	
+	
 	/**
 	 * Basic set up for testing
 	 * 
 	 * @throws java.lang.Exception
 	 * @author Lucas
 	 */
+	
 	@Before
 	public void setUp() throws Exception {
 		carPark = new CarPark(maxCarSpaces, maxSmallCarSpaces,
