@@ -53,7 +53,9 @@ public abstract class Vehicle {
 	private int intendedDuration;
 	private int departureTime;
 	private int exitQueueTime;
-	private boolean isSatisfied;
+	//private boolean isSatisfied;
+	private boolean wasParked;
+	private boolean wasQueued;
 
 	private static final String newState = "N";
 	private static final String queuedState = "Q";
@@ -82,7 +84,9 @@ public abstract class Vehicle {
 			this.departureTime = 0;
 			this.parkingTime = 0;
 			this.exitQueueTime = 0;
-			this.isSatisfied = false;
+			//this.isSatisfied = false;
+			this.wasParked = false;
+			this.wasQueued = false;
 		}
 	}
 
@@ -119,6 +123,7 @@ public abstract class Vehicle {
 					this.parkingTime = parkingTime;
 					this.intendedDuration = intendedDuration;
 					this.departureTime = parkingTime + intendedDuration;
+					this.wasParked = true;
 				}
 			}
 		}
@@ -138,6 +143,7 @@ public abstract class Vehicle {
 					"enterQueuedState(): Vehicle in incorrect state");
 		} else {
 			this.state = queuedState;
+			this.wasQueued = true;
 		}
 	}
 
@@ -277,28 +283,20 @@ public abstract class Vehicle {
 	 */
 	public boolean isSatisfied() {
 		// TODO
-		if (wasParked()) {
+		if (this.state == newState)
+		{
+			return false;
+		}
+		if (this.wasParked) {
 			// parked
 			return true;
 		} else {
-			// Not parked
-			if (!wasParked() && !wasQueued()) {
-				// turned away
-				return false;
+			if (isQueued()) {
+				return true;
 			} else {
-				// was queued
-				if (!wasParked() && isQueued()) {
-					// waiting patiently in the queue
-					return true;
-				} else {
-					if (this.exitQueueTime > 0 && this.parkingTime == 0) {
-						// stayed too long in the queue
-						return false;
-					}
-				}
+				return false;
 			}
 		}
-		return true;
 	}
 
 	/*
@@ -325,7 +323,7 @@ public abstract class Vehicle {
 			stringBuilder.append("Vehicle was not queued");
 		}
 		stringBuilder.append("\n");
-		if (wasParked()) {
+		if (this.wasParked) {
 			stringBuilder.append("Entry to Car Park: ");
 			stringBuilder.append(this.parkingTime);
 			stringBuilder.append("\n");
@@ -338,7 +336,7 @@ public abstract class Vehicle {
 			stringBuilder.append("Vehicle was not parked");
 		}
 		stringBuilder.append("\n");
-		if (isSatisfied) {
+		if (isSatisfied()) {
 			stringBuilder.append("Customer was satisfied");
 		} else {
 			stringBuilder.append("Customer was not satisfied");
@@ -363,16 +361,7 @@ public abstract class Vehicle {
 	 * @return true if vehicle was or is in a parked state, false otherwise
 	 */
 	public boolean wasParked() {
-		if (this.parkingTime == 0) {
-			return false;
-		} else {
-			if (this.state == parkedState) {
-				return true;
-			} else {
-				return true;
-			}
-			// TODO
-		}
+		return this.wasParked;
 	}
 
 	/**
@@ -381,14 +370,6 @@ public abstract class Vehicle {
 	 * @return true if vehicle was or is in a queued state, false otherwise
 	 */
 	public boolean wasQueued() {
-		if (this.exitQueueTime > 0) {
-			return true;
-		} else {
-			if (this.state == queuedState) {
-				return true;
-			} else {
-				return false;
-			}
-		}
+		return this.wasQueued;
 	}
 }

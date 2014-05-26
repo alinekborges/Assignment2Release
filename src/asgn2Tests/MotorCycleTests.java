@@ -682,7 +682,7 @@ public class MotorCycleTests {
 	public void testIsSatisfiedQueuedNotParked() throws VehicleException {
 		this.motorCycle.enterQueuedState();
 		this.motorCycle.exitQueuedState(this.exitQueueTime);
-		assertTrue(this.motorCycle.isSatisfied());
+		assertFalse(this.motorCycle.isSatisfied());
 	}
 	
 	/**
