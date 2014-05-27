@@ -44,6 +44,7 @@ public class GUISimulator extends JFrame implements Runnable {
 	private JPanel outputPanel;
 	
 	private Button startButton;
+	//private //
 
 	/**
 	 * @param arg0
