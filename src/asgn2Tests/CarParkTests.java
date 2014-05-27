@@ -3494,6 +3494,782 @@ public class CarParkTests {
 				carParkBefore, carPark.getNumMotorCycles());
 	}
 
+	@Test
+	public void testTryProcessNewVehicles_MotorcycleAndCar_ParkBoth()
+			throws VehicleException, SimulationException {
+		Simulator sim = new Simulator(Constants.DEFAULT_SEED,
+				Constants.DEFAULT_INTENDED_STAY_MEAN,
+				Constants.DEFAULT_INTENDED_STAY_SD, 1, 0, 1);
+
+		int carParkBefore = carPark.getNumCars() + carPark.getNumMotorCycles();
+		carPark.tryProcessNewVehicles(defaultArrival3, sim);
+		assertEquals(
+				"testTryProcessNewVehicles_MotorcycleAndCar_ParkBoth() Error",
+				carParkBefore + 2,
+				carPark.getNumCars() + carPark.getNumMotorCycles());
+	}
+
+	@Test
+	public void testTryProcessNewVehicles_MotorcycleAndCar_CarparkAlmostFull_ParkBoth()
+			throws VehicleException, SimulationException {
+		Simulator sim = new Simulator(Constants.DEFAULT_SEED,
+				Constants.DEFAULT_INTENDED_STAY_MEAN,
+				Constants.DEFAULT_INTENDED_STAY_SD, 1, 0, 1);
+		// Almost Full Car Park
+		for (int i = 1; i < maxNormalCarSpaces; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.parkVehicle(car, i, defaultIntendedStay);
+		}
+		for (int j = maxNormalCarSpaces + 1; j <= maxCarSpaces; j++) {
+			smallCar = new Car((vehicleID2 + Integer.toString(j)), j, true);
+			carPark.parkVehicle(smallCar, j, defaultIntendedStay);
+		}
+		for (int k = 1; k < maxMotorCycleSpaces; k++) {
+			motorCycle = new MotorCycle((vehicleID3 + Integer.toString(k)), k);
+			carPark.parkVehicle(motorCycle, k, defaultIntendedStay);
+		}
+
+		int carParkBefore = carPark.getNumCars() + carPark.getNumMotorCycles();
+		carPark.tryProcessNewVehicles(defaultArrival3, sim);
+		assertEquals(
+				"testTryProcessNewVehicles_MotorcycleAndCar_CarparkAlmostFull_ParkBoth() Error",
+				carParkBefore + 2,
+				carPark.getNumCars() + carPark.getNumMotorCycles());
+	}
+
+	@Test
+	public void testTryProcessNewVehicles_MotorcycleAndCar_CarparkAlmostFull_SmallCarSpaceAvailable_ParkBoth()
+			throws VehicleException, SimulationException {
+		Simulator sim = new Simulator(Constants.DEFAULT_SEED,
+				Constants.DEFAULT_INTENDED_STAY_MEAN,
+				Constants.DEFAULT_INTENDED_STAY_SD, 1, 0, 1);
+		// Almost Full Car Park
+		for (int i = 1; i < maxNormalCarSpaces; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.parkVehicle(car, i, defaultIntendedStay);
+		}
+		for (int j = maxNormalCarSpaces + 1; j < maxCarSpaces; j++) {
+			smallCar = new Car((vehicleID2 + Integer.toString(j)), j, true);
+			carPark.parkVehicle(smallCar, j, defaultIntendedStay);
+		}
+		for (int k = 1; k <= maxMotorCycleSpaces; k++) {
+			motorCycle = new MotorCycle((vehicleID3 + Integer.toString(k)), k);
+			carPark.parkVehicle(motorCycle, k, defaultIntendedStay);
+		}
+
+		int carParkBefore = carPark.getNumCars() + carPark.getNumMotorCycles();
+		carPark.tryProcessNewVehicles(defaultArrival3, sim);
+		assertEquals(
+				"testTryProcessNewVehicles_MotorcycleAndCar_CarparkAlmostFull_SmallCarSpaceAvailable_ParkBoth() Error",
+				carParkBefore + 2,
+				carPark.getNumCars() + carPark.getNumMotorCycles());
+	}
+
+	@Test
+	public void testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForCar_ParkCar_QueueMotorCycle()
+			throws VehicleException, SimulationException {
+		Simulator sim = new Simulator(Constants.DEFAULT_SEED,
+				Constants.DEFAULT_INTENDED_STAY_MEAN,
+				Constants.DEFAULT_INTENDED_STAY_SD, 1, 0, 1);
+		// Almost Full Car Park
+		for (int j = maxNormalCarSpaces + 1; j <= maxCarSpaces; j++) {
+			smallCar = new Car((vehicleID2 + Integer.toString(j)), j, true);
+			carPark.parkVehicle(smallCar, j, defaultIntendedStay);
+		}
+		for (int k = 1; k <= maxMotorCycleSpaces; k++) {
+			motorCycle = new MotorCycle((vehicleID3 + Integer.toString(k)), k);
+			carPark.parkVehicle(motorCycle, k, defaultIntendedStay);
+		}
+
+		int carParkBefore = carPark.getNumCars();
+		int queueBefore = carPark.numVehiclesInQueue();
+		carPark.tryProcessNewVehicles(defaultArrival3, sim);
+		assertEquals(
+				"testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForCar_ParkCar_QueueMotorCycle() Parking Error",
+				carParkBefore + 1, carPark.getNumCars());
+		assertEquals(
+				"testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForCar_ParkCar_QueueMotorCycle() Queue Error",
+				queueBefore + 1, carPark.numVehiclesInQueue());
+	}
+
+	@Test
+	public void testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForCar_CarParkAlmostFull_ParkCar_QueueMotorCycle()
+			throws VehicleException, SimulationException {
+		Simulator sim = new Simulator(Constants.DEFAULT_SEED,
+				Constants.DEFAULT_INTENDED_STAY_MEAN,
+				Constants.DEFAULT_INTENDED_STAY_SD, 1, 0, 1);
+		// Almost Full Car Park
+		for (int i = 1; i < maxNormalCarSpaces; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.parkVehicle(car, i, defaultIntendedStay);
+		}
+		for (int j = maxNormalCarSpaces + 1; j <= maxCarSpaces; j++) {
+			smallCar = new Car((vehicleID2 + Integer.toString(j)), j, true);
+			carPark.parkVehicle(smallCar, j, defaultIntendedStay);
+		}
+		for (int k = 1; k <= maxMotorCycleSpaces; k++) {
+			motorCycle = new MotorCycle((vehicleID3 + Integer.toString(k)), k);
+			carPark.parkVehicle(motorCycle, k, defaultIntendedStay);
+		}
+
+		int carParkBefore = carPark.getNumCars();
+		int queueBefore = carPark.numVehiclesInQueue();
+		carPark.tryProcessNewVehicles(defaultArrival3, sim);
+		assertEquals(
+				"testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForCar_CarParkAlmostFull_ParkCar_QueueMotorCycle() Parking Error",
+				carParkBefore + 1, carPark.getNumCars());
+		assertEquals(
+				"testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForCar_CarParkAlmostFull_ParkCar_QueueMotorCycle() Queue Error",
+				queueBefore + 1, carPark.numVehiclesInQueue());
+	}
+
+	@Test
+	public void testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForCar_ParkCar_QueueMotorCycle_QueueAlmostFull()
+			throws VehicleException, SimulationException {
+		Simulator sim = new Simulator(Constants.DEFAULT_SEED,
+				Constants.DEFAULT_INTENDED_STAY_MEAN,
+				Constants.DEFAULT_INTENDED_STAY_SD, 1, 0, 1);
+		for (int j = maxNormalCarSpaces + 1; j <= maxCarSpaces; j++) {
+			smallCar = new Car((vehicleID2 + Integer.toString(j)), j, true);
+			carPark.parkVehicle(smallCar, j, defaultIntendedStay);
+		}
+		for (int k = 1; k <= maxMotorCycleSpaces; k++) {
+			motorCycle = new MotorCycle((vehicleID3 + Integer.toString(k)), k);
+			carPark.parkVehicle(motorCycle, k, defaultIntendedStay);
+		}
+		// Almost Full Queue
+		for (int i = 1; i < maxQueueSize; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.enterQueue(car);
+		}
+
+		int carParkBefore = carPark.getNumCars();
+		int queueBefore = carPark.numVehiclesInQueue();
+		carPark.tryProcessNewVehicles(defaultArrival3, sim);
+		assertEquals(
+				"testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForCar_ParkCar_QueueMotorCycle_QueueAlmostFull() Parking Error",
+				carParkBefore + 1, carPark.getNumCars());
+		assertEquals(
+				"testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForCar_ParkCar_QueueMotorCycle_QueueAlmostFull() Queue Error",
+				queueBefore + 1, carPark.numVehiclesInQueue());
+	}
+
+	@Test
+	public void testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForCar_CarParkAlmostFull_ParkCar_QueueMotorCycle_QueueAlmostFull()
+			throws VehicleException, SimulationException {
+		Simulator sim = new Simulator(Constants.DEFAULT_SEED,
+				Constants.DEFAULT_INTENDED_STAY_MEAN,
+				Constants.DEFAULT_INTENDED_STAY_SD, 1, 0, 1);
+		// Almost Full Car Park
+		for (int i = 1; i < maxNormalCarSpaces; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.parkVehicle(car, i, defaultIntendedStay);
+		}
+		for (int j = maxNormalCarSpaces + 1; j <= maxCarSpaces; j++) {
+			smallCar = new Car((vehicleID2 + Integer.toString(j)), j, true);
+			carPark.parkVehicle(smallCar, j, defaultIntendedStay);
+		}
+		for (int k = 1; k <= maxMotorCycleSpaces; k++) {
+			motorCycle = new MotorCycle((vehicleID3 + Integer.toString(k)), k);
+			carPark.parkVehicle(motorCycle, k, defaultIntendedStay);
+		}
+		// Almost Full Queue
+		for (int i = 1; i < maxQueueSize; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.enterQueue(car);
+		}
+
+		int carParkBefore = carPark.getNumCars();
+		int queueBefore = carPark.numVehiclesInQueue();
+		carPark.tryProcessNewVehicles(defaultArrival3, sim);
+		assertEquals(
+				"testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForCar_CarParkAlmostFull_ParkCar_QueueMotorCycle_QueueAlmostFull() Parking Error",
+				carParkBefore + 1, carPark.getNumCars());
+		assertEquals(
+				"testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForCar_CarParkAlmostFull_ParkCar_QueueMotorCycle_QueueAlmostFull() Queue Error",
+				queueBefore + 1, carPark.numVehiclesInQueue());
+	}
+
+	@Test
+	public void testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForCar_ParkCar_QueueIsFull_ArchiveCycle()
+			throws VehicleException, SimulationException {
+		Simulator sim = new Simulator(Constants.DEFAULT_SEED,
+				Constants.DEFAULT_INTENDED_STAY_MEAN,
+				Constants.DEFAULT_INTENDED_STAY_SD, 1, 0, 1);
+		for (int j = maxNormalCarSpaces + 1; j <= maxCarSpaces; j++) {
+			smallCar = new Car((vehicleID2 + Integer.toString(j)), j, true);
+			carPark.parkVehicle(smallCar, j, defaultIntendedStay);
+		}
+		for (int k = 1; k <= maxMotorCycleSpaces; k++) {
+			motorCycle = new MotorCycle((vehicleID3 + Integer.toString(k)), k);
+			carPark.parkVehicle(motorCycle, k, defaultIntendedStay);
+		}
+		// Full Queue
+		for (int i = 1; i <= maxQueueSize; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.enterQueue(car);
+		}
+
+		int carParkBefore = carPark.getNumCars();
+		int queueBefore = carPark.numVehiclesInQueue();
+		carPark.tryProcessNewVehicles(defaultArrival3, sim);
+		assertEquals(
+				"testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForCar_ParkCar_QueueIsFull_ArchiveCycle() Parking Error",
+				carParkBefore + 1, carPark.getNumCars());
+		assertEquals(
+				"testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForCar_ParkCar_QueueIsFull_ArchiveCycle() Queue Error",
+				queueBefore, carPark.numVehiclesInQueue());
+	}
+
+	@Test
+	public void testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForCar_CarParkAlmostFull_ParkCar_QueueIsFull_ArchiveCycle()
+			throws VehicleException, SimulationException {
+		Simulator sim = new Simulator(Constants.DEFAULT_SEED,
+				Constants.DEFAULT_INTENDED_STAY_MEAN,
+				Constants.DEFAULT_INTENDED_STAY_SD, 1, 0, 1);
+		// Almost Full Car Park
+		for (int i = 1; i < maxNormalCarSpaces; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.parkVehicle(car, i, defaultIntendedStay);
+		}
+		for (int j = maxNormalCarSpaces + 1; j <= maxCarSpaces; j++) {
+			smallCar = new Car((vehicleID2 + Integer.toString(j)), j, true);
+			carPark.parkVehicle(smallCar, j, defaultIntendedStay);
+		}
+		for (int k = 1; k <= maxMotorCycleSpaces; k++) {
+			motorCycle = new MotorCycle((vehicleID3 + Integer.toString(k)), k);
+			carPark.parkVehicle(motorCycle, k, defaultIntendedStay);
+		}
+		// Full Queue
+		for (int i = 1; i <= maxQueueSize; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.enterQueue(car);
+		}
+
+		int carParkBefore = carPark.getNumCars();
+		int queueBefore = carPark.numVehiclesInQueue();
+		carPark.tryProcessNewVehicles(defaultArrival3, sim);
+		assertEquals(
+				"testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForCar_CarParkAlmostFull_ParkCar_QueueIsFull_ArchiveCycle() Parking Error",
+				carParkBefore + 1, carPark.getNumCars());
+		assertEquals(
+				"testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForCar_CarParkAlmostFull_ParkCar_QueueIsFull_ArchiveCycle() Queue Error",
+				queueBefore, carPark.numVehiclesInQueue());
+	}
+
+	@Test
+	public void testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForMotorCycle_ParkMotorCycle_QueueCar()
+			throws VehicleException, SimulationException {
+		Simulator sim = new Simulator(Constants.DEFAULT_SEED,
+				Constants.DEFAULT_INTENDED_STAY_MEAN,
+				Constants.DEFAULT_INTENDED_STAY_SD, 1, 0, 1);
+
+		for (int i = 1; i <= maxNormalCarSpaces; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.parkVehicle(car, i, defaultIntendedStay);
+		}
+		for (int j = maxNormalCarSpaces + 1; j <= maxCarSpaces; j++) {
+			smallCar = new Car((vehicleID2 + Integer.toString(j)), j, true);
+			carPark.parkVehicle(smallCar, j, defaultIntendedStay);
+		}
+
+		int carParkBefore = carPark.getNumMotorCycles();
+		int queueBefore = carPark.numVehiclesInQueue();
+		carPark.tryProcessNewVehicles(defaultArrival3, sim);
+		assertEquals(
+				"testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForMotorCycle_ParkMotorCycle_QueueCar() Parking Error",
+				carParkBefore + 1, carPark.getNumMotorCycles());
+		assertEquals(
+				"testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForMotorCycle_ParkMotorCycle_QueueCar() Queue Error",
+				queueBefore + 1, carPark.numVehiclesInQueue());
+	}
+
+	@Test
+	public void testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForMotorCycle_ParkMotorCycle_QueueAlmostFull_QueueCar()
+			throws VehicleException, SimulationException {
+		Simulator sim = new Simulator(Constants.DEFAULT_SEED,
+				Constants.DEFAULT_INTENDED_STAY_MEAN,
+				Constants.DEFAULT_INTENDED_STAY_SD, 1, 0, 1);
+
+		for (int i = 1; i <= maxNormalCarSpaces; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.parkVehicle(car, i, defaultIntendedStay);
+		}
+		for (int j = maxNormalCarSpaces + 1; j <= maxCarSpaces; j++) {
+			smallCar = new Car((vehicleID2 + Integer.toString(j)), j, true);
+			carPark.parkVehicle(smallCar, j, defaultIntendedStay);
+		}
+
+		for (int i = 1; i < maxQueueSize; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.enterQueue(car);
+		}
+
+		int carParkBefore = carPark.getNumMotorCycles();
+		int queueBefore = carPark.numVehiclesInQueue();
+		carPark.tryProcessNewVehicles(defaultArrival3, sim);
+		assertEquals(
+				"testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForMotorCycle_ParkMotorCycle_QueueAlmostFull_QueueCar() Parking Error",
+				carParkBefore + 1, carPark.getNumMotorCycles());
+		assertEquals(
+				"testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForMotorCycle_ParkMotorCycle_QueueAlmostFull_QueueCar() Queue Error",
+				queueBefore + 1, carPark.numVehiclesInQueue());
+	}
+
+	@Test
+	public void testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForMotorCycle_CarParkAlmostFull_ParkMotorCycle_QueueCar()
+			throws VehicleException, SimulationException {
+		Simulator sim = new Simulator(Constants.DEFAULT_SEED,
+				Constants.DEFAULT_INTENDED_STAY_MEAN,
+				Constants.DEFAULT_INTENDED_STAY_SD, 1, 0, 1);
+
+		for (int i = 1; i <= maxNormalCarSpaces; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.parkVehicle(car, i, defaultIntendedStay);
+		}
+		for (int j = maxNormalCarSpaces + 1; j <= maxCarSpaces; j++) {
+			smallCar = new Car((vehicleID2 + Integer.toString(j)), j, true);
+			carPark.parkVehicle(smallCar, j, defaultIntendedStay);
+		}
+		for (int k = 1; k < maxMotorCycleSpaces; k++) {
+			motorCycle = new MotorCycle((vehicleID3 + Integer.toString(k)), k);
+			carPark.parkVehicle(motorCycle, k, defaultIntendedStay);
+		}
+
+		int carParkBefore = carPark.getNumMotorCycles();
+		int queueBefore = carPark.numVehiclesInQueue();
+		carPark.tryProcessNewVehicles(defaultArrival3, sim);
+		assertEquals(
+				"testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForMotorCycle_CarParkAlmostFull_ParkMotorCycle_QueueCar() Parking Error",
+				carParkBefore + 1, carPark.getNumMotorCycles());
+		assertEquals(
+				"testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForMotorCycle_CarParkAlmostFull_ParkMotorCycle_QueueCar() Queue Error",
+				queueBefore + 1, carPark.numVehiclesInQueue());
+	}
+
+	@Test
+	public void testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForMotorCycle_CarParkAlmostFull_ParkMotorCycle_QueueAlmostFull_QueueCar()
+			throws VehicleException, SimulationException {
+		Simulator sim = new Simulator(Constants.DEFAULT_SEED,
+				Constants.DEFAULT_INTENDED_STAY_MEAN,
+				Constants.DEFAULT_INTENDED_STAY_SD, 1, 0, 1);
+
+		for (int i = 1; i <= maxNormalCarSpaces; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.parkVehicle(car, i, defaultIntendedStay);
+		}
+		for (int j = maxNormalCarSpaces + 1; j <= maxCarSpaces; j++) {
+			smallCar = new Car((vehicleID2 + Integer.toString(j)), j, true);
+			carPark.parkVehicle(smallCar, j, defaultIntendedStay);
+		}
+		for (int k = 1; k < maxMotorCycleSpaces; k++) {
+			motorCycle = new MotorCycle((vehicleID3 + Integer.toString(k)), k);
+			carPark.parkVehicle(motorCycle, k, defaultIntendedStay);
+		}
+		for (int i = 1; i < maxQueueSize; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.enterQueue(car);
+		}
+
+		int carParkBefore = carPark.getNumMotorCycles();
+		int queueBefore = carPark.numVehiclesInQueue();
+		carPark.tryProcessNewVehicles(defaultArrival3, sim);
+		assertEquals(
+				"testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForMotorCycle_CarParkAlmostFull_ParkMotorCycle_QueueAlmostFull_QueueCar() Parking Error",
+				carParkBefore + 1, carPark.getNumMotorCycles());
+		assertEquals(
+				"testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForMotorCycle_CarParkAlmostFull_ParkMotorCycle_QueueAlmostFull_QueueCar() Queue Error",
+				queueBefore + 1, carPark.numVehiclesInQueue());
+	}
+
+	@Test
+	public void testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForMotorCycle_SmallCarSpaceAvailable_ParkMotorCycle_QueueCar()
+			throws VehicleException, SimulationException {
+		Simulator sim = new Simulator(Constants.DEFAULT_SEED,
+				Constants.DEFAULT_INTENDED_STAY_MEAN,
+				Constants.DEFAULT_INTENDED_STAY_SD, 1, 0, 1);
+
+		for (int i = 1; i <= maxNormalCarSpaces; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.parkVehicle(car, i, defaultIntendedStay);
+		}
+		for (int k = 1; k <= maxMotorCycleSpaces; k++) {
+			motorCycle = new MotorCycle((vehicleID3 + Integer.toString(k)), k);
+			carPark.parkVehicle(motorCycle, k, defaultIntendedStay);
+		}
+
+		int carParkBefore = carPark.getNumMotorCycles();
+		int queueBefore = carPark.numVehiclesInQueue();
+		carPark.tryProcessNewVehicles(defaultArrival3, sim);
+		assertEquals(
+				"testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForMotorCycle_SmallCarSpaceAvailable_ParkMotorCycle_QueueCar() Parking Error",
+				carParkBefore + 1, carPark.getNumMotorCycles());
+		assertEquals(
+				"testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForMotorCycle_SmallCarSpaceAvailable_ParkMotorCycle_QueueCar() Queue Error",
+				queueBefore + 1, carPark.numVehiclesInQueue());
+	}
+
+	@Test
+	public void testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForMotorCycle_SmallCarSpaceAvailable_ParkMotorCycle_QueueAlmostFull_QueueCar()
+			throws VehicleException, SimulationException {
+		Simulator sim = new Simulator(Constants.DEFAULT_SEED,
+				Constants.DEFAULT_INTENDED_STAY_MEAN,
+				Constants.DEFAULT_INTENDED_STAY_SD, 1, 0, 1);
+
+		for (int i = 1; i <= maxNormalCarSpaces; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.parkVehicle(car, i, defaultIntendedStay);
+		}
+		for (int k = 1; k <= maxMotorCycleSpaces; k++) {
+			motorCycle = new MotorCycle((vehicleID3 + Integer.toString(k)), k);
+			carPark.parkVehicle(motorCycle, k, defaultIntendedStay);
+		}
+
+		for (int i = 1; i < maxQueueSize; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.enterQueue(car);
+		}
+
+		int carParkBefore = carPark.getNumMotorCycles();
+		int queueBefore = carPark.numVehiclesInQueue();
+		carPark.tryProcessNewVehicles(defaultArrival3, sim);
+		assertEquals(
+				"testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForMotorCycle_SmallCarSpaceAvailable_ParkMotorCycle_QueueAlmostFull_QueueCar() Parking Error",
+				carParkBefore + 1, carPark.getNumMotorCycles());
+		assertEquals(
+				"testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForMotorCycle_SmallCarSpaceAvailable_ParkMotorCycle_QueueAlmostFull_QueueCar() Queue Error",
+				queueBefore + 1, carPark.numVehiclesInQueue());
+	}
+
+	@Test
+	public void testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForMotorCycle_SmallCarSpaceAvailable_CarParkAlmostFull_ParkMotorCycle_QueueCar()
+			throws VehicleException, SimulationException {
+		Simulator sim = new Simulator(Constants.DEFAULT_SEED,
+				Constants.DEFAULT_INTENDED_STAY_MEAN,
+				Constants.DEFAULT_INTENDED_STAY_SD, 1, 0, 1);
+
+		for (int i = 1; i <= maxNormalCarSpaces; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.parkVehicle(car, i, defaultIntendedStay);
+		}
+		for (int j = maxNormalCarSpaces + 1; j < maxCarSpaces; j++) {
+			smallCar = new Car((vehicleID2 + Integer.toString(j)), j, true);
+			carPark.parkVehicle(smallCar, j, defaultIntendedStay);
+		}
+		for (int k = 1; k <= maxMotorCycleSpaces; k++) {
+			motorCycle = new MotorCycle((vehicleID3 + Integer.toString(k)), k);
+			carPark.parkVehicle(motorCycle, k, defaultIntendedStay);
+		}
+
+		int carParkBefore = carPark.getNumMotorCycles();
+		int queueBefore = carPark.numVehiclesInQueue();
+		carPark.tryProcessNewVehicles(defaultArrival3, sim);
+		assertEquals(
+				"testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForMotorCycle_SmallCarSpaceAvailable_CarParkAlmostFull_ParkMotorCycle_QueueCar() Parking Error",
+				carParkBefore + 1, carPark.getNumMotorCycles());
+		assertEquals(
+				"testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForMotorCycle_SmallCarSpaceAvailable_CarParkAlmostFull_ParkMotorCycle_QueueCar() Queue Error",
+				queueBefore + 1, carPark.numVehiclesInQueue());
+	}
+
+	@Test
+	public void testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForMotorCycle_SmallCarSpaceAvailable_CarParkAlmostFull_ParkMotorCycle_QueueAlmostFull_QueueCar()
+			throws VehicleException, SimulationException {
+		Simulator sim = new Simulator(Constants.DEFAULT_SEED,
+				Constants.DEFAULT_INTENDED_STAY_MEAN,
+				Constants.DEFAULT_INTENDED_STAY_SD, 1, 0, 1);
+
+		for (int i = 1; i <= maxNormalCarSpaces; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.parkVehicle(car, i, defaultIntendedStay);
+		}
+		for (int j = maxNormalCarSpaces + 1; j < maxCarSpaces; j++) {
+			smallCar = new Car((vehicleID2 + Integer.toString(j)), j, true);
+			carPark.parkVehicle(smallCar, j, defaultIntendedStay);
+		}
+		for (int k = 1; k <= maxMotorCycleSpaces; k++) {
+			motorCycle = new MotorCycle((vehicleID3 + Integer.toString(k)), k);
+			carPark.parkVehicle(motorCycle, k, defaultIntendedStay);
+		}
+		for (int i = 1; i < maxQueueSize; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.enterQueue(car);
+		}
+
+		int carParkBefore = carPark.getNumMotorCycles();
+		int queueBefore = carPark.numVehiclesInQueue();
+		carPark.tryProcessNewVehicles(defaultArrival3, sim);
+		assertEquals(
+				"testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForMotorCycle_SmallCarSpaceAvailable_CarParkAlmostFull_ParkMotorCycle_QueueAlmostFull_QueueCar() Parking Error",
+				carParkBefore + 1, carPark.getNumMotorCycles());
+		assertEquals(
+				"testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForMotorCycle_SmallCarSpaceAvailable_CarParkAlmostFull_ParkMotorCycle_QueueAlmostFull_QueueCar() Queue Error",
+				queueBefore + 1, carPark.numVehiclesInQueue());
+	}
+
+	@Test
+	public void testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForMotorCycle_ParkMotorCycle_ArchiveCar()
+			throws VehicleException, SimulationException {
+		Simulator sim = new Simulator(Constants.DEFAULT_SEED,
+				Constants.DEFAULT_INTENDED_STAY_MEAN,
+				Constants.DEFAULT_INTENDED_STAY_SD, 1, 0, 1);
+
+		for (int i = 1; i <= maxNormalCarSpaces; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.parkVehicle(car, i, defaultIntendedStay);
+		}
+		for (int j = maxNormalCarSpaces + 1; j <= maxCarSpaces; j++) {
+			smallCar = new Car((vehicleID2 + Integer.toString(j)), j, true);
+			carPark.parkVehicle(smallCar, j, defaultIntendedStay);
+		}
+		for (int i = 1; i <= maxQueueSize; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.enterQueue(car);
+		}
+
+		int carParkBefore = carPark.getNumMotorCycles();
+		int queueBefore = carPark.numVehiclesInQueue();
+		carPark.tryProcessNewVehicles(defaultArrival3, sim);
+		assertEquals(
+				"testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForMotorCycle_ParkMotorCycle_ArchiveCar() Parking Error",
+				carParkBefore + 1, carPark.getNumMotorCycles());
+		assertEquals(
+				"testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForMotorCycle_ParkMotorCycle_ArchiveCar() Queue Error",
+				queueBefore, carPark.numVehiclesInQueue());
+	}
+
+	@Test
+	public void testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForMotorCycle_CarParkAlmostFull_ParkMotorCycle_ArchiveCar()
+			throws VehicleException, SimulationException {
+		Simulator sim = new Simulator(Constants.DEFAULT_SEED,
+				Constants.DEFAULT_INTENDED_STAY_MEAN,
+				Constants.DEFAULT_INTENDED_STAY_SD, 1, 0, 1);
+
+		for (int i = 1; i <= maxNormalCarSpaces; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.parkVehicle(car, i, defaultIntendedStay);
+		}
+		for (int j = maxNormalCarSpaces + 1; j <= maxCarSpaces; j++) {
+			smallCar = new Car((vehicleID2 + Integer.toString(j)), j, true);
+			carPark.parkVehicle(smallCar, j, defaultIntendedStay);
+		}
+		for (int k = 1; k < maxMotorCycleSpaces; k++) {
+			motorCycle = new MotorCycle((vehicleID3 + Integer.toString(k)), k);
+			carPark.parkVehicle(motorCycle, k, defaultIntendedStay);
+		}
+		for (int i = 1; i <= maxQueueSize; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.enterQueue(car);
+		}
+
+		int carParkBefore = carPark.getNumMotorCycles();
+		int queueBefore = carPark.numVehiclesInQueue();
+		carPark.tryProcessNewVehicles(defaultArrival3, sim);
+		assertEquals(
+				"testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForMotorCycle_CarParkAlmostFull_ParkMotorCycle_ArchiveCar() Parking Error",
+				carParkBefore + 1, carPark.getNumMotorCycles());
+		assertEquals(
+				"testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForMotorCycle_CarParkAlmostFull_ParkMotorCycle_ArchiveCar() Queue Error",
+				queueBefore, carPark.numVehiclesInQueue());
+	}
+
+	@Test
+	public void testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForMotorCycle_SmallCarSpacesAvailable_ParkMotorCycle_ArchiveCar()
+			throws VehicleException, SimulationException {
+		Simulator sim = new Simulator(Constants.DEFAULT_SEED,
+				Constants.DEFAULT_INTENDED_STAY_MEAN,
+				Constants.DEFAULT_INTENDED_STAY_SD, 1, 0, 1);
+
+		for (int i = 1; i <= maxNormalCarSpaces; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.parkVehicle(car, i, defaultIntendedStay);
+		}
+		for (int k = 1; k <= maxMotorCycleSpaces; k++) {
+			motorCycle = new MotorCycle((vehicleID3 + Integer.toString(k)), k);
+			carPark.parkVehicle(motorCycle, k, defaultIntendedStay);
+		}
+		for (int i = 1; i <= maxQueueSize; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.enterQueue(car);
+		}
+
+		int carParkBefore = carPark.getNumMotorCycles();
+		int queueBefore = carPark.numVehiclesInQueue();
+		carPark.tryProcessNewVehicles(defaultArrival3, sim);
+		assertEquals(
+				"testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForMotorCycle_SmallCarSpacesAvailable_ParkMotorCycle_ArchiveCar() Parking Error",
+				carParkBefore + 1, carPark.getNumMotorCycles());
+		assertEquals(
+				"testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForMotorCycle_SmallCarSpacesAvailable_ParkMotorCycle_ArchiveCar() Queue Error",
+				queueBefore, carPark.numVehiclesInQueue());
+	}
+
+	@Test
+	public void testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForMotorCycle_CarParkAlmostFull_SmallCarSpacesAvailable_ParkMotorCycle_ArchiveCar()
+			throws VehicleException, SimulationException {
+		Simulator sim = new Simulator(Constants.DEFAULT_SEED,
+				Constants.DEFAULT_INTENDED_STAY_MEAN,
+				Constants.DEFAULT_INTENDED_STAY_SD, 1, 0, 1);
+
+		for (int i = 1; i <= maxNormalCarSpaces; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.parkVehicle(car, i, defaultIntendedStay);
+		}
+		for (int j = maxNormalCarSpaces + 1; j < maxCarSpaces; j++) {
+			smallCar = new Car((vehicleID2 + Integer.toString(j)), j, true);
+			carPark.parkVehicle(smallCar, j, defaultIntendedStay);
+		}
+		for (int k = 1; k <= maxMotorCycleSpaces; k++) {
+			motorCycle = new MotorCycle((vehicleID3 + Integer.toString(k)), k);
+			carPark.parkVehicle(motorCycle, k, defaultIntendedStay);
+		}
+		for (int i = 1; i <= maxQueueSize; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.enterQueue(car);
+		}
+
+		int carParkBefore = carPark.getNumMotorCycles();
+		int queueBefore = carPark.numVehiclesInQueue();
+		carPark.tryProcessNewVehicles(defaultArrival3, sim);
+		assertEquals(
+				"testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForMotorCycle_CarParkAlmostFull_SmallCarSpacesAvailable_ParkMotorCycle_ArchiveCar() Parking Error",
+				carParkBefore + 1, carPark.getNumMotorCycles());
+		assertEquals(
+				"testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForMotorCycle_CarParkAlmostFull_SmallCarSpacesAvailable_ParkMotorCycle_ArchiveCar() Queue Error",
+				queueBefore, carPark.numVehiclesInQueue());
+	}
+
+	@Test
+	public void testTryProcessNewVehicles_MotorcycleAndCar_NoSpaceInCarparkForBoth_QueueEmpty_QueueBoth()
+			throws VehicleException, SimulationException {
+		Simulator sim = new Simulator(Constants.DEFAULT_SEED,
+				Constants.DEFAULT_INTENDED_STAY_MEAN,
+				Constants.DEFAULT_INTENDED_STAY_SD, 1, 0, 1);
+
+		for (int i = 1; i <= maxNormalCarSpaces; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.parkVehicle(car, i, defaultIntendedStay);
+		}
+		for (int j = maxNormalCarSpaces + 1; j <= maxCarSpaces; j++) {
+			smallCar = new Car((vehicleID2 + Integer.toString(j)), j, true);
+			carPark.parkVehicle(smallCar, j, defaultIntendedStay);
+		}
+		for (int k = 1; k <= maxMotorCycleSpaces; k++) {
+			motorCycle = new MotorCycle((vehicleID3 + Integer.toString(k)), k);
+			carPark.parkVehicle(motorCycle, k, defaultIntendedStay);
+		}
+
+		int queueBefore = carPark.numVehiclesInQueue();
+		carPark.tryProcessNewVehicles(defaultArrival3, sim);
+		assertEquals(
+				"testTryProcessNewVehicles_MotorcycleAndCar_NoSpaceInCarparkForBoth_QueueEmpty_QueueBoth() Queue Error",
+				queueBefore + 2, carPark.numVehiclesInQueue());
+	}
+
+	@Test
+	public void testTryProcessNewVehicles_MotorcycleAndCar_NoSpaceInCarparkForBoth_SpaceForBothInQueue_QueueBoth()
+			throws VehicleException, SimulationException {
+		Simulator sim = new Simulator(Constants.DEFAULT_SEED,
+				Constants.DEFAULT_INTENDED_STAY_MEAN,
+				Constants.DEFAULT_INTENDED_STAY_SD, 1, 0, 1);
+
+		for (int i = 1; i <= maxNormalCarSpaces; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.parkVehicle(car, i, defaultIntendedStay);
+		}
+		for (int j = maxNormalCarSpaces + 1; j <= maxCarSpaces; j++) {
+			smallCar = new Car((vehicleID2 + Integer.toString(j)), j, true);
+			carPark.parkVehicle(smallCar, j, defaultIntendedStay);
+		}
+		for (int k = 1; k <= maxMotorCycleSpaces; k++) {
+			motorCycle = new MotorCycle((vehicleID3 + Integer.toString(k)), k);
+			carPark.parkVehicle(motorCycle, k, defaultIntendedStay);
+		}
+		for (int i = 1; i <= maxQueueSize - 2; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.enterQueue(car);
+		}
+
+		int queueBefore = carPark.numVehiclesInQueue();
+		carPark.tryProcessNewVehicles(defaultArrival3, sim);
+		assertEquals(
+				"testTryProcessNewVehicles_MotorcycleAndCar_NoSpaceInCarparkForBoth_SpaceForBothInQueue_QueueBoth() Queue Error",
+				queueBefore + 2, carPark.numVehiclesInQueue());
+	}
+
+	@Test
+	public void testTryProcessNewVehicles_MotorcycleAndCar_NoSpaceInCarparkForBoth_SpaceForCarInQueueOnly_QueueCar_ArchiveMotorcycle()
+			throws VehicleException, SimulationException {
+		Simulator sim = new Simulator(Constants.DEFAULT_SEED,
+				Constants.DEFAULT_INTENDED_STAY_MEAN,
+				Constants.DEFAULT_INTENDED_STAY_SD, 1, 0, 1);
+
+		for (int i = 1; i <= maxNormalCarSpaces; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.parkVehicle(car, i, defaultIntendedStay);
+		}
+		for (int j = maxNormalCarSpaces + 1; j <= maxCarSpaces; j++) {
+			smallCar = new Car((vehicleID2 + Integer.toString(j)), j, true);
+			carPark.parkVehicle(smallCar, j, defaultIntendedStay);
+		}
+		for (int k = 1; k <= maxMotorCycleSpaces; k++) {
+			motorCycle = new MotorCycle((vehicleID3 + Integer.toString(k)), k);
+			carPark.parkVehicle(motorCycle, k, defaultIntendedStay);
+		}
+		for (int i = 1; i < maxQueueSize; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.enterQueue(car);
+		}
+
+		int carParkBefore = carPark.getNumMotorCycles();
+		int queueBefore = carPark.numVehiclesInQueue();
+		carPark.tryProcessNewVehicles(defaultArrival3, sim);
+		assertEquals(
+				"testTryProcessNewVehicles_MotorcycleAndCar_NoSpaceInCarparkForBoth_SpaceForCarInQueueOnly_QueueCar_ArchiveMotorcycle() Parking Error",
+				carParkBefore, carPark.getNumMotorCycles());
+		carPark.tryProcessNewVehicles(defaultArrival3, sim);
+		assertEquals(
+				"testTryProcessNewVehicles_MotorcycleAndCar_NoSpaceInCarparkForBoth_SpaceForCarInQueueOnly_QueueCar_ArchiveMotorcycle() Queue Error",
+				queueBefore + 1, carPark.numVehiclesInQueue());
+	}
+
+	@Test
+	public void testTryProcessNewVehicles_MotorcycleAndCar_NoSpaceInCarparkForBoth_QueueFull_ArchiveBoth()
+			throws VehicleException, SimulationException {
+		Simulator sim = new Simulator(Constants.DEFAULT_SEED,
+				Constants.DEFAULT_INTENDED_STAY_MEAN,
+				Constants.DEFAULT_INTENDED_STAY_SD, 1, 0, 1);
+
+		for (int i = 1; i <= maxNormalCarSpaces; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.parkVehicle(car, i, defaultIntendedStay);
+		}
+		for (int j = maxNormalCarSpaces + 1; j <= maxCarSpaces; j++) {
+			smallCar = new Car((vehicleID2 + Integer.toString(j)), j, true);
+			carPark.parkVehicle(smallCar, j, defaultIntendedStay);
+		}
+		for (int k = 1; k <= maxMotorCycleSpaces; k++) {
+			motorCycle = new MotorCycle((vehicleID3 + Integer.toString(k)), k);
+			carPark.parkVehicle(motorCycle, k, defaultIntendedStay);
+		}
+		for (int i = 1; i <= maxQueueSize; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.enterQueue(car);
+		}
+
+		int carParkBefore = carPark.getNumMotorCycles() + carPark.getNumCars();
+		int queueBefore = carPark.numVehiclesInQueue();
+		carPark.tryProcessNewVehicles(defaultArrival3, sim);
+		assertEquals(
+				"testTryProcessNewVehicles_MotorcycleAndCar_NoSpaceInCarparkForBoth_QueueFull_ArchiveBoth() Parking Error",
+				carParkBefore,
+				carPark.getNumMotorCycles() + carPark.getNumCars());
+		carPark.tryProcessNewVehicles(defaultArrival3, sim);
+		assertEquals(
+				"testTryProcessNewVehicles_MotorcycleAndCar_NoSpaceInCarparkForBoth_QueueFull_ArchiveBoth() Queue Error",
+				queueBefore, carPark.numVehiclesInQueue());
+	}
+
 	/**
 	 * Test method for
 	 * {@link asgn2CarParks.CarPark#unparkVehicle(asgn2Vehicles.Vehicle, int)}.
@@ -3571,18 +4347,21 @@ public class CarParkTests {
 	// }
 
 	@Test(expected = SimulationException.class)
-	public void testUnparkVehicle_SimulationException() throws VehicleException, SimulationException {
+	public void testUnparkVehicle_SimulationException()
+			throws VehicleException, SimulationException {
 		carPark.unparkVehicle(car, defaultDeparture);
 	}
-	
+
 	@Test(expected = SimulationException.class)
-	public void testUnparkVehicle_SimulationException_CarInQueue() throws VehicleException, SimulationException {
+	public void testUnparkVehicle_SimulationException_CarInQueue()
+			throws VehicleException, SimulationException {
 		carPark.enterQueue(car);
 		carPark.unparkVehicle(car, defaultDeparture);
 	}
-	
+
 	@Test(expected = SimulationException.class)
-	public void testUnparkVehicleSimulationException() throws VehicleException, SimulationException {
+	public void testUnparkVehicleSimulationException() throws VehicleException,
+			SimulationException {
 		carPark.unparkVehicle(car, defaultDeparture);
 	}
 }
