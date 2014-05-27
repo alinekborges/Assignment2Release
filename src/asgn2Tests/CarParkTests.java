@@ -236,6 +236,44 @@ public class CarParkTests {
 		carPark.exitQueue(car, exitQueueAfterMax);
 		carPark.archiveQueueFailures(exitQueueAfterMax);
 	}
+	// TODO maxDefaultQueueDeparture exitQueueBeforeMax exitQueueAfterMax
+	@Test
+	public void testArchiveQueueFailures_beforeMaxTime()
+			throws SimulationException, VehicleException {
+		carPark.enterQueue(car);
+		int queueBefore = carPark.numVehiclesInQueue();
+		carPark.archiveQueueFailures(exitQueueBeforeMax);
+		assertEquals("testArchiveQueueFailures_beforeMaxTime()", queueBefore, carPark.numVehiclesInQueue());
+	}
+	
+	@Test
+	public void testArchiveQueueFailures_MaxTime()
+			throws SimulationException, VehicleException {
+		carPark.enterQueue(car);
+		int queueBefore = carPark.numVehiclesInQueue();
+		carPark.archiveQueueFailures(maxDefaultQueueDeparture);
+		assertEquals("testArchiveQueueFailures_MaxTime()", queueBefore, carPark.numVehiclesInQueue());
+	}
+	
+	@Test
+	public void testArchiveQueueFailures_afterMaxTime()
+			throws SimulationException, VehicleException {
+		carPark.enterQueue(car);
+		int queueBefore = carPark.numVehiclesInQueue();
+		carPark.archiveQueueFailures(exitQueueAfterMax);
+		assertEquals("testArchiveQueueFailures_MaxTime()", queueBefore - 1, carPark.numVehiclesInQueue());
+	}
+	
+	@Test
+	public void testArchiveQueueFailures_ArchiveFullQueue()
+			throws SimulationException, VehicleException {
+		for (int i = 1; i <= maxQueueSize; i++) {
+			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
+			carPark.enterQueue(car);
+		}
+		carPark.archiveQueueFailures(maxQueueSize + maxQueueStay + 1);
+		assertEquals("testArchiveQueueFailures_ArchiveFullQueue()", 0, carPark.numVehiclesInQueue());
+	}
 
 	// /**
 	// * Test method for {@link
@@ -2954,6 +2992,33 @@ public class CarParkTests {
 
 	/**
 	 * Test method for
+	 * {@link asgn2CarParks.CarPark#spacesAvailable(asgn2Vehicles.Vehicle)}.
+	 * Motorcycle and small car spaces are full. A Car tries to park after
+	 * motorcycles have overflowed.
+	 * 
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
+	@Test
+	public void testSpacesAvailable_MotorCycleAndSmallCarSpacesFull_MotorCycleOverflow_CarTriesToPark()
+			throws SimulationException, VehicleException {
+		for (int i = 1; i <= maxMotorCycleSpaces; i++) {
+			motorCycle = new MotorCycle((vehicleID3 + Integer.toString(i)), i);
+			carPark.parkVehicle(motorCycle, i, defaultIntendedStay);
+		}
+		for (int i = 1; i < maxSmallCarSpaces; i++) {
+			smallCar = new Car((vehicleID2 + Integer.toString(i)), i, true);
+			carPark.parkVehicle(smallCar, i, defaultIntendedStay);
+		}
+		MotorCycle overFlowMotorCycle = new MotorCycle(vehicleID3, maxSmallCarSpaces);
+		carPark.parkVehicle(overFlowMotorCycle, maxSmallCarSpaces, defaultIntendedStay);
+		assertTrue(
+				"testSpacesAvailable_MotorCycleAndSmallCarSpacesFull_MotorCycleOverflow_CarTriesToPark() Error",
+				carPark.spacesAvailable(car));
+	}
+
+	/**
+	 * Test method for
 	 * {@link asgn2CarParks.CarPark#spacesAvailable(asgn2Vehicles.Vehicle)}. All
 	 * spaces are full and a car tries to find a space.
 	 * 
@@ -4283,7 +4348,7 @@ public class CarParkTests {
 		carPark.parkVehicle(car, defaultArrival1, defaultIntendedStay);
 		carPark.unparkVehicle(car, defaultDeparture);
 	}
-	
+
 	/**
 	 * Test method for
 	 * {@link asgn2CarParks.CarPark#unparkVehicle(asgn2Vehicles.Vehicle, int)}.
@@ -4297,7 +4362,7 @@ public class CarParkTests {
 		carPark.parkVehicle(smallCar, defaultArrival2, defaultIntendedStay);
 		carPark.unparkVehicle(smallCar, defaultDeparture);
 	}
-	
+
 	/**
 	 * Test method for
 	 * {@link asgn2CarParks.CarPark#unparkVehicle(asgn2Vehicles.Vehicle, int)}.
