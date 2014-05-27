@@ -1,0 +1,542 @@
+commit f47a04bada6cc2f5778cb736840a2906852e7586
+Author: lditls <Lucas@Lucass-Notebook.local>
+Date:   Tue May 27 23:26:30 2014 +1000
+
+    Project Renamed
+
+commit 08f5ad7b46ef578c062840b9faf62977c36b9f72
+Merge: cfda6e3 53e4289
+Author: Aline Borges <alinekborges@gmail.com>
+Date:   Tue May 27 23:23:08 2014 +1000
+
+    Merge branch 'Dev' of https://github.com/alinekborges/Assignment2Release into Dev
+
+commit cfda6e3cf1b1cf496d2ddd76fed46b388dbde22c
+Author: Aline Borges <alinekborges@gmail.com>
+Date:   Tue May 27 23:22:59 2014 +1000
+
+    GUISimulatior finaizing
+
+commit 53e4289767e0f17ceff94b0496471faf8a881836
+Author: lditls <Lucas@Lucass-Notebook.local>
+Date:   Tue May 27 23:01:00 2014 +1000
+
+    Added @author tags
+
+commit c74ccf0025522116f83d0b58e20a6eedea33f216
+Author: Aline Borges <alinekborges@gmail.com>
+Date:   Tue May 27 22:13:36 2014 +1000
+
+    GUSimulator.java visible log output
+    
+    Scroll not working
+
+commit 8b8055d451f22530b57852e1d3f3bb1eaf46a62b
+Author: Aline Borges <alinekborges@gmail.com>
+Date:   Tue May 27 19:10:30 2014 +1000
+
+    GUISimulator.java visible input checker
+
+commit 87eaf6dd8ecdfc59e75251807c77f4f0d1bff28a
+Author: lditls <Lucas@Lucass-Notebook.local>
+Date:   Tue May 27 18:34:23 2014 +1000
+
+    CarParkTests.java More tests
+    
+    Tests to reach untested code.
+
+commit cc17dc65cb54295e0bb36b1b83b6d08deff4d04a
+Merge: 44db19f a118b15
+Author: Aline Borges <alinekborges@gmail.com>
+Date:   Tue May 27 16:55:03 2014 +1000
+
+    Merge branch 'Dev' of https://github.com/alinekborges/Assignment2Release into Dev
+
+commit a118b15e385d9b0f2a1db5e32a86fd4f22098148
+Author: lditls <Lucas@Lucass-Notebook.local>
+Date:   Tue May 27 16:54:12 2014 +1000
+
+    CarParkTests.java Bug fixes
+    
+    Adding tests for unreached code.
+
+commit 44db19fdcd41778f346de6586761de33b2aa13b0
+Author: Aline Borges <alinekborges@gmail.com>
+Date:   Tue May 27 16:43:27 2014 +1000
+
+    CarPark.java deleted useless private helper function
+
+commit cfadb8f4b2585fa2e5e3e1abb6be9832118b229a
+Author: lditls <Lucas@Lucass-Notebook.local>
+Date:   Tue May 27 16:38:05 2014 +1000
+
+    CarParkTests.java More tests
+    
+    Objects Maintain own state tests.
+
+commit 0ab44edb062b977d166ffc59236e0e25cdec98ee
+Author: Aline Borges <alinekborges@gmail.com>
+Date:   Tue May 27 15:24:00 2014 +1000
+
+    GUISimulator.java TextFields & Styling
+
+commit b7998f77b00e9900cbcca69260b92343ffd98d34
+Author: lditls <Lucas@Lucass-Notebook.local>
+Date:   Tue May 27 15:20:33 2014 +1000
+
+    CarParkTests.java tryProcessNewVehicles() Complete
+    
+    TODO: Process New Vehicle: Motorcycle and Car Complete
+
+commit 87fa8ab2c9d4e4d7a5a120c11e5cfea9c250f4b0
+Author: Aline Borges <alinekborges@gmail.com>
+Date:   Tue May 27 13:47:41 2014 +1000
+
+    Test coommit via eclipse
+
+commit 1dd14a6d1b29be20945ef10f9520f9f070e832a6
+Author: lditls <Lucas@Lucass-Notebook.local>
+Date:   Tue May 27 13:23:09 2014 +1000
+
+    CarParkTests() Working
+
+commit 57ea1ac5d5264bdf1e3a44b3c4732a038b11b232
+Author: Aline Borges <alinekborges@gmail.com>
+Date:   Tue May 27 13:02:21 2014 +1000
+
+    CarPark.java Fix carParkFull()
+
+commit 51788aef31870ba08215415f1f9d61cfffe8b54a
+Author: lditls <Lucas@Lucass-Notebook.local>
+Date:   Tue May 27 13:04:58 2014 +1000
+
+    CarParkTests.java Bug Fixes
+
+commit 4f395ef21f5771706ab290a2c356a5052a015dc9
+Author: Aline Borges <alinekborges@gmail.com>
+Date:   Tue May 27 12:55:17 2014 +1000
+
+    GUI Simulator Start
+
+commit a2c85e17dea082cd820b96963e3570beba50e95c
+Author: lditls <Lucas@Lucass-Notebook.local>
+Date:   Tue May 27 12:54:18 2014 +1000
+
+    carParkFull() bug fixed
+
+commit 6b89c4b7583ba5549b5e298f7b159613c366541b
+Author: lditls <Lucas@Lucass-Notebook.local>
+Date:   Tue May 27 02:41:15 2014 +1000
+
+    CarParkTests.java Total Reconstruction
+    
+    Our logic was wrong.
+
+commit f2a9bfd9b165001e92d742661209ebc68bf4686b
+Author: Aline Borges <alinekborges@gmail.com>
+Date:   Mon May 26 23:53:40 2014 +1000
+
+    CarPark.java finished
+    
+    Working Car Park.java. Fixed all problems and matches default logs. But
+    with the misreading about small cars jumping the queue, most of the
+    tests are going to need to be rewriten
+
+commit 5a830410cb968ba30ea7b75a5b195e5fd893dd07
+Merge: 86f42a4 9a199dc
+Author: Aline Borges <alinekborges@gmail.com>
+Date:   Mon May 26 23:26:24 2014 +1000
+
+    Merge branch 'Dev' of https://github.com/alinekborges/Assignment2Release into Dev
+
+commit 86f42a40dfe5cce05a413af9a8003fd90a7bd42d
+Author: Aline Borges <alinekborges@gmail.com>
+Date:   Mon May 26 23:24:49 2014 +1000
+
+    CarPark.java fix queue misreading
+    
+    Fixed queue misreading. We thought if there was any queue, the car could
+    not be parked. We were wrong.
+
+commit 9a199dc787fd84cde97f8c16fc9d50b2e33269bc
+Author: lditls <Lucas@Lucass-Notebook.local>
+Date:   Mon May 26 23:24:02 2014 +1000
+
+    Bug fixes
+
+commit e19cbf5bb00f81ca29169da337a78e00bde53e92
+Merge: 339eb9a 65a6d7f
+Author: Aline Borges <alinekborges@gmail.com>
+Date:   Mon May 26 21:37:55 2014 +1000
+
+    Merge branch 'Dev' of https://github.com/alinekborges/Assignment2Release into Dev
+
+commit 65a6d7ff558b2e8982fc654711953f0bacb751fa
+Author: lditls <Lucas@Lucass-Notebook.local>
+Date:   Mon May 26 21:37:03 2014 +1000
+
+    Command Line Arguments
+    
+    SimulationRunner class updated to accept command line arguments.
+
+commit 339eb9ae11c5fea5404f0e40df362e38dad2ff9d
+Author: Aline Borges <alinekborges@gmail.com>
+Date:   Mon May 26 21:32:15 2014 +1000
+
+    CarParkTests.java test sort order
+
+commit c01d641657c348b1d9cd5dfa27a3fce4f3432703
+Author: lditls <Lucas@Lucass-Notebook.local>
+Date:   Mon May 26 18:16:48 2014 +1000
+
+    CarPark.tryProcessNewVehicle() Tests
+    
+    Incomplete.
+
+commit f235b2726af0ccc0bff339e4515e78fea9c5df91
+Author: lditls <Lucas@Lucass-Notebook.local>
+Date:   Mon May 26 16:51:00 2014 +1000
+
+    Gitignore
+
+commit ecc6958459dca7327eeaf4b2e61590902487a1fc
+Merge: e2ea9dc 60356d8
+Author: Aline Borges <alinekborges@gmail.com>
+Date:   Mon May 26 16:52:47 2014 +1000
+
+    Merge branch 'Dev' of https://github.com/alinekborges/Assignment2Release into Dev
+    
+    Conflicts:
+    	src/asgn2CarParks/CarPark.java
+
+commit e2ea9dcd87f2bac1ad12ed6193a2607653632488
+Author: Aline Borges <alinekborges@gmail.com>
+Date:   Mon May 26 16:51:54 2014 +1000
+
+    Formating CarPark
+
+commit 60356d84a29375703ddb9fa61c709051972e427c
+Author: lditls <Lucas@Lucass-Notebook.local>
+Date:   Mon May 26 16:50:25 2014 +1000
+
+    Formatting in CarPark.java
+
+commit 376c9c0fa39c0fa249fba1fbfd194fb7802455d0
+Author: Aline Borges <alinekborges@gmail.com>
+Date:   Mon May 26 16:39:13 2014 +1000
+
+    MotorcycleTests testDeletion
+
+commit 4832164dc9dd9d5973cd272a7e2f78c3322f0bd1
+Author: lditls <Lucas@Lucass-Notebook.local>
+Date:   Mon May 26 16:37:18 2014 +1000
+
+    Bug fixes
+    
+    CarParkTests.java;
+    MotorCycleTests.java;
+    Vehicle.java.
+
+commit c84441b9fc73c699b16ab6715d7246a3654e2d5d
+Author: lditls <Lucas@Lucass-Notebook.local>
+Date:   Mon May 26 12:25:52 2014 +1000
+
+    CarPark.ProcessQueue() Tests Complete
+    
+    Some TODOs remain in CarParkTests.
+
+commit c9822b202ce8056a871994cfe13f58c75ce5ff82
+Author: lditls <Lucas@Lucass-Notebook.local>
+Date:   Mon May 26 00:46:38 2014 +1000
+
+    CarPark.ProcessQueue() Tests Outlined
+    
+    - TODO.
+
+commit ab9a606b6f0d48df5e8f56bd3309d3c2577a6a3c
+Author: Aline Borges <alinekborges@gmail.com>
+Date:   Mon May 26 00:45:20 2014 +1000
+
+    CarPark.java bug fixes / Car & Vehicle tests
+    
+    CarPark is fixed and working well. All bugs were fixed
+    Added some tests to Motorcycle & car
+
+commit 45a0ec575e99352d3da56a228f8a9656b32e26c5
+Author: lditls <Lucas@Lucass-Notebook.local>
+Date:   Sun May 25 23:54:48 2014 +1000
+
+    Minor updates in Test Classes
+
+commit f650f5cf91ec69d159f9f841f01b18828f2f8f17
+Author: Aline Borges <alinekborges@gmail.com>
+Date:   Sun May 25 23:34:16 2014 +1000
+
+    CarPark.java status messages
+    
+    Fixed to show all status message
+    Problem still continues: Motorycle at the end of queue is parked
+    incorrectly
+
+commit 5542c3355b1f0d8a127488683b5bc134c3f297ef
+Author: lditls <Lucas@Lucass-Notebook.local>
+Date:   Sun May 25 22:59:35 2014 +1000
+
+    Vehicle.exitQueuedState() fix
+
+commit c05d8c7708e1870740d4166d8e262464ec3b065b
+Author: lditls <Lucas@Lucass-Notebook.local>
+Date:   Sun May 25 22:54:43 2014 +1000
+
+    Vehicle.java
+    
+    - incorrect import fix;
+    - part of isSatisfied().
+
+commit b0f61262a383e0f97f640b83148c8368bf08a623
+Author: lditls <Lucas@Lucass-Notebook.local>
+Date:   Sun May 25 22:14:10 2014 +1000
+
+    Vehicle.java
+    
+    - toString() implementation.
+
+commit 1fb40acc72d34dd347e2e6daf57d7f83f39bbadf
+Author: lditls <Lucas@Lucass-Notebook.local>
+Date:   Sun May 25 21:11:04 2014 +1000
+
+    CarParkTests.java Bug fixes
+    
+    - Many bug fixes.
+
+commit 330748d41fe376cdca6926574daf4fbe75e0c46b
+Author: lditls <Lucas@Lucass-Notebook.local>
+Date:   Sun May 25 20:34:13 2014 +1000
+
+    CarParkTests.java
+    
+    - For loop index errors fixed.
+
+commit 245d209696349867e51cfa0c7248cfef0382f2fa
+Author: lditls <Lucas@Lucass-Notebook.local>
+Date:   Sun May 25 20:07:55 2014 +1000
+
+    Vehicle.java
+    
+    -  ToString()
+
+commit 74068497ff968b8c3d0f9445c4818355e9ae9852
+Author: Aline Borges <alinekborges@gmail.com>
+Date:   Sun May 25 20:04:59 2014 +1000
+
+    Fixed getCarSpaces()
+
+commit e7a1616e6982d98a2799f6b55eddabbc5c09cd3a
+Merge: 5f5c4f0 c96f3e1
+Author: lditls <Lucas@Lucass-Notebook.local>
+Date:   Sun May 25 20:07:10 2014 +1000
+
+    Merge branch 'Dev' of https://github.com/alinekborges/Assignment2Release into Dev
+    
+    Conflicts:
+    	src/asgn2Vehicles/Vehicle.java
+
+commit 5f5c4f043dbb82a33918e29701f745699a45f299
+Author: lditls <Lucas@Lucass-Notebook.local>
+Date:   Sun May 25 20:05:24 2014 +1000
+
+    Vehicle.java
+    
+    - ToString()
+
+commit c96f3e1f4004a9bd104092b517fbda3097789769
+Author: Aline Borges <alinekborges@gmail.com>
+Date:   Sun May 25 19:45:08 2014 +1000
+
+    Finish writing car park and all methods
+
+commit b179afa7ae25551c55793bcb20bc2e933a12e4f5
+Author: Aline Borges <alinekborges@gmail.com>
+Date:   Sat May 24 17:01:02 2014 +1000
+
+    More implementations in CarPark
+
+commit 4a94654c2ea258fb1ea83de0156aba793598f0bc
+Author: lditls <Lucas@Lucass-Notebook.local>
+Date:   Sat May 17 19:50:06 2014 +1000
+
+    CarParkTests.java
+    
+    - Fixed issue with for loops starting with index = zero;
+    - added some tests for CarPark.processQueue();
+    - Bug fixes.
+
+commit 2b6107816a3290fd753be09d0cb1d172a8664f4b
+Author: Aline Borges <alinekborges@gmail.com>
+Date:   Sat May 17 15:57:40 2014 +1000
+
+    Revert CarPark to last working code
+
+commit 50de4584ebb856e4e68d800d4ef813889bd1ff8e
+Author: Aline Borges <alinekborges@gmail.com>
+Date:   Sat May 17 15:34:12 2014 +1000
+
+    Revert "CarPark"
+    
+    This reverts commit f9ba33856e0104446d22b079bcab941030d4a83f.
+
+commit 854f0e327a1c20c3c7c457d79ba069c4a20ea8a2
+Author: Aline Borges <alinekborges@gmail.com>
+Date:   Sat May 17 15:33:31 2014 +1000
+
+    Revert "Test commit message yaaay#"
+    
+    This reverts commit 3e3599b7076769aa05bde5acf96cefb2856d22c4.
+
+commit 1886711f96fb79b89915c11844c01efcb183ca1e
+Author: Aline Borges <alinekborges@gmail.com>
+Date:   Sat May 17 15:33:18 2014 +1000
+
+    Revert "Revert "Revert "CarPark"""
+    
+    This reverts commit 906bffdb1328f1f43ee7708c42681fe50a8ccd7d.
+
+commit 906bffdb1328f1f43ee7708c42681fe50a8ccd7d
+Author: Aline Borges <alinekborges@gmail.com>
+Date:   Sat May 17 15:27:50 2014 +1000
+
+    Revert "Revert "CarPark""
+    
+    This reverts commit 049d996255c15d269c9a6d9859371b0bf28ab898.
+
+commit 049d996255c15d269c9a6d9859371b0bf28ab898
+Author: Aline Borges <alinekborges@gmail.com>
+Date:   Sat May 17 15:25:50 2014 +1000
+
+    Revert "CarPark"
+    
+    This reverts commit f9ba33856e0104446d22b079bcab941030d4a83f.
+
+commit f9ba33856e0104446d22b079bcab941030d4a83f
+Author: Aline Borges <alinekborges@gmail.com>
+Date:   Sat May 17 15:23:00 2014 +1000
+
+    CarPark
+    
+    More functions implemented. Still not complete
+
+commit 3e3599b7076769aa05bde5acf96cefb2856d22c4
+Author: Aline Borges <alinekborges@gmail.com>
+Date:   Fri May 9 19:15:19 2014 +1000
+
+    Test commit message yaaay#
+
+commit 53335cc5e493c4a3fd4b33ad69889046dc0acba4
+Author: lditls <Lucas@Lucass-Notebook.local>
+Date:   Mon May 12 08:08:46 2014 +1000
+
+    Vehicle.java
+    
+    - Some TODOs left.
+
+commit 27beda9327283332050505d1a5631a79481f3ff3
+Author: lditls <Lucas@Lucass-Notebook.local>
+Date:   Sun May 11 09:54:45 2014 +1000
+
+    CarParkTests.java Javadoc
+    
+    - Most tests implemented;
+    - A few TODOs pending.
+
+commit f6122f60d9a740b24ee32feaaac09c793a15bd95
+Author: lditls <Lucas@Lucass-Notebook.local>
+Date:   Sat May 10 20:14:45 2014 +1000
+
+    CarParkTests.java
+    
+    - Most tests implemented;
+    - A few TODOs pending;
+    - Javadoc incomplete.
+
+commit 819ed03be9a95e139920aed80551825560090eed
+Author: Aline Borges <alinekborges@gmail.com>
+Date:   Fri May 9 18:02:43 2014 +1000
+
+    MotorCycle Tests
+    
+    Motorcycle tests almost complete, missing a few like toString() and
+    isDissatisfied()
+
+commit 3b305399c579bcacded82aa2c404108f78760678
+Author: Aline Borges <alinekborges@gmail.com>
+Date:   Wed May 7 16:30:55 2014 +1000
+
+    Car & Motorcycle tests initial
+    
+    Car & Motorcycle tests (still not complete)
+    
+    annotation @author in all Motorcycle methods
+
+commit 52626fb8da79b1dbe67b10ea9a15a601c481b108
+Author: Aline Borges <alinekborges@gmail.com>
+Date:   Wed May 7 15:16:35 2014 +1000
+
+    Car and Motorcycle Classes
+
+commit 8b1544ea24ec1a9ef204786356c7c13bb702653b
+Author: Aline Borges <alinekborges@gmail.com>
+Date:   Tue May 6 16:32:26 2014 +1000
+
+    Test Commit Aline
+
+commit 3aedad47ffa798d892098753cc17e7c3fd13d211
+Merge: fc0c08e ae027fd
+Author: Aline Borges <alinekborges@gmail.com>
+Date:   Tue May 6 16:30:35 2014 +1000
+
+    Merge branch 'master' of https://github.com/alinekborges/Assignment2Release
+
+commit ae027fd9519235c06fcb6ef18ced74addd6bf557
+Author: lditls <Lucas@Lucass-Notebook.local>
+Date:   Tue May 6 16:28:25 2014 +1000
+
+    Test in CarPark
+
+commit fc0c08e64b99c0ec7b9b63517e491deaff42f4da
+Author: Aline Borges <alinekborges@gmail.com>
+Date:   Tue May 6 16:11:30 2014 +1000
+
+    The third commit
+    
+    Changes to README testing git
+
+commit ba50cb390ccf01fb2065bbd37cdef8dd66be56c3
+Author: lditls <Lucas@Lucass-Notebook.local>
+Date:   Tue May 6 15:45:53 2014 +1000
+
+    Test 2
+
+commit b8b1a8c7cf59c691c11f64ba6b256f09d55e7040
+Merge: bad8b0e 9eaab22
+Author: Aline Borges <alinekborges@gmail.com>
+Date:   Tue May 6 15:23:37 2014 +1000
+
+    Merge branch 'master' of https://github.com/alinekborges/ENB370_Assignment2Release
+
+commit 9eaab22887587a77dddc799d86f6f3598de2e0e6
+Author: alinekborges <alinekborges@gmail.com>
+Date:   Tue May 6 15:21:15 2014 +1000
+
+    Delete README.md
+
+commit 5d558b42f6059a079e87ac20f60d998f57b8a323
+Author: alinekborges <alinekborges@gmail.com>
+Date:   Mon May 5 22:17:38 2014 -0700
+
+    Initial commit
+
+commit bad8b0e070d2d9badcdcec4bc40e3bd8f90a5ca9
+Author: Aline Borges <alinekborges@gmail.com>
+Date:   Tue May 6 15:07:29 2014 +1000
+
+    Initial commit of scr and doc

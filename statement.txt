@@ -1,0 +1,26 @@
+Aline Kolczycki Borges - n8947147
+Lucas Michael Dilts - n8925666
+
+Aline’s Contribution: 
+	- Car.java;
+	- CarTests.java;
+	- MotorCycle.java;
+	- MotorCycleTests.java;
+	- CarPark.java;
+	- GUISimulator.java.
+
+Lucas’Contribution:
+	- Vehicle.java;
+	- CarParkTest.java;
+	- Command line Arguments.
+
+I, Aline Kolczycki Borges, agree with this contribution statement.
+I, Lucas Michael Dilts, agree with this contribution statement. 
+
+Incomplete features:
+	- No charts;
+	- No message displayed to user if there is an exception.
+
+location of class which holds the main method for your GUI:
+	- CarParkSimulator/src/asgn2Simulators/GUISimulator.java
+	- We have provided a run.bat file.
