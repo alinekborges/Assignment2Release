@@ -1,167 +1,197 @@
-/**
- * 
- * This file is part of the CarParkSimulator Project, written as 
- * part of the assessment for INB370, semester 1, 2014. 
- *
- * CarParkSimulator
- * asgn2Simulators 
- * 20/04/2014
- * 
- */
 package asgn2Simulators;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
+import java.awt.EventQueue;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.SwingUtilities;
-import java.awt.*;
+import java.awt.BorderLayout;
+import javax.swing.JTabbedPane;
+import javax.swing.JLabel;
+import java.awt.GridLayout;
+import javax.swing.JScrollBar;
+import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
+import java.awt.SystemColor;
+import java.awt.Color;
+import java.awt.Font;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JButton;
 
-/**
- * @author hogan
- * 
- */
-@SuppressWarnings("serial")
-public class GUISimulator extends JFrame implements Runnable {
+public class GUISimulator {
 
-	private static final long serialVersionUID = -7031008862559936404L;
+	private JFrame frame;
+	private JTextField textField;
+	private JTextField textField_1;
+	private JTextField textField_2;
+	private JTextField textField_3;
+	private JTextField textField_4;
+	private JTextField textField_5;
+	private JTextField textField_6;
+	private JTextField textField_7;
+	
 	public static final int WIDTH = 1024;
 	public static final int HEIGHT = 576;
-	
-	public static final int TITLE_HEIGHT = (int) (HEIGHT*0.1);
-	public static final int TITLE_WIDTH = WIDTH;
-	public static final int INPUT_HEIGHT = (int) (HEIGHT * 0.7);
 	public static final int INPUT_WIDTH = (int) (WIDTH*0.15);
-	public static final int RUN_HEIGHT = (int) (HEIGHT*0.2);
-	public static final int RUN_WIDHT = INPUT_WIDTH;	
-	public static final int OUTPUT_HEIGHT = HEIGHT - TITLE_HEIGHT;
-	public static final int OUTPUT_WIDTH = WIDTH - INPUT_WIDTH;
-
-	private JPanel titlePanel;
-	private JPanel inputPanel;
-	private JPanel runPanel;
-	private JPanel outputPanel;
-	
-	private Button startButton;
-	//private //
+	private JTextField textField_8;
+	private JTextField textField_9;
 
 	/**
-	 * @param arg0
-	 * @throws HeadlessException
-	 */
-	public GUISimulator(String arg0) throws HeadlessException {
-		super(arg0);
-		// TODO Auto-generated constructor stub
-
-	}
-
-	private void createGUI() {
-		setSize(WIDTH, HEIGHT);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLayout(new BorderLayout());
-
-		//widht = full panel
-		//height = 10% panel
-		titlePanel = createPanel(Color.BLUE , TITLE_WIDTH, TITLE_HEIGHT);		
-		inputPanel = createPanel(Color.CYAN, INPUT_WIDTH, INPUT_HEIGHT);
-		runPanel = createPanel(Color.GRAY, RUN_WIDHT, RUN_HEIGHT);
-		outputPanel = createPanel(Color.magenta, OUTPUT_WIDTH, OUTPUT_WIDTH);
-		
-		this.getContentPane().add(titlePanel, BorderLayout.NORTH);
-		this.getContentPane().add(inputPanel, BorderLayout.WEST);
-		this.getContentPane().add(runPanel, BorderLayout.SOUTH);
-		this.getContentPane().add(outputPanel, BorderLayout.EAST);
-		
-		repaint();
-		this.setVisible(true);
-
-	}
-	
-	private JTextArea createTextArea() {
-		JTextArea jta = new JTextArea(); 
-		jta.setEditable(false);
-		jta.setLineWrap(true);
-		jta.setFont(new Font("Arial",Font.BOLD,24));
-		jta.setBorder(BorderFactory.createEtchedBorder());
-		return jta;
-	}
-
-	private JPanel createPanel(Color c, int width, int height) {
-		// Create a JPanel object and store it in a local var
-		// set the background colour to that passed in c
-		// Return the JPanel object
-		Dimension d = new Dimension(width, height);
-		JPanel jp = new JPanel();
-		jp.setBackground(c);
-		jp.setPreferredSize(d);		
-		return jp;
-
-	}
-	
-	private void layoutButtonPanel() {
-		GridBagLayout layout = new GridBagLayout();
-	    //pnlBtn.setLayout(layout);
-	    
-	    //add components to grid
-	    GridBagConstraints constraints = new GridBagConstraints(); 
-	    
-	    //Defaults
-	    constraints.fill = GridBagConstraints.NONE;
-	    constraints.anchor = GridBagConstraints.CENTER;
-	    constraints.weightx = 100;
-	    constraints.weighty = 100;
-	    
-	    //addToPanel(pnlBtn, btnLoad,constraints,0,0,2,1); 
-	    //addToPanel(pnlBtn, btnUnload,constraints,3,0,2,1); 
-	    //addToPanel(pnlBtn, btnFind,constraints,0,2,2,1); 
-	    //addToPanel(pnlBtn, btnSwitch,constraints,3,2,2,1); 	
-	}
-	
-	/**
-     * 
-     * A convenience method to add a component to given grid bag
-     * layout locations. Code due to Cay Horstmann 
-     *
-     * @param c the component to add
-     * @param constraints the grid bag constraints to use
-     * @param x the x grid position
-     * @param y the y grid position
-     * @param w the grid width
-     * @param h the grid height
-     */
-   private void addToPanel(JPanel jp,Component c, GridBagConstraints constraints, int x, int y, int w, int h) {  
-      constraints.gridx = x;
-      constraints.gridy = y;
-      constraints.gridwidth = w;
-      constraints.gridheight = h;
-      jp.add(c, constraints);
-   }
-	
-	private JButton createButton(String str) {
-		JButton jb = new JButton(str); 
-		//jb.addActionListener(this);
-		return jb; 
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Runnable#run()
-	 */
-	@Override
-	public void run() {
-		createGUI();
-
-	}
-
-	/**
-	 * @param args
+	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		JFrame.setDefaultLookAndFeelDecorated(true);
-        SwingUtilities.invokeLater(new GUISimulator("BorderLayout"));
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					GUISimulator window = new GUISimulator();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 
+	/**
+	 * Create the application.
+	 */
+	public GUISimulator() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame();
+		frame.setBounds(100, 100, 450, 300);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setSize(WIDTH, HEIGHT);
+		
+		JPanel titlePanel = new JPanel();
+		titlePanel.setForeground(Color.WHITE);
+		titlePanel.setBackground(SystemColor.textHighlight);
+		frame.getContentPane().add(titlePanel, BorderLayout.NORTH);
+		
+		JLabel lblCarParkSimulator = new JLabel("Car Park Simulator");
+		lblCarParkSimulator.setFont(new Font("Tahoma", Font.BOLD, 22));
+		lblCarParkSimulator.setForeground(Color.WHITE);
+		titlePanel.add(lblCarParkSimulator);
+		
+		JPanel inputPanel = new JPanel();
+		inputPanel.setForeground(SystemColor.textHighlight);
+		inputPanel.setBackground(Color.WHITE);
+		inputPanel.setBorder(new EmptyBorder(10, 35, 10, 15));
+		frame.getContentPane().add(inputPanel, BorderLayout.WEST);
+		inputPanel.setLayout(new GridLayout(21, 1, 0, 1));
+		inputPanel.setSize(INPUT_WIDTH, HEIGHT);
+		
+		JLabel lblMaxCarSpaces = new JLabel("Max Car Spaces");
+		lblMaxCarSpaces.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblMaxCarSpaces.setForeground(SystemColor.textHighlight);
+		inputPanel.add(lblMaxCarSpaces);
+		
+		textField = new JTextField();
+		textField.setForeground(SystemColor.textHighlight);
+		inputPanel.add(textField);
+		textField.setColumns(10);
+		textField.setBorder(new LineBorder(SystemColor.textHighlight, 1));
+		
+		JLabel lblMaxSmallCar = new JLabel("Max Small Car Spaces");
+		lblMaxSmallCar.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblMaxSmallCar.setForeground(SystemColor.textHighlight);
+		lblMaxSmallCar.setBackground(Color.WHITE);
+		inputPanel.add(lblMaxSmallCar);
+		
+		textField_1 = new JTextField();
+		inputPanel.add(textField_1);
+		textField_1.setColumns(10);
+		textField_1.setBorder(new LineBorder(SystemColor.textHighlight, 1));
+		
+		JLabel lblNewLabel = new JLabel("Max Motorcycle Spaces");
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblNewLabel.setForeground(SystemColor.textHighlight);
+		inputPanel.add(lblNewLabel);
+		
+		textField_2 = new JTextField();
+		inputPanel.add(textField_2);
+		textField_2.setColumns(10);
+		textField_2.setBorder(new LineBorder(SystemColor.textHighlight, 1));
+		
+		JLabel lblNewLabel_1 = new JLabel("Max Queue Size");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblNewLabel_1.setForeground(SystemColor.textHighlight);
+		inputPanel.add(lblNewLabel_1);
+		
+		textField_3 = new JTextField();
+		inputPanel.add(textField_3);
+		textField_3.setColumns(10);
+		textField_3.setBorder(new LineBorder(SystemColor.textHighlight, 1));
+		
+		JLabel lblNewLabel_2 = new JLabel("Mean Stay");
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblNewLabel_2.setForeground(SystemColor.textHighlight);
+		inputPanel.add(lblNewLabel_2);
+		
+		textField_4 = new JTextField();
+		inputPanel.add(textField_4);
+		textField_4.setColumns(10);
+		textField_4.setBorder(new LineBorder(SystemColor.textHighlight, 1));
+		
+		JLabel lblCarProbability = new JLabel("Car Probability");
+		lblCarProbability.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblCarProbability.setForeground(SystemColor.textHighlight);
+		inputPanel.add(lblCarProbability);
+		
+		textField_5 = new JTextField();
+		inputPanel.add(textField_5);
+		textField_5.setColumns(10);
+		textField_5.setBorder(new LineBorder(SystemColor.textHighlight, 1));
+		
+		JLabel lblSmallCarProbability = new JLabel("Small Car Probability");
+		lblSmallCarProbability.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblSmallCarProbability.setForeground(SystemColor.textHighlight);
+		inputPanel.add(lblSmallCarProbability);
+		
+		textField_6 = new JTextField();
+		inputPanel.add(textField_6);
+		textField_6.setColumns(10);
+		textField_6.setBorder(new LineBorder(SystemColor.textHighlight, 1));
+		
+		JLabel lblMotorcycleProbability = new JLabel("MotorCycle Probability");
+		lblMotorcycleProbability.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblMotorcycleProbability.setForeground(SystemColor.textHighlight);
+		inputPanel.add(lblMotorcycleProbability);
+		
+		textField_7 = new JTextField();
+		inputPanel.add(textField_7);
+		textField_7.setColumns(10);
+		textField_7.setBorder(new LineBorder(SystemColor.textHighlight, 1));
+		
+		JLabel lblSdStay = new JLabel("SD Stay");
+		lblSdStay.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblSdStay.setForeground(SystemColor.textHighlight);
+		inputPanel.add(lblSdStay);
+		
+		textField_8 = new JTextField();
+		inputPanel.add(textField_8);
+		textField_8.setColumns(10);
+		textField_8.setBorder(new LineBorder(SystemColor.textHighlight, 1));
+		
+		JLabel lblSeed = new JLabel("Seed");
+		lblSeed.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblSeed.setForeground(SystemColor.textHighlight);
+		inputPanel.add(lblSeed);
+		
+		textField_9 = new JTextField();
+		inputPanel.add(textField_9);
+		textField_9.setColumns(10);
+		textField_9.setBorder(new LineBorder(SystemColor.textHighlight, 1));
+		
+		JButton btnNewButton = new JButton("Start");
+		inputPanel.add(btnNewButton);
+		
+		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		frame.getContentPane().add(tabbedPane, BorderLayout.CENTER);
 	}
 
 }
