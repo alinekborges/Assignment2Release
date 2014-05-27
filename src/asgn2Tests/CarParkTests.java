@@ -4283,6 +4283,34 @@ public class CarParkTests {
 		carPark.parkVehicle(car, defaultArrival1, defaultIntendedStay);
 		carPark.unparkVehicle(car, defaultDeparture);
 	}
+	
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#unparkVehicle(asgn2Vehicles.Vehicle, int)}.
+	 * 
+	 * @throws VehicleException
+	 * @throws SimulationException
+	 */
+	@Test
+	public void testUnparkVehicle_SmallCar() throws SimulationException,
+			VehicleException {
+		carPark.parkVehicle(smallCar, defaultArrival2, defaultIntendedStay);
+		carPark.unparkVehicle(smallCar, defaultDeparture);
+	}
+	
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#unparkVehicle(asgn2Vehicles.Vehicle, int)}.
+	 * 
+	 * @throws VehicleException
+	 * @throws SimulationException
+	 */
+	@Test
+	public void testUnparkVehicle_MotorCycle() throws SimulationException,
+			VehicleException {
+		carPark.parkVehicle(motorCycle, defaultArrival3, defaultIntendedStay);
+		carPark.unparkVehicle(motorCycle, defaultDeparture);
+	}
 
 	// /**
 	// * Test method for
