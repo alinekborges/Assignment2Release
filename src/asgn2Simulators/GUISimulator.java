@@ -1,47 +1,36 @@
 package asgn2Simulators;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 import java.awt.BorderLayout;
-import javax.swing.JTabbedPane;
-import javax.swing.JLabel;
-import java.awt.GridLayout;
-import javax.swing.JScrollBar;
-import javax.swing.JTextField;
-import javax.swing.border.LineBorder;
-import java.awt.SystemColor;
+import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.EventQueue;
+import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.SystemColor;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.IOException;
 
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.DefaultCaret;
-import javax.swing.JButton;
 
 import asgn2CarParks.CarPark;
 import asgn2Exceptions.SimulationException;
 import asgn2Exceptions.VehicleException;
-
-import javax.swing.SwingConstants;
-import javax.swing.JTextArea;
-import java.awt.CardLayout;
-import java.awt.FlowLayout;
-import javax.swing.BoxLayout;
-import java.awt.Component;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneConstants;
-import java.awt.Dimension;
 
 public class GUISimulator implements MouseListener, Runnable {
 
@@ -82,6 +71,7 @@ public class GUISimulator implements MouseListener, Runnable {
 	private JPanel runSimulationButton;
 	private JPanel cardLayout_1;
 	private JTextArea logTextArea;
+	private JLabel StatusLabel;
 
 	/**
 	 * Launch the application.
@@ -409,29 +399,34 @@ public class GUISimulator implements MouseListener, Runnable {
 		runSimulationLabel.setBackground(Color.WHITE);
 		runSimulationButton.add(runSimulationLabel);
 		startPanel.add(runSimulationButton);
+		
+		StatusLabel = new JLabel("");
+		StatusLabel.setForeground(new Color(204, 0, 0));
+		startPanel.add(StatusLabel);
+		
+		JPanel panel = new JPanel();
+		startPanel.add(panel);
 
 		JPanel textLogPanel_1 = new JPanel();
-		FlowLayout flowLayout = (FlowLayout) textLogPanel_1.getLayout();
-		flowLayout.setAlignment(FlowLayout.LEFT);
 		textLogPanel_1.setBackground(Color.WHITE);
 		cardLayout_1.add(textLogPanel_1, "LOG");
 
 		logTextArea = new JTextArea();
 		logTextArea.setText("Simulation log");
-		logTextArea.setEditable(false);
 		logTextArea.setForeground(new Color(0, 0, 102));
 		logTextArea.setColumns(50);
 		logTextArea.setLineWrap(true);
-		logTextArea.setSize(400,400);   
-		textLogPanel_1.add(logTextArea);
-		
-		DefaultCaret caret = (DefaultCaret)logTextArea.getCaret();
+		logTextArea.setSize(400, 400);
+		// textLogPanel_1.add(logTextArea);
+
+		DefaultCaret caret = (DefaultCaret) logTextArea.getCaret();
 		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+		textLogPanel_1.setLayout(null);
 
 		JScrollPane scroll = new JScrollPane(logTextArea);
-		scroll.setPreferredSize(new Dimension(406, 32767));
+		scroll.setLocation(5, 5);
+		scroll.setSize(new Dimension(700, 400));
 		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		
 
 		textLogPanel_1.add(scroll);
 
@@ -451,7 +446,7 @@ public class GUISimulator implements MouseListener, Runnable {
 	 * @throws IOException
 	 *             on logging failures
 	 */
-	public void runSimulation() throws VehicleException, SimulationException,
+	private void runSimulation() throws VehicleException, SimulationException,
 			IOException {
 
 		String buffer = "";
@@ -479,11 +474,10 @@ public class GUISimulator implements MouseListener, Runnable {
 			// Log progress
 			String status = carPark.getStatus(time);
 			log.writer.write(status);
-			//this.logTextArea.append(status + "\n");
+			// this.logTextArea.append(status + "\n");
 			buffer += (status);
 		}
 		logTextArea.setText(buffer);
-		logTextArea.setCaretPosition(logTextArea.getDocument().getLength());
 		log.finalise(carPark);
 	}
 
@@ -535,11 +529,6 @@ public class GUISimulator implements MouseListener, Runnable {
 			}
 		}
 
-		private boolean invalidProbability(String prob) {
-			double d = parseDouble(prob);
-			return (d < 0.0) || (d > 1.0);
-		}
-
 	};
 
 	private class notNegativeChecker implements DocumentListener {
@@ -585,6 +574,15 @@ public class GUISimulator implements MouseListener, Runnable {
 
 	};
 
+	private static boolean isNotNegative(String value) {
+		double v = parseDouble(value);
+		if (v >= 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	private static void setInvalidTextField(JTextField tf) {
 		tf.setBorder(new LineBorder(redColor, 1));
 	}
@@ -605,6 +603,153 @@ public class GUISimulator implements MouseListener, Runnable {
 		}
 	}
 
+	private boolean invalidProbability(String prob) {
+		double d = parseDouble(prob);
+		return (d < 0.0) || (d > 1.0);
+	}
+	
+	private boolean invalidProbability(Double d) {
+		return (d < 0.0) || (d > 1.0);
+	}
+
+	private void checkInputsAndRun() throws Exception {
+
+		int maxCarSpaces;
+		int maxSmallCarSpaces;
+		int maxMotorcycleSpaces;
+		int maxQueueSize;
+		double meanStay;
+		double carProb;
+		double smallCarProb;
+		double mcProb;
+		double sdStay;
+		int seed;
+
+		// try parse all values
+		try {
+			maxCarSpaces = Integer.parseInt(this.textField_MaxCarSpaces
+					.getText());
+			if (maxCarSpaces < 0) {
+				throw new Exception();
+			}
+		} catch (Exception ex) {
+			throw new Exception(" \"" + this.textField_MaxCarSpaces.getText()
+					+ "\" is not a valid entry to Max Car Spaces");
+		}
+		
+		try {
+			maxSmallCarSpaces = Integer.parseInt(this.textField_MaxSmallCarSpaces
+					.getText());
+			if (maxSmallCarSpaces < 0) {
+				throw new Exception();
+			}
+		} catch (Exception ex) {
+			throw new Exception(" \"" + this.textField_MaxSmallCarSpaces.getText()
+					+ "\" is not a valid entry to Max Small Car Spaces");
+		}
+		
+		try {
+			maxMotorcycleSpaces = Integer.parseInt(this.textField_MaxMotorcycleSpaces
+					.getText());
+			if (maxMotorcycleSpaces < 0) {
+				throw new Exception();
+			}
+		} catch (Exception ex) {
+			throw new Exception(" \"" + this.textField_MaxMotorcycleSpaces.getText()
+					+ "\" is not a valid entry to Max Motorcycle Spaces");
+		}
+		
+		try {
+			maxQueueSize = Integer.parseInt(this.textField_MaxQueueSize
+					.getText());
+			if (maxQueueSize < 0) {
+				throw new Exception();
+			}
+		} catch (Exception ex) {
+			throw new Exception(" \"" + this.textField_MaxQueueSize.getText()
+					+ "\" is not a valid entry to Max Queue Size");
+		}
+		
+		try {
+			meanStay = Double.parseDouble(this.textField_MeanStay
+					.getText());
+			if (meanStay < 0) {
+				throw new Exception();
+			}
+		} catch (Exception ex) {
+			throw new Exception(" \"" + this.textField_MeanStay.getText()
+					+ "\" is not a valid entry to Max Car Spaces");
+		}
+		
+		try {
+			sdStay = Double.parseDouble(this.textField_SDStay
+					.getText());
+			if (sdStay < 0) {
+				throw new Exception();
+			}
+		} catch (Exception ex) {
+			throw new Exception(" \"" + this.textField_SDStay.getText()
+					+ "\" is not a valid entry to Max Car Spaces");
+		}
+		
+		try {
+			seed = Integer.parseInt(this.textField_Seed
+					.getText());
+			if (seed < 0) {
+				throw new Exception();
+			}
+		} catch (Exception ex) {
+			throw new Exception(" \"" + this.textField_Seed.getText()
+					+ "\" is not a valid entry to Max Car Spaces");
+		}
+		
+		try {
+			carProb = Double.parseDouble(this.textField_CarProbability
+					.getText());
+			if (invalidProbability(carProb)) {
+				throw new Exception();
+			}
+		} catch (Exception ex) {
+			throw new Exception(" \"" + this.textField_CarProbability.getText()
+					+ "\" is not a valid entry to Max Car Spaces");
+		}
+		
+		try {
+			smallCarProb = Double.parseDouble(this.textField_SmallCarProbability
+					.getText());
+			if (invalidProbability(smallCarProb)) {
+				throw new Exception();
+			}
+		} catch (Exception ex) {
+			throw new Exception(" \"" + this.textField_SmallCarProbability.getText()
+					+ "\" is not a valid entry to Max Car Spaces");
+		}
+		
+		try {
+			mcProb = Double.parseDouble(this.textField_MotorcycleProbability
+					.getText());
+			if (invalidProbability(mcProb)) {
+				throw new Exception();
+			}
+		} catch (Exception ex) {
+			throw new Exception(" \"" + this.textField_MotorcycleProbability.getText()
+					+ "\" is not a valid entry to Max Car Spaces");
+		}
+		
+		if (maxCarSpaces < maxSmallCarSpaces) {
+			throw new Exception("Max Car Spaces should be more or equal than small car");
+		}
+
+		carPark = new CarPark(maxCarSpaces, maxSmallCarSpaces,
+				maxMotorCycleSpaces, maxQueueSize);
+		sim = new Simulator(seed, meanStay, sdStay,
+				carProb, smallCarProb, mcProb);
+		runSimulation();
+		
+
+	}
+	
+
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// Run the simulation
@@ -612,12 +757,14 @@ public class GUISimulator implements MouseListener, Runnable {
 		try {
 			CardLayout cl = (CardLayout) cardLayout_1.getLayout();
 			cl.show(cardLayout_1, "LOG");
-			runSimulation();
+			checkInputsAndRun();			
 
-		} catch (Exception ex) {
-			System.out.println("Exception in Run Simulation");
-			ex.printStackTrace();
+		} catch (VehicleException | SimulationException | IOException exception) {
 			System.exit(-1);
+		} catch (Exception ex) {
+			StatusLabel.setText(ex.getMessage());
+			CardLayout cl = (CardLayout) cardLayout_1.getLayout();
+			cl.show(cardLayout_1, "RUN");
 		}
 
 	}
@@ -651,5 +798,8 @@ public class GUISimulator implements MouseListener, Runnable {
 
 	public JTextArea getLogTextArea() {
 		return logTextArea;
+	}
+	public JLabel getStatusLabel() {
+		return StatusLabel;
 	}
 }
