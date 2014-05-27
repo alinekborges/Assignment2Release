@@ -65,6 +65,7 @@ public abstract class Vehicle {
 	/**
 	 * Vehicle Constructor
 	 * 
+	 * @author Lucas
 	 * @param vehID
 	 *            String identification number or plate of the vehicle
 	 * @param arrivalTime
@@ -94,6 +95,7 @@ public abstract class Vehicle {
 	 * Transition vehicle to parked state (mutator) Parking starts on arrival or
 	 * on exit from the queue, but time is set here
 	 * 
+	 * @author Lucas
 	 * @param parkingTime
 	 *            int time (minutes) at which the vehicle was able to park
 	 * @param intendedDuration
@@ -134,6 +136,7 @@ public abstract class Vehicle {
 	 * arrival and ceases with a call to {@link #exitQueuedState(int)
 	 * exitQueuedState}
 	 * 
+	 * @author Lucas
 	 * @throws VehicleException
 	 *             if the vehicle is already in a queued or parked state
 	 */
@@ -150,6 +153,7 @@ public abstract class Vehicle {
 	/**
 	 * Transition vehicle from parked state (mutator)
 	 * 
+	 * @author Lucas
 	 * @param departureTime
 	 *            int holding the actual departure time
 	 * @throws VehicleException
@@ -176,6 +180,7 @@ public abstract class Vehicle {
 	 * arrival with a call to {@link #enterQueuedState() enterQueuedState} Here
 	 * we exit and set the time at which the vehicle left the queue
 	 * 
+	 * @author Lucas
 	 * @param exitTime
 	 *            int holding the time at which the vehicle left the queue
 	 * @throws VehicleException
@@ -200,6 +205,7 @@ public abstract class Vehicle {
 	/**
 	 * Simple getter for the arrival time
 	 * 
+	 * @author Lucas
 	 * @return the arrivalTime
 	 */
 	public int getArrivalTime() {
@@ -211,6 +217,7 @@ public abstract class Vehicle {
 	 * be 0 before parking, show intended departure time while parked; and
 	 * actual when archived
 	 * 
+	 * @author Lucas
 	 * @return the departureTime
 	 */
 	public int getDepartureTime() {
@@ -228,6 +235,7 @@ public abstract class Vehicle {
 	/**
 	 * Simple getter for the parking time Note: result may be 0 before parking
 	 * 
+	 * @author Lucas
 	 * @return the parkingTime
 	 */
 	public int getParkingTime() {
@@ -241,6 +249,7 @@ public abstract class Vehicle {
 	/**
 	 * Simple getter for the vehicle ID
 	 * 
+	 * @author Lucas
 	 * @return the vehID
 	 */
 	public String getVehID() {
@@ -250,6 +259,7 @@ public abstract class Vehicle {
 	/**
 	 * Boolean status indicating whether vehicle is currently parked
 	 * 
+	 * @author Lucas
 	 * @return true if the vehicle is in a parked state; false otherwise
 	 */
 	public boolean isParked() {
@@ -263,6 +273,7 @@ public abstract class Vehicle {
 	/**
 	 * Boolean status indicating whether vehicle is currently queued
 	 * 
+	 * @author Lucas
 	 * @return true if vehicle is in a queued state, false otherwise
 	 */
 	public boolean isQueued() {
@@ -278,6 +289,7 @@ public abstract class Vehicle {
 	 * if they park; dissatisfied if turned away, or queuing for too long Note
 	 * that calls to this method may not reflect final status
 	 * 
+	 * @author Lucas
 	 * @return true if satisfied, false if never in parked state or if queuing
 	 *         time exceeds max allowable
 	 */
@@ -299,12 +311,10 @@ public abstract class Vehicle {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
+	
+	/**
+	 * @author Lucas
 	 */
-	@Override
 	public String toString() {
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append("Vehicle vehID: ");
@@ -358,6 +368,7 @@ public abstract class Vehicle {
 	 * Boolean status indicating whether vehicle was ever parked Will return
 	 * false for vehicles in queue or turned away
 	 * 
+	 * @author Lucas
 	 * @return true if vehicle was or is in a parked state, false otherwise
 	 */
 	public boolean wasParked() {
@@ -367,6 +378,7 @@ public abstract class Vehicle {
 	/**
 	 * Boolean status indicating whether vehicle was ever queued
 	 * 
+	 * @author Lucas
 	 * @return true if vehicle was or is in a queued state, false otherwise
 	 */
 	public boolean wasQueued() {

@@ -85,26 +85,12 @@ public class CarParkTests {
 		motorCycle = new MotorCycle(vehicleID3, defaultArrival3);
 	}
 
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@Test
-	public void defaultSetUp() throws Exception {
-		// TODO
-	}
-
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@After
-	public void tearDown() throws Exception {
-		// TODO
-	}
 
 	/**
 	 * Test method for
 	 * {@link asgn2CarParks.CarPark#archiveDepartingVehicles(int, boolean)}.
 	 * 
+	 * @author Lucas
 	 * @throws SimulationException
 	 * @throws VehicleException
 	 */
@@ -121,6 +107,7 @@ public class CarParkTests {
 	 * {@link asgn2CarParks.CarPark#archiveDepartingVehicles(int, boolean)}.
 	 * Testing for vehicles that try to depart before the default time.
 	 * 
+	 * @author Lucas
 	 * @throws VehicleException
 	 * @throws SimulationException
 	 */
@@ -137,6 +124,7 @@ public class CarParkTests {
 	 * {@link asgn2CarParks.CarPark#archiveDepartingVehicles(int, boolean)}.
 	 * Testing for vehicles that try to depart before the default time.
 	 * 
+	 * @author Lucas
 	 * @throws VehicleException
 	 * @throws SimulationException
 	 */
@@ -148,27 +136,13 @@ public class CarParkTests {
 		carPark.archiveDepartingVehicles(departureAfterDeafult, true);
 	}
 
-	// /**
-	// * Test method for
-	// * {@link asgn2CarParks.CarPark#archiveDepartingVehicles(int, boolean)}.
-	// * Testing for a simulation exception when there are no vehicles to be
-	// * archived.
-	// *
-	// * @throws VehicleException
-	// * @throws SimulationException
-	// */
-	// @Test(expected = SimulationException.class)
-	// public void testArchiveDepartingVehiclesNoVehcilesSimulationaException()
-	// throws VehicleException, SimulationException {
-	// carPark.archiveDepartingVehicles(defaultDeparture, true);
-	// }
-
 	/**
 	 * Test method for
 	 * {@link asgn2CarParks.CarPark#archiveDepartingVehicles(int, boolean)}.
 	 * Testing for a vehicle exception when the vehicle is in the incorrect
 	 * state.
 	 * 
+	 * @author Lucas
 	 * @throws SimulationException
 	 * @throws VehicleException
 	 */
@@ -184,6 +158,7 @@ public class CarParkTests {
 	 * Test method for
 	 * {@link asgn2CarParks.CarPark#archiveNewVehicle(asgn2Vehicles.Vehicle)}.
 	 * 
+	 * @author Lucas
 	 * @throws SimulationException
 	 */
 	@Test
@@ -197,6 +172,7 @@ public class CarParkTests {
 	 * Testing for a simulation exception when a vehicle is in the incorrect
 	 * state.
 	 * 
+	 * @author Lucas
 	 * @throws SimulationException
 	 * @throws VehicleException
 	 */
@@ -213,6 +189,7 @@ public class CarParkTests {
 	 * Testing for a simulation exception when a vehicle is in the incorrect
 	 * state.
 	 * 
+	 * @author Lucas
 	 * @throws SimulationException
 	 * @throws VehicleException
 	 */
@@ -226,6 +203,7 @@ public class CarParkTests {
 	/**
 	 * Test method for {@link asgn2CarParks.CarPark#archiveQueueFailures(int)}.
 	 * 
+	 * @author Lucas
 	 * @throws VehicleException
 	 * @throws SimulationException
 	 */
@@ -236,7 +214,14 @@ public class CarParkTests {
 		carPark.exitQueue(car, exitQueueAfterMax);
 		carPark.archiveQueueFailures(exitQueueAfterMax);
 	}
-	// TODO maxDefaultQueueDeparture exitQueueBeforeMax exitQueueAfterMax
+	
+	/**
+	 * Test method for {@link asgn2CarParks.CarPark#archiveQueueFailures(int)}.
+	 * 
+	 * @author Lucas
+	 * @throws VehicleException
+	 * @throws SimulationException
+	 */
 	@Test
 	public void testArchiveQueueFailures_beforeMaxTime()
 			throws SimulationException, VehicleException {
@@ -246,6 +231,13 @@ public class CarParkTests {
 		assertEquals("testArchiveQueueFailures_beforeMaxTime()", queueBefore, carPark.numVehiclesInQueue());
 	}
 	
+	/**
+	 * Test method for {@link asgn2CarParks.CarPark#archiveQueueFailures(int)}.
+	 * 
+	 * @author Lucas
+	 * @throws VehicleException
+	 * @throws SimulationException
+	 */
 	@Test
 	public void testArchiveQueueFailures_MaxTime()
 			throws SimulationException, VehicleException {
@@ -255,6 +247,13 @@ public class CarParkTests {
 		assertEquals("testArchiveQueueFailures_MaxTime()", queueBefore, carPark.numVehiclesInQueue());
 	}
 	
+	/**
+	 * Test method for {@link asgn2CarParks.CarPark#archiveQueueFailures(int)}.
+	 * 
+	 * @author Lucas
+	 * @throws VehicleException
+	 * @throws SimulationException
+	 */
 	@Test
 	public void testArchiveQueueFailures_afterMaxTime()
 			throws SimulationException, VehicleException {
@@ -264,6 +263,13 @@ public class CarParkTests {
 		assertEquals("testArchiveQueueFailures_MaxTime()", queueBefore - 1, carPark.numVehiclesInQueue());
 	}
 	
+	/**
+	 * Test method for {@link asgn2CarParks.CarPark#archiveQueueFailures(int)}.
+	 * 
+	 * @author Lucas
+	 * @throws VehicleException
+	 * @throws SimulationException
+	 */
 	@Test
 	public void testArchiveQueueFailures_ArchiveFullQueue()
 			throws SimulationException, VehicleException {
@@ -275,57 +281,10 @@ public class CarParkTests {
 		assertEquals("testArchiveQueueFailures_ArchiveFullQueue()", 0, carPark.numVehiclesInQueue());
 	}
 
-	// /**
-	// * Test method for {@link
-	// asgn2CarParks.CarPark#archiveQueueFailures(int)}.
-	// * Testing for a vehicle exception when a vehicle leaves the queue on the
-	// * last possible minute.
-	// *
-	// * @throws SimulationException
-	// * @throws VehicleException
-	// */
-	// @Test(expected = VehicleException.class)
-	// public void testArchiveQueueFailuresExitQueueOnLimit()
-	// throws SimulationException, VehicleException {
-	// carPark.enterQueue(car);
-	// carPark.exitQueue(car, maxQueueStay);
-	// carPark.archiveQueueFailures(maxQueueStay);
-	// }
-
-	// /**
-	// * Test method for {@link
-	// asgn2CarParks.CarPark#archiveQueueFailures(int)}.
-	// * Testing for a vehicle exception for when a vehicle leaves the queue
-	// * before the maximum wait time.
-	// *
-	// * @throws SimulationException
-	// * @throws VehicleException
-	// */
-	// @Test(expected = VehicleException.class)
-	// public void testArchiveQueueFailuresExitQueueBeforeLimit()
-	// throws SimulationException, VehicleException {
-	// carPark.enterQueue(car);
-	// carPark.exitQueue(car, exitQueueBeforeMax);
-	// carPark.archiveQueueFailures(exitQueueBeforeMax);
-	// }
-
-	// /**
-	// * Test method for {@link
-	// asgn2CarParks.CarPark#archiveQueueFailures(int)}.
-	// * Testing for a vehicle exception, when a vehicle is in the incorrect
-	// * state.
-	// *
-	// * @throws SimulationException
-	// * @throws VehicleException
-	// */
-	// @Test(expected = VehicleException.class)
-	// public void testArchiveQueueFailuresVehicleInIncorrectState()
-	// throws SimulationException, VehicleException {
-	// carPark.archiveQueueFailures(exitQueueAfterMax);
-	// }
-
 	/**
 	 * Test method for {@link asgn2CarParks.CarPark#carParkEmpty()}.
+	 * 
+	 * @author Lucas
 	 */
 	@Test
 	public void testCarParkEmpty() {
@@ -337,6 +296,7 @@ public class CarParkTests {
 	 * Test method for {@link asgn2CarParks.CarPark#carParkEmpty()}. Testing the
 	 * car park when there is currently one vehicle parked.
 	 * 
+	 * @author Lucas
 	 * @throws SimulationException
 	 * @throws VehicleException
 	 */
@@ -352,6 +312,7 @@ public class CarParkTests {
 	 * Test method for {@link asgn2CarParks.CarPark#carParkEmpty()}. Testing for
 	 * when there is only a vehicle in the queue.
 	 * 
+	 * @author Lucas
 	 * @throws SimulationException
 	 * @throws VehicleException
 	 */
@@ -368,6 +329,7 @@ public class CarParkTests {
 	 * Test method for {@link asgn2CarParks.CarPark#carParkEmpty()}. Testing for
 	 * when the car park is full.
 	 * 
+	 * @author Lucas
 	 * @throws SimulationException
 	 * @throws VehicleException
 	 */
@@ -393,6 +355,7 @@ public class CarParkTests {
 	/**
 	 * Test method for {@link asgn2CarParks.CarPark#carParkFull()}.
 	 * 
+	 * @author Lucas
 	 * @throws VehicleException
 	 * @throws SimulationException
 	 */
@@ -418,6 +381,8 @@ public class CarParkTests {
 	/**
 	 * Test method for {@link asgn2CarParks.CarPark#carParkFull()}. Testing for
 	 * when there are currently no cars in the car park.
+	 * 
+	 * @author Lucas
 	 */
 	@Test
 	public void testCarParkFullNoCars() {
@@ -428,6 +393,7 @@ public class CarParkTests {
 	 * Test method for {@link asgn2CarParks.CarPark#carParkFull()}. Testing for
 	 * when there is only one car in the car park.
 	 * 
+	 * @author Lucas
 	 * @throws SimulationException
 	 * @throws VehicleException
 	 */
@@ -442,6 +408,7 @@ public class CarParkTests {
 	 * Test method for
 	 * {@link asgn2CarParks.CarPark#enterQueue(asgn2Vehicles.Vehicle)}.
 	 * 
+	 * @author Lucas
 	 * @throws VehicleException
 	 * @throws SimulationException
 	 */
@@ -456,6 +423,7 @@ public class CarParkTests {
 	 * for a simulation exception, for when the queue is already full and
 	 * another vehicle tries to enter the queue.
 	 * 
+	 * @author Lucas
 	 * @throws VehicleException
 	 * @throws SimulationException
 	 */
@@ -475,6 +443,7 @@ public class CarParkTests {
 	 * for a vehicle exception, when a vehicle in an incorrect state attempts to
 	 * enter the queue.
 	 * 
+	 * @author Lucas
 	 * @throws SimulationException
 	 * @throws VehicleException
 	 */
@@ -489,6 +458,7 @@ public class CarParkTests {
 	 * Test method for
 	 * {@link asgn2CarParks.CarPark#exitQueue(asgn2Vehicles.Vehicle, int)}.
 	 * 
+	 * @author Lucas
 	 * @throws VehicleException
 	 * @throws SimulationException
 	 */
@@ -504,6 +474,7 @@ public class CarParkTests {
 	 * Testing for a simulation exception, when a car that is not currently in
 	 * the queue attempts to exit the queue.
 	 * 
+	 * @author Lucas
 	 * @throws SimulationException
 	 * @throws VehicleException
 	 */
@@ -519,6 +490,7 @@ public class CarParkTests {
 	 * Testing for a vehicle exception, when a vehicle attempts to exit the
 	 * queue in an incorrect state.
 	 * 
+	 * @author Lucas
 	 * @throws SimulationException
 	 * @throws VehicleException
 	 */
@@ -530,29 +502,13 @@ public class CarParkTests {
 		carPark.exitQueue(car, maxQueueStay);
 	}
 
-	// /**
-	// * Test method for
-	// * {@link asgn2CarParks.CarPark#exitQueue(asgn2Vehicles.Vehicle, int)}.
-	// * Testing for a vehicle exception, when a vehicle stays longer than the
-	// max
-	// * wait time.
-	// *
-	// * @throws SimulationException
-	// * @throws VehicleException
-	// */
-	// @Test(expected = VehicleException.class)
-	// public void testExitQueueViolatedTimingStayingLongerThanMax()
-	// throws SimulationException, VehicleException {
-	// carPark.enterQueue(car);
-	// carPark.exitQueue(car, exitQueueAfterMax);
-	// }
-
 	/**
 	 * Test method for
 	 * {@link asgn2CarParks.CarPark#exitQueue(asgn2Vehicles.Vehicle, int)}
 	 * .Testing for a vehicle exception, when a vehicle leaves the queue before
 	 * arriving.
 	 * 
+	 * @author Lucas
 	 * @throws SimulationException
 	 * @throws VehicleException
 	 */
@@ -566,6 +522,8 @@ public class CarParkTests {
 
 	/**
 	 * Test method for {@link asgn2CarParks.CarPark#finalState()}.
+	 * 
+	 * @author Lucas
 	 */
 	@Test
 	public void testFinalState() {
@@ -575,6 +533,7 @@ public class CarParkTests {
 	/**
 	 * Test method for {@link asgn2CarParks.CarPark#getNumCars()}.
 	 * 
+	 * @author Lucas
 	 * @throws VehicleException
 	 * @throws SimulationException
 	 */
@@ -588,6 +547,7 @@ public class CarParkTests {
 	 * Test method for {@link asgn2CarParks.CarPark#getNumCars()}. Testing the
 	 * method for small cars.
 	 * 
+	 * @author Lucas
 	 * @throws SimulationException
 	 * @throws VehicleException
 	 */
@@ -602,6 +562,7 @@ public class CarParkTests {
 	 * Test method for {@link asgn2CarParks.CarPark#getNumCars()}. Testing the
 	 * method for small and regular cars.
 	 * 
+	 * @author Lucas
 	 * @throws SimulationException
 	 * @throws VehicleException
 	 */
@@ -617,6 +578,7 @@ public class CarParkTests {
 	 * Test method for {@link asgn2CarParks.CarPark#getNumCars()}. Testing a
 	 * situation when vehicles come and leave the car park.
 	 * 
+	 * @author Lucas
 	 * @throws SimulationException
 	 * @throws VehicleException
 	 */
@@ -633,6 +595,8 @@ public class CarParkTests {
 	/**
 	 * Test method for {@link asgn2CarParks.CarPark#getNumCars()}. Testing the
 	 * method for when there are no cars in the car park.
+	 * 
+	 * @author Lucas
 	 */
 	@Test
 	public void testNumCarsZeroCars() {
@@ -643,6 +607,7 @@ public class CarParkTests {
 	 * Test method for {@link asgn2CarParks.CarPark#getNumCars()}. Testing the
 	 * method for when the car park is full.
 	 * 
+	 * @author Lucas
 	 * @throws VehicleException
 	 * @throws SimulationException
 	 */
@@ -668,6 +633,7 @@ public class CarParkTests {
 	/**
 	 * Test method for {@link asgn2CarParks.CarPark#getNumMotorCycles()}.
 	 * 
+	 * @author Lucas
 	 * @throws VehicleException
 	 * @throws SimulationException
 	 */
@@ -684,6 +650,7 @@ public class CarParkTests {
 	 * for when there are no motorcycles in he car park, but other vehicles are
 	 * present.
 	 * 
+	 * @author Lucas
 	 * @throws SimulationException
 	 * @throws VehicleException
 	 */
@@ -700,6 +667,7 @@ public class CarParkTests {
 	 * Testing for when there are more than one motorcycles among other vehicles
 	 * in the car park.
 	 * 
+	 * @author Lucas
 	 * @throws SimulationException
 	 * @throws VehicleException
 	 */
@@ -718,6 +686,7 @@ public class CarParkTests {
 	 * Test method for {@link asgn2CarParks.CarPark#getNumMotorCycles()}.
 	 * Testing for when the motorcycle spaces are full.
 	 * 
+	 * @author Lucas
 	 * @throws SimulationException
 	 * @throws VehicleException
 	 */
@@ -735,6 +704,7 @@ public class CarParkTests {
 	/**
 	 * Test method for {@link asgn2CarParks.CarPark#getNumSmallCars()}.
 	 * 
+	 * @author Lucas
 	 * @throws VehicleException
 	 * @throws SimulationException
 	 */
@@ -750,6 +720,7 @@ public class CarParkTests {
 	/**
 	 * Test method for {@link asgn2CarParks.CarPark#getNumSmallCars()}.
 	 * 
+	 * @author Lucas
 	 * @throws SimulationException
 	 * @throws VehicleException
 	 */
@@ -777,6 +748,7 @@ public class CarParkTests {
 	 * Test method for {@link asgn2CarParks.CarPark#getNumSmallCars()}. Testing
 	 * for when there are no small cars.
 	 * 
+	 * @author Lucas
 	 * @throws SimulationException
 	 * @throws VehicleException
 	 */
@@ -791,6 +763,7 @@ public class CarParkTests {
 	 * Test method for {@link asgn2CarParks.CarPark#getNumSmallCars()}. Test for
 	 * when there are no parked small cars but there are regular cars.
 	 * 
+	 * @author Lucas
 	 * @throws SimulationException
 	 * @throws VehicleException
 	 */
@@ -806,6 +779,7 @@ public class CarParkTests {
 	 * Test method for {@link asgn2CarParks.CarPark#getNumSmallCars()}. Testing
 	 * for when the small car spaces are full.
 	 * 
+	 * @author Lucas
 	 * @throws SimulationException
 	 * @throws VehicleException
 	 */
@@ -824,6 +798,7 @@ public class CarParkTests {
 	 * Test method for {@link asgn2CarParks.CarPark#getNumSmallCars()}. Testing
 	 * for when the small car and normal car spaces are full.
 	 * 
+	 * @author Lucas
 	 * @throws SimulationException
 	 * @throws VehicleException
 	 */
@@ -844,6 +819,8 @@ public class CarParkTests {
 
 	/**
 	 * Test method for {@link asgn2CarParks.CarPark#getStatus(int)}.
+	 * 
+	 * @author Lucas
 	 */
 	@Test
 	public void testGetStatus() {
@@ -852,6 +829,8 @@ public class CarParkTests {
 
 	/**
 	 * Test method for {@link asgn2CarParks.CarPark#initialState()}.
+	 * 
+	 * @author Lucas
 	 */
 	@Test
 	public void testInitialState() {
@@ -861,6 +840,7 @@ public class CarParkTests {
 	/**
 	 * Test method for {@link asgn2CarParks.CarPark#numVehiclesInQueue()}.
 	 * 
+	 * @author Lucas
 	 * @throws VehicleException
 	 * @throws SimulationException
 	 */
@@ -877,6 +857,8 @@ public class CarParkTests {
 	/**
 	 * Test method for {@link asgn2CarParks.CarPark#numVehiclesInQueue()}. No
 	 * cars in the queue.
+	 * 
+	 * @author Lucas
 	 */
 	@Test
 	public void testNumVehiclesInQueueZero() {
@@ -888,6 +870,7 @@ public class CarParkTests {
 	 * Test method for {@link asgn2CarParks.CarPark#numVehiclesInQueue()}.
 	 * Vehicles enter and leave the queue.
 	 * 
+	 * @author Lucas
 	 * @throws SimulationException
 	 * @throws VehicleException
 	 */
@@ -906,6 +889,7 @@ public class CarParkTests {
 	 * Test method for {@link asgn2CarParks.CarPark#numVehiclesInQueue()}.
 	 * Testing for when the queue is full.
 	 * 
+	 * @author Lucas
 	 * @throws SimulationException
 	 * @throws VehicleException
 	 */
@@ -925,6 +909,7 @@ public class CarParkTests {
 	 * {@link asgn2CarParks.CarPark#parkVehicle(asgn2Vehicles.Vehicle, int, int)}
 	 * .
 	 * 
+	 * @author Lucas
 	 * @throws VehicleException
 	 * @throws SimulationException
 	 */
@@ -944,6 +929,7 @@ public class CarParkTests {
 	 * . Testing for a simulation exception, when a vehicle attempts to park in
 	 * a full car park.
 	 * 
+	 * @author Lucas
 	 * @throws SimulationException
 	 * @throws VehicleException
 	 */
@@ -972,6 +958,7 @@ public class CarParkTests {
 	 * . Testing for a simulation exception, when a motorcycle attempts to park
 	 * when there are no motorcycle spaces.
 	 * 
+	 * @author Lucas
 	 * @throws SimulationException
 	 * @throws VehicleException
 	 */
@@ -997,6 +984,7 @@ public class CarParkTests {
 	 * . A small car attempts to park when both the small and normal car spaces
 	 * are full.
 	 * 
+	 * @author Lucas
 	 * @throws SimulationException
 	 * @throws VehicleException
 	 */
@@ -1020,6 +1008,7 @@ public class CarParkTests {
 	 * {@link asgn2CarParks.CarPark#parkVehicle(asgn2Vehicles.Vehicle, int, int)}
 	 * . Testing to see if the vehicles are parking correctly.
 	 * 
+	 * @author Lucas
 	 * @throws SimulationException
 	 * @throws VehicleException
 	 */
@@ -1057,6 +1046,7 @@ public class CarParkTests {
 	 * {@link asgn2CarParks.CarPark#parkVehicle(asgn2Vehicles.Vehicle, int, int)}
 	 * . A motorcycle may park in a small car space.
 	 * 
+	 * @author Lucas
 	 * @throws SimulationException
 	 * @throws VehicleException
 	 */
@@ -1086,6 +1076,7 @@ public class CarParkTests {
 	 * {@link asgn2CarParks.CarPark#parkVehicle(asgn2Vehicles.Vehicle, int, int)}
 	 * . A small car may park in a normal car space.
 	 * 
+	 * @author Lucas
 	 * @throws SimulationException
 	 * @throws VehicleException
 	 */
@@ -1107,22 +1098,6 @@ public class CarParkTests {
 				maxSmallCarSpaces + 1, carPark.getNumSmallCars());
 	}
 
-	// /**
-	// * Test method for
-	// * {@link asgn2CarParks.CarPark#parkVehicle(asgn2Vehicles.Vehicle, int,
-	// int)}
-	// * . Testing for a vehicle exception when a vehicle parked before
-	// arriving.
-	// *
-	// * @throws VehicleException
-	// * @throws SimulationException
-	// */
-	// @Test(expected = VehicleException.class)
-	// public void testParkVehicleVehicleArrivedAfterCurrentTime()
-	// throws VehicleException, SimulationException {
-	// car = new Car(vehicleID1, defaultArrival3, false);
-	// carPark.parkVehicle(car, defaultArrival1, defaultIntendedStay);
-	// }
 
 	/**
 	 * Test method for
@@ -1130,6 +1105,7 @@ public class CarParkTests {
 	 * . Testing for a vehicle exception, when the vehicle is in the incorrect
 	 * state.
 	 * 
+	 * @author Lucas
 	 * @throws VehicleException
 	 * @throws SimulationException
 	 */
@@ -1145,6 +1121,7 @@ public class CarParkTests {
 	 * {@link asgn2CarParks.CarPark#processQueue(int, asgn2Simulators.Simulator)}
 	 * .
 	 * 
+	 * @author Lucas
 	 * @throws SimulationException
 	 * @throws VehicleException
 	 */
@@ -1157,7 +1134,15 @@ public class CarParkTests {
 				carPark.queueEmpty());
 	}
 
-	// Queue is not full & Spaces For All
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#processQueue(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testProcessQueue_QueueIsNotFull_SpacesForAll()
 			throws VehicleException, SimulationException {
@@ -1202,7 +1187,15 @@ public class CarParkTests {
 				carPark.queueEmpty());
 	}
 
-	// Queue is not full & Spaces for some
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#processQueue(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testProcessQueue_QueueIsNotFull_SpacesForSome_SpaceForFirstButNotLast_FirstIsNormalCar()
 			throws SimulationException, VehicleException {
@@ -1240,6 +1233,15 @@ public class CarParkTests {
 				queueSize - 1, carPark.numVehiclesInQueue());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#processQueue(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testProcessQueue_QueueIsNotFull_SpacesForSome_SpaceForFirstButNotLast_FirstIsSmallCar()
 			throws SimulationException, VehicleException {
@@ -1277,6 +1279,15 @@ public class CarParkTests {
 				queueSize - 1, carPark.numVehiclesInQueue());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#processQueue(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testProcessQueue_QueueIsNotFull_SpacesForSome_SpaceForFirstButNotLast_FirstIsSmallCar_NormalCarSpaceAvailable()
 			throws SimulationException, VehicleException {
@@ -1314,6 +1325,15 @@ public class CarParkTests {
 				queueSize - 1, carPark.numVehiclesInQueue());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#processQueue(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testProcessQueue_QueueIsNotFull_SpacesForSome_SpaceForFirstButNotLast_FirstIsMotorCycle()
 			throws SimulationException, VehicleException {
@@ -1352,6 +1372,15 @@ public class CarParkTests {
 				queueSize - 1, carPark.numVehiclesInQueue());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#processQueue(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testProcessQueue_QueueIsNotFull_SpacesForSome_SpaceForFirstButNotLast_FirstIsMotorCycle_SmallCarSpaceAvailable()
 			throws SimulationException, VehicleException {
@@ -1390,6 +1419,15 @@ public class CarParkTests {
 				queueSize - 1, carPark.numVehiclesInQueue());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#processQueue(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testProcessQueue_QueueIsNotFull_SpacesForSome_SpaceForMiddleButNotFirstAndNotLast_MiddleIsNormalCar()
 			throws SimulationException, VehicleException {
@@ -1422,6 +1460,15 @@ public class CarParkTests {
 				queueSize, carPark.numVehiclesInQueue());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#processQueue(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testProcessQueue_QueueIsNotFull_SpacesForSome_SpaceForMiddleButNotFirstAndNotLast_MiddleIsSmallCar()
 			throws SimulationException, VehicleException {
@@ -1454,6 +1501,15 @@ public class CarParkTests {
 				queueSize, carPark.numVehiclesInQueue());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#processQueue(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testProcessQueue_QueueIsNotFull_SpacesForSome_SpaceForMiddleButNotFirstAndNotLast_MiddleIsSmallCar_NormalCarSpaceAvailable()
 			throws SimulationException, VehicleException {
@@ -1486,6 +1542,15 @@ public class CarParkTests {
 				queueSize, carPark.numVehiclesInQueue());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#processQueue(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testProcessQueue_QueueIsNotFull_SpacesForSome_SpaceForMiddleButNotFirstAndNotLast_MiddleIsMotorCycle()
 			throws SimulationException, VehicleException {
@@ -1522,6 +1587,15 @@ public class CarParkTests {
 				queueSize, carPark.numVehiclesInQueue());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#processQueue(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testProcessQueue_QueueIsNotFull_SpacesForSome_SpaceForMiddleButNotFirstAndNotLast_MiddleIsMotorCycle_SmallCarSpaceAvailable()
 			throws SimulationException, VehicleException {
@@ -1554,6 +1628,15 @@ public class CarParkTests {
 				queueSize, carPark.numVehiclesInQueue());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#processQueue(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testProcessQueue_QueueIsNotFull_SpacesForSome_SpaceForLastButNotFirst_LastIsNormalCar()
 			throws SimulationException, VehicleException {
@@ -1587,6 +1670,15 @@ public class CarParkTests {
 
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#processQueue(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testProcessQueue_QueueIsNotFull_SpacesForSome_SpaceForLastButNotFirst_LastIsSmallCar()
 			throws SimulationException, VehicleException {
@@ -1619,6 +1711,15 @@ public class CarParkTests {
 				queueSize, carPark.numVehiclesInQueue());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#processQueue(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testProcessQueue_QueueIsNotFull_SpacesForSome_SpaceForLastButNotFirst_LastIsSmallCar_NormalCarSpaceAvailable()
 			throws SimulationException, VehicleException {
@@ -1651,6 +1752,15 @@ public class CarParkTests {
 				queueSize, carPark.numVehiclesInQueue());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#processQueue(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testProcessQueue_QueueIsNotFull_SpacesForSome_SpaceForLastButNotFirst_LastIsMotorCycle()
 			throws SimulationException, VehicleException {
@@ -1683,6 +1793,15 @@ public class CarParkTests {
 				queueSize, carPark.numVehiclesInQueue());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#processQueue(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testProcessQueue_QueueIsNotFull_SpacesForSome_SpaceForLastButNotFirst_LastIsMotorCycle_SmallCarSpaceAvailable()
 			throws SimulationException, VehicleException {
@@ -1715,6 +1834,15 @@ public class CarParkTests {
 				queueSize, carPark.numVehiclesInQueue());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#processQueue(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testProcessQueue_QueueIsNotFull_SpacesForNone()
 			throws SimulationException, VehicleException {
@@ -1752,6 +1880,15 @@ public class CarParkTests {
 				queueSize, carPark.numVehiclesInQueue());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#processQueue(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testProcessQueue_QueueIsFull_SpacesForAll()
 			throws VehicleException, SimulationException {
@@ -1796,6 +1933,15 @@ public class CarParkTests {
 				carPark.queueEmpty());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#processQueue(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testProcessQueue_QueueIsFull_SpacesForSome_SpaceForFirstButNotLast_FirstIsNormalCar()
 			throws SimulationException, VehicleException {
@@ -1842,6 +1988,15 @@ public class CarParkTests {
 				queueSize - 1, carPark.numVehiclesInQueue());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#processQueue(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testProcessQueue_QueueIsFull_SpacesForSome_SpaceForFirstButNotLast_FirstIsSmallCar()
 			throws SimulationException, VehicleException {
@@ -1888,6 +2043,15 @@ public class CarParkTests {
 				queueSize - 1, carPark.numVehiclesInQueue());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#processQueue(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testProcessQueue_QueueIsFull_SpacesForSome_SpaceForFirstButNotLast_FirstIsSmallCar_NormalCarSpaceAvailable()
 			throws SimulationException, VehicleException {
@@ -1934,6 +2098,15 @@ public class CarParkTests {
 				queueSize - 1, carPark.numVehiclesInQueue());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#processQueue(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testProcessQueue_QueueIsFull_SpacesForSome_SpaceForFirstButNotLast_FirstIsMotorCycle()
 			throws SimulationException, VehicleException {
@@ -1981,6 +2154,15 @@ public class CarParkTests {
 				queueSize - 1, carPark.numVehiclesInQueue());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#processQueue(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testProcessQueue_QueueIsFull_SpacesForSome_SpaceForFirstButNotLast_FirstIsMotorCycle_SmallCarSpaceAvailable()
 			throws SimulationException, VehicleException {
@@ -2028,6 +2210,15 @@ public class CarParkTests {
 				queueSize - 1, carPark.numVehiclesInQueue());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#processQueue(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testProcessQueue_QueueIsFull_SpacesForSome_SpaceForMiddleButNotFirstAndNotLast_MiddleIsNormalCar()
 			throws SimulationException, VehicleException {
@@ -2074,6 +2265,15 @@ public class CarParkTests {
 				queueSize, carPark.numVehiclesInQueue());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#processQueue(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testProcessQueue_QueueIsFull_SpacesForSome_SpaceForMiddleButNotFirstAndNotLast_MiddleIsSmallCar()
 			throws SimulationException, VehicleException {
@@ -2120,6 +2320,15 @@ public class CarParkTests {
 				queueSize, carPark.numVehiclesInQueue());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#processQueue(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testProcessQueue_QueueIsFull_SpacesForSome_SpaceForMiddleButNotFirstAndNotLast_MiddleIsSmallCar_NormalCarSpaceAvailable()
 			throws SimulationException, VehicleException {
@@ -2166,6 +2375,15 @@ public class CarParkTests {
 				queueSize, carPark.numVehiclesInQueue());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#processQueue(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testProcessQueue_QueueIsFull_SpacesForSomeSpaceForMiddleButNotFirstAndNotLast_MiddleIsMotorCycle()
 			throws SimulationException, VehicleException {
@@ -2212,6 +2430,15 @@ public class CarParkTests {
 				queueSize, carPark.numVehiclesInQueue());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#processQueue(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testProcessQueue_QueueIsFull_SpacesForSomeSpaceForMiddleButNotFirstAndNotLast_MiddleIsMotorCycle_SmallCarSpaceAvailable()
 			throws SimulationException, VehicleException {
@@ -2258,6 +2485,15 @@ public class CarParkTests {
 				queueSize, carPark.numVehiclesInQueue());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#processQueue(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testProcessQueue_QueueIsFull_SpacesForSomeSpaceForLastButNotFirst_LastIsNormalCar()
 			throws SimulationException, VehicleException {
@@ -2305,6 +2541,15 @@ public class CarParkTests {
 
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#processQueue(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testProcessQueue_QueueIsFull_SpacesForSome_SpaceForLastButNotFirst_LastIsSmallCar()
 			throws SimulationException, VehicleException {
@@ -2351,6 +2596,15 @@ public class CarParkTests {
 				queueSize, carPark.numVehiclesInQueue());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#processQueue(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testProcessQueue_QueueIsFull_SpacesForSomeSpaceForLastButNotFirst_LastIsSmallCar_NormalCarSpaceAvailable()
 			throws SimulationException, VehicleException {
@@ -2397,6 +2651,15 @@ public class CarParkTests {
 				queueSize, carPark.numVehiclesInQueue());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#processQueue(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testProcessQueue_QueueIsFull_SpacesForSome_SpaceForLastButNotFirst_LastIsMotorCycle()
 			throws SimulationException, VehicleException {
@@ -2443,6 +2706,15 @@ public class CarParkTests {
 				queueSize, carPark.numVehiclesInQueue());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#processQueue(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testProcessQueue_QueueIsFull_SpacesForSome_SpaceForLastButNotFirst_LastIsMotorCycle_SmallCarSpaceAvailable()
 			throws SimulationException, VehicleException {
@@ -2489,6 +2761,15 @@ public class CarParkTests {
 				queueSize, carPark.numVehiclesInQueue());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#processQueue(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testProcessQueue_QueueIsFull_SpacesForNone()
 			throws SimulationException, VehicleException {
@@ -2536,6 +2817,8 @@ public class CarParkTests {
 
 	/**
 	 * Test method for {@link asgn2CarParks.CarPark#queueEmpty()}.
+	 * 
+	 * @author Lucas
 	 */
 	@Test
 	public void testQueueEmpty() {
@@ -2546,6 +2829,7 @@ public class CarParkTests {
 	 * Test method for {@link asgn2CarParks.CarPark#queueEmpty()}. One car in
 	 * the queue.
 	 * 
+	 * @author Lucas
 	 * @throws SimulationException
 	 * @throws VehicleException
 	 */
@@ -2559,6 +2843,7 @@ public class CarParkTests {
 	/**
 	 * One small car in queue.
 	 * 
+	 * @author Lucas
 	 * @throws SimulationException
 	 * @throws VehicleException
 	 */
@@ -2573,6 +2858,7 @@ public class CarParkTests {
 	 * Test method for {@link asgn2CarParks.CarPark#queueEmpty()}. One
 	 * motorcycle in the queue
 	 * 
+	 * @author Lucas
 	 * @throws SimulationException
 	 * @throws VehicleException
 	 */
@@ -2586,6 +2872,7 @@ public class CarParkTests {
 	/**
 	 * The queue is full.
 	 * 
+	 * @author Lucas
 	 * @throws SimulationException
 	 * @throws VehicleException
 	 */
@@ -2601,6 +2888,12 @@ public class CarParkTests {
 				carPark.queueEmpty());
 	}
 
+	/**
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testQueueEmptyFullQueue_SmallCars() throws SimulationException,
 			VehicleException {
@@ -2613,6 +2906,12 @@ public class CarParkTests {
 				carPark.queueEmpty());
 	}
 
+	/**
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testQueueEmptyFullQueue_MotorCycles()
 			throws SimulationException, VehicleException {
@@ -2628,6 +2927,7 @@ public class CarParkTests {
 	/**
 	 * Test method for {@link asgn2CarParks.CarPark#queueFull()}.
 	 * 
+	 * @author Lucas
 	 * @throws VehicleException
 	 * @throws SimulationException
 	 */
@@ -2640,6 +2940,12 @@ public class CarParkTests {
 		assertTrue("testQueueFull() Error", carPark.queueFull());
 	}
 
+	/**
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testQueueFull_SmallCars() throws SimulationException,
 			VehicleException {
@@ -2650,6 +2956,12 @@ public class CarParkTests {
 		assertTrue("testQueueFull_SmallCars() Error", carPark.queueFull());
 	}
 
+	/**
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testQueueFull_MotorCycles() throws SimulationException,
 			VehicleException {
@@ -2664,6 +2976,7 @@ public class CarParkTests {
 	 * Test method for {@link asgn2CarParks.CarPark#queueFull()}. Testing the
 	 * limit of the queue.
 	 * 
+	 * @author Lucas
 	 * @throws SimulationException
 	 * @throws VehicleException
 	 */
@@ -2681,6 +2994,7 @@ public class CarParkTests {
 	 * Test method for {@link asgn2CarParks.CarPark#queueFull()}. Testing the
 	 * lower limit of the queue.
 	 * 
+	 * @author Lucas
 	 * @throws SimulationException
 	 * @throws VehicleException
 	 */
@@ -2694,6 +3008,8 @@ public class CarParkTests {
 	/**
 	 * Test method for {@link asgn2CarParks.CarPark#queueFull()}. The queue is
 	 * empty.
+	 * 
+	 * @author Lucas
 	 */
 	@Test
 	public void testQueueFull_Empty() {
@@ -2703,6 +3019,8 @@ public class CarParkTests {
 	/**
 	 * Test method for
 	 * {@link asgn2CarParks.CarPark#spacesAvailable(asgn2Vehicles.Vehicle)}.
+	 * 
+	 * @author Lucas
 	 */
 	@Test
 	public void testSpacesAvailable() {
@@ -2713,6 +3031,8 @@ public class CarParkTests {
 	 * Test method for
 	 * {@link asgn2CarParks.CarPark#spacesAvailable(asgn2Vehicles.Vehicle)}.
 	 * Testing for small cars.
+	 * 
+	 * @author Lucas
 	 */
 	@Test
 	public void testSpacesAvailable_SmallCar() {
@@ -2724,6 +3044,8 @@ public class CarParkTests {
 	 * Test method for
 	 * {@link asgn2CarParks.CarPark#spacesAvailable(asgn2Vehicles.Vehicle)}.
 	 * testing for motorcycles.
+	 * 
+	 * @author Lucas
 	 */
 	@Test
 	public void testSpacesAvailable_MotorCycle() {
@@ -2736,6 +3058,7 @@ public class CarParkTests {
 	 * {@link asgn2CarParks.CarPark#spacesAvailable(asgn2Vehicles.Vehicle)}.
 	 * Testing for normal cars.
 	 * 
+	 * @author Lucas
 	 * @throws SimulationException
 	 * @throws VehicleException
 	 */
@@ -2752,6 +3075,7 @@ public class CarParkTests {
 	 * {@link asgn2CarParks.CarPark#spacesAvailable(asgn2Vehicles.Vehicle)}.
 	 * Testing for small cars.
 	 * 
+	 * @author Lucas
 	 * @throws SimulationException
 	 * @throws VehicleException
 	 */
@@ -2768,6 +3092,7 @@ public class CarParkTests {
 	 * {@link asgn2CarParks.CarPark#spacesAvailable(asgn2Vehicles.Vehicle)}.
 	 * Testing for motorcycles.
 	 * 
+	 * @author Lucas
 	 * @throws SimulationException
 	 * @throws VehicleException
 	 */
@@ -2784,6 +3109,7 @@ public class CarParkTests {
 	 * {@link asgn2CarParks.CarPark#spacesAvailable(asgn2Vehicles.Vehicle)}.
 	 * Testing the limit for normal cars.
 	 * 
+	 * @author Lucas
 	 * @throws VehicleException
 	 * @throws SimulationException
 	 */
@@ -2803,6 +3129,7 @@ public class CarParkTests {
 	 * {@link asgn2CarParks.CarPark#spacesAvailable(asgn2Vehicles.Vehicle)}.
 	 * Testing the limit for small cars spaces.
 	 * 
+	 * @author Lucas
 	 * @throws SimulationException
 	 * @throws VehicleException
 	 */
@@ -2822,6 +3149,7 @@ public class CarParkTests {
 	 * {@link asgn2CarParks.CarPark#spacesAvailable(asgn2Vehicles.Vehicle)}.
 	 * Testing the limit for motorcycle spaces.
 	 * 
+	 * @author Lucas
 	 * @throws SimulationException
 	 * @throws VehicleException
 	 */
@@ -2841,6 +3169,7 @@ public class CarParkTests {
 	 * {@link asgn2CarParks.CarPark#spacesAvailable(asgn2Vehicles.Vehicle)}.
 	 * Normal car spaces are full.
 	 * 
+	 * @author Lucas
 	 * @throws SimulationException
 	 * @throws VehicleException
 	 */
@@ -2860,6 +3189,7 @@ public class CarParkTests {
 	 * {@link asgn2CarParks.CarPark#spacesAvailable(asgn2Vehicles.Vehicle)}.
 	 * Small cars can park in normal car spaces.
 	 * 
+	 * @author Lucas
 	 * @throws SimulationException
 	 * @throws VehicleException
 	 */
@@ -2880,6 +3210,7 @@ public class CarParkTests {
 	 * {@link asgn2CarParks.CarPark#spacesAvailable(asgn2Vehicles.Vehicle)}.
 	 * Motorcycles may park in small car spaces.
 	 * 
+	 * @author Lucas
 	 * @throws SimulationException
 	 * @throws VehicleException
 	 */
@@ -2900,6 +3231,7 @@ public class CarParkTests {
 	 * {@link asgn2CarParks.CarPark#spacesAvailable(asgn2Vehicles.Vehicle)}.
 	 * Testing the limit for small car and normal car spcaes for small cars.
 	 * 
+	 * @author Lucas
 	 * @throws SimulationException
 	 * @throws VehicleException
 	 */
@@ -2924,6 +3256,7 @@ public class CarParkTests {
 	 * {@link asgn2CarParks.CarPark#spacesAvailable(asgn2Vehicles.Vehicle)}.
 	 * Testing the limit for motorcycle and small car spaces for motorcycles.
 	 * 
+	 * @author Lucas
 	 * @throws SimulationException
 	 * @throws VehicleException
 	 */
@@ -2948,6 +3281,7 @@ public class CarParkTests {
 	 * {@link asgn2CarParks.CarPark#spacesAvailable(asgn2Vehicles.Vehicle)}.
 	 * Small and normal car spaces are full.
 	 * 
+	 * @author Lucas
 	 * @throws SimulationException
 	 * @throws VehicleException
 	 */
@@ -2971,6 +3305,7 @@ public class CarParkTests {
 	 * {@link asgn2CarParks.CarPark#spacesAvailable(asgn2Vehicles.Vehicle)}.
 	 * Motorcycle and small car spaces are full.
 	 * 
+	 * @author Lucas
 	 * @throws SimulationException
 	 * @throws VehicleException
 	 */
@@ -2996,6 +3331,7 @@ public class CarParkTests {
 	 * Motorcycle and small car spaces are full. A Car tries to park after
 	 * motorcycles have overflowed.
 	 * 
+	 * @author Lucas
 	 * @throws SimulationException
 	 * @throws VehicleException
 	 */
@@ -3022,6 +3358,7 @@ public class CarParkTests {
 	 * {@link asgn2CarParks.CarPark#spacesAvailable(asgn2Vehicles.Vehicle)}. All
 	 * spaces are full and a car tries to find a space.
 	 * 
+	 * @author Lucas
 	 * @throws SimulationException
 	 * @throws VehicleException
 	 */
@@ -3049,6 +3386,7 @@ public class CarParkTests {
 	 * {@link asgn2CarParks.CarPark#spacesAvailable(asgn2Vehicles.Vehicle)}. All
 	 * spaces are full and a small car tries to find a space.
 	 * 
+	 * @author Lucas
 	 * @throws SimulationException
 	 * @throws VehicleException
 	 */
@@ -3076,6 +3414,7 @@ public class CarParkTests {
 	 * {@link asgn2CarParks.CarPark#spacesAvailable(asgn2Vehicles.Vehicle)}. All
 	 * spaces are taken and a motorcycles tries to find a space.
 	 * 
+	 * @author Lucas
 	 * @throws SimulationException
 	 * @throws VehicleException
 	 */
@@ -3100,6 +3439,7 @@ public class CarParkTests {
 
 	/**
 	 * Test method for {@link asgn2CarParks.CarPark#toString()}.
+	 * @author Lucas
 	 */
 	@Test
 	public void testToString() {
@@ -3111,6 +3451,7 @@ public class CarParkTests {
 	 * {@link asgn2CarParks.CarPark#tryProcessNewVehicles(int, asgn2Simulators.Simulator)}
 	 * .
 	 * 
+	 * @author Lucas
 	 * @throws SimulationException
 	 * @throws VehicleException
 	 */
@@ -3127,6 +3468,15 @@ public class CarParkTests {
 				carParkBefore + 1, carPark.getNumCars());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#tryProcessNewVehicles(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testTryProcessNewVehicles_Park_SmallCar()
 			throws SimulationException, VehicleException {
@@ -3143,6 +3493,15 @@ public class CarParkTests {
 				carParkBefore + 1, carPark.getNumCars());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#tryProcessNewVehicles(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testTryProcessNewVehicles_Park_MotorCycle()
 			throws VehicleException, SimulationException {
@@ -3156,6 +3515,15 @@ public class CarParkTests {
 				carParkBefore + 1, carPark.getNumMotorCycles());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#tryProcessNewVehicles(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testTryProcessNewVehicles_Park_Car_CarParkAlmostFull()
 			throws VehicleException, SimulationException {
@@ -3183,6 +3551,15 @@ public class CarParkTests {
 				carParkBefore + 1, carPark.getNumCars());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#tryProcessNewVehicles(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testTryProcessNewVehicles_Park_SmallCar_CarParkAlmostFull()
 			throws SimulationException, VehicleException {
@@ -3210,6 +3587,15 @@ public class CarParkTests {
 				carParkBefore + 1, carPark.getNumCars());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#tryProcessNewVehicles(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testTryProcessNewVehicles_Park_MotorCycle_CarParkAlmostFull()
 			throws VehicleException, SimulationException {
@@ -3237,6 +3623,15 @@ public class CarParkTests {
 				carParkBefore + 1, carPark.getNumMotorCycles());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#tryProcessNewVehicles(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testTryProcessNewVehicles_Park_SmallCar_CarParkAlmostFull_NormalCarSpace()
 			throws SimulationException, VehicleException {
@@ -3264,6 +3659,15 @@ public class CarParkTests {
 				carParkBefore + 1, carPark.getNumCars());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#tryProcessNewVehicles(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testTryProcessNewVehicles_Park_MotorCycle_CarParkAlmostFull_SmallCarSpace()
 			throws VehicleException, SimulationException {
@@ -3291,6 +3695,15 @@ public class CarParkTests {
 				carParkBefore + 1, carPark.getNumMotorCycles());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#tryProcessNewVehicles(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testTryProcessNewVehicles_Queue_Car()
 			throws SimulationException, VehicleException {
@@ -3317,6 +3730,15 @@ public class CarParkTests {
 				queueBefore + 1, carPark.numVehiclesInQueue());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#tryProcessNewVehicles(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testTryProcessNewVehicles_Queue_SmallCar()
 			throws VehicleException, SimulationException {
@@ -3343,6 +3765,15 @@ public class CarParkTests {
 				queueBefore + 1, carPark.numVehiclesInQueue());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#tryProcessNewVehicles(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testTryProcessNewVehicles_Queue_MotorCycle()
 			throws VehicleException, SimulationException {
@@ -3370,6 +3801,15 @@ public class CarParkTests {
 				queueBefore + 1, carPark.numVehiclesInQueue());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#tryProcessNewVehicles(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testTryProcessNewVehicles_Queue_Car_QueueAlmostFull()
 			throws SimulationException, VehicleException {
@@ -3402,6 +3842,15 @@ public class CarParkTests {
 				queueBefore + 1, carPark.numVehiclesInQueue());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#tryProcessNewVehicles(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testTryProcessNewVehicles_Queue_SmallCar_QueueAlmostFull()
 			throws VehicleException, SimulationException {
@@ -3434,6 +3883,15 @@ public class CarParkTests {
 				queueBefore + 1, carPark.numVehiclesInQueue());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#tryProcessNewVehicles(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testTryProcessNewVehicles_Queue_MotorCycle_QueueAlmostFull()
 			throws VehicleException, SimulationException {
@@ -3466,6 +3924,15 @@ public class CarParkTests {
 				queueBefore + 1, carPark.numVehiclesInQueue());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#tryProcessNewVehicles(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testTryProcessNewVehicles_Archive_Car()
 			throws SimulationException, VehicleException {
@@ -3497,6 +3964,15 @@ public class CarParkTests {
 				carParkBefore, carPark.getNumCars());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#tryProcessNewVehicles(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testTryProcessNewVehicles_Archive_SmallCar()
 			throws VehicleException, SimulationException {
@@ -3528,6 +4004,15 @@ public class CarParkTests {
 				carParkBefore, carPark.getNumCars());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#tryProcessNewVehicles(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testTryProcessNewVehicles_Archive_MotorCycle()
 			throws VehicleException, SimulationException {
@@ -3559,6 +4044,15 @@ public class CarParkTests {
 				carParkBefore, carPark.getNumMotorCycles());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#tryProcessNewVehicles(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testTryProcessNewVehicles_MotorcycleAndCar_ParkBoth()
 			throws VehicleException, SimulationException {
@@ -3574,6 +4068,15 @@ public class CarParkTests {
 				carPark.getNumCars() + carPark.getNumMotorCycles());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#tryProcessNewVehicles(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testTryProcessNewVehicles_MotorcycleAndCar_CarparkAlmostFull_ParkBoth()
 			throws VehicleException, SimulationException {
@@ -3602,6 +4105,15 @@ public class CarParkTests {
 				carPark.getNumCars() + carPark.getNumMotorCycles());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#tryProcessNewVehicles(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testTryProcessNewVehicles_MotorcycleAndCar_CarparkAlmostFull_SmallCarSpaceAvailable_ParkBoth()
 			throws VehicleException, SimulationException {
@@ -3630,6 +4142,15 @@ public class CarParkTests {
 				carPark.getNumCars() + carPark.getNumMotorCycles());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#tryProcessNewVehicles(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForCar_ParkCar_QueueMotorCycle()
 			throws VehicleException, SimulationException {
@@ -3657,6 +4178,15 @@ public class CarParkTests {
 				queueBefore + 1, carPark.numVehiclesInQueue());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#tryProcessNewVehicles(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForCar_CarParkAlmostFull_ParkCar_QueueMotorCycle()
 			throws VehicleException, SimulationException {
@@ -3688,6 +4218,15 @@ public class CarParkTests {
 				queueBefore + 1, carPark.numVehiclesInQueue());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#tryProcessNewVehicles(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForCar_ParkCar_QueueMotorCycle_QueueAlmostFull()
 			throws VehicleException, SimulationException {
@@ -3719,6 +4258,15 @@ public class CarParkTests {
 				queueBefore + 1, carPark.numVehiclesInQueue());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#tryProcessNewVehicles(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForCar_CarParkAlmostFull_ParkCar_QueueMotorCycle_QueueAlmostFull()
 			throws VehicleException, SimulationException {
@@ -3755,6 +4303,15 @@ public class CarParkTests {
 				queueBefore + 1, carPark.numVehiclesInQueue());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#tryProcessNewVehicles(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForCar_ParkCar_QueueIsFull_ArchiveCycle()
 			throws VehicleException, SimulationException {
@@ -3786,6 +4343,15 @@ public class CarParkTests {
 				queueBefore, carPark.numVehiclesInQueue());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#tryProcessNewVehicles(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForCar_CarParkAlmostFull_ParkCar_QueueIsFull_ArchiveCycle()
 			throws VehicleException, SimulationException {
@@ -3822,6 +4388,15 @@ public class CarParkTests {
 				queueBefore, carPark.numVehiclesInQueue());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#tryProcessNewVehicles(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForMotorCycle_ParkMotorCycle_QueueCar()
 			throws VehicleException, SimulationException {
@@ -3849,6 +4424,15 @@ public class CarParkTests {
 				queueBefore + 1, carPark.numVehiclesInQueue());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#tryProcessNewVehicles(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForMotorCycle_ParkMotorCycle_QueueAlmostFull_QueueCar()
 			throws VehicleException, SimulationException {
@@ -3881,6 +4465,15 @@ public class CarParkTests {
 				queueBefore + 1, carPark.numVehiclesInQueue());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#tryProcessNewVehicles(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForMotorCycle_CarParkAlmostFull_ParkMotorCycle_QueueCar()
 			throws VehicleException, SimulationException {
@@ -3912,6 +4505,15 @@ public class CarParkTests {
 				queueBefore + 1, carPark.numVehiclesInQueue());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#tryProcessNewVehicles(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForMotorCycle_CarParkAlmostFull_ParkMotorCycle_QueueAlmostFull_QueueCar()
 			throws VehicleException, SimulationException {
@@ -3947,6 +4549,15 @@ public class CarParkTests {
 				queueBefore + 1, carPark.numVehiclesInQueue());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#tryProcessNewVehicles(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForMotorCycle_SmallCarSpaceAvailable_ParkMotorCycle_QueueCar()
 			throws VehicleException, SimulationException {
@@ -3974,6 +4585,15 @@ public class CarParkTests {
 				queueBefore + 1, carPark.numVehiclesInQueue());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#tryProcessNewVehicles(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForMotorCycle_SmallCarSpaceAvailable_ParkMotorCycle_QueueAlmostFull_QueueCar()
 			throws VehicleException, SimulationException {
@@ -4006,6 +4626,15 @@ public class CarParkTests {
 				queueBefore + 1, carPark.numVehiclesInQueue());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#tryProcessNewVehicles(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForMotorCycle_SmallCarSpaceAvailable_CarParkAlmostFull_ParkMotorCycle_QueueCar()
 			throws VehicleException, SimulationException {
@@ -4037,6 +4666,15 @@ public class CarParkTests {
 				queueBefore + 1, carPark.numVehiclesInQueue());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#tryProcessNewVehicles(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForMotorCycle_SmallCarSpaceAvailable_CarParkAlmostFull_ParkMotorCycle_QueueAlmostFull_QueueCar()
 			throws VehicleException, SimulationException {
@@ -4072,6 +4710,15 @@ public class CarParkTests {
 				queueBefore + 1, carPark.numVehiclesInQueue());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#tryProcessNewVehicles(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForMotorCycle_ParkMotorCycle_ArchiveCar()
 			throws VehicleException, SimulationException {
@@ -4103,6 +4750,15 @@ public class CarParkTests {
 				queueBefore, carPark.numVehiclesInQueue());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#tryProcessNewVehicles(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForMotorCycle_CarParkAlmostFull_ParkMotorCycle_ArchiveCar()
 			throws VehicleException, SimulationException {
@@ -4138,6 +4794,15 @@ public class CarParkTests {
 				queueBefore, carPark.numVehiclesInQueue());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#tryProcessNewVehicles(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForMotorCycle_SmallCarSpacesAvailable_ParkMotorCycle_ArchiveCar()
 			throws VehicleException, SimulationException {
@@ -4169,6 +4834,15 @@ public class CarParkTests {
 				queueBefore, carPark.numVehiclesInQueue());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#tryProcessNewVehicles(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testTryProcessNewVehicles_MotorcycleAndCar_SpaceInCarparkForMotorCycle_CarParkAlmostFull_SmallCarSpacesAvailable_ParkMotorCycle_ArchiveCar()
 			throws VehicleException, SimulationException {
@@ -4204,6 +4878,15 @@ public class CarParkTests {
 				queueBefore, carPark.numVehiclesInQueue());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#tryProcessNewVehicles(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testTryProcessNewVehicles_MotorcycleAndCar_NoSpaceInCarparkForBoth_QueueEmpty_QueueBoth()
 			throws VehicleException, SimulationException {
@@ -4231,6 +4914,15 @@ public class CarParkTests {
 				queueBefore + 2, carPark.numVehiclesInQueue());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#tryProcessNewVehicles(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testTryProcessNewVehicles_MotorcycleAndCar_NoSpaceInCarparkForBoth_SpaceForBothInQueue_QueueBoth()
 			throws VehicleException, SimulationException {
@@ -4262,6 +4954,15 @@ public class CarParkTests {
 				queueBefore + 2, carPark.numVehiclesInQueue());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#tryProcessNewVehicles(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testTryProcessNewVehicles_MotorcycleAndCar_NoSpaceInCarparkForBoth_SpaceForCarInQueueOnly_QueueCar_ArchiveMotorcycle()
 			throws VehicleException, SimulationException {
@@ -4298,6 +4999,15 @@ public class CarParkTests {
 				queueBefore + 1, carPark.numVehiclesInQueue());
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#tryProcessNewVehicles(int, asgn2Simulators.Simulator)}
+	 * .
+	 * 
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testTryProcessNewVehicles_MotorcycleAndCar_NoSpaceInCarparkForBoth_QueueFull_ArchiveBoth()
 			throws VehicleException, SimulationException {
@@ -4338,7 +5048,7 @@ public class CarParkTests {
 	/**
 	 * Test method for
 	 * {@link asgn2CarParks.CarPark#unparkVehicle(asgn2Vehicles.Vehicle, int)}.
-	 * 
+	 * @author Lucas
 	 * @throws VehicleException
 	 * @throws SimulationException
 	 */
@@ -4353,6 +5063,7 @@ public class CarParkTests {
 	 * Test method for
 	 * {@link asgn2CarParks.CarPark#unparkVehicle(asgn2Vehicles.Vehicle, int)}.
 	 * 
+	 * @author Lucas
 	 * @throws VehicleException
 	 * @throws SimulationException
 	 */
@@ -4367,6 +5078,7 @@ public class CarParkTests {
 	 * Test method for
 	 * {@link asgn2CarParks.CarPark#unparkVehicle(asgn2Vehicles.Vehicle, int)}.
 	 * 
+	 * @author Lucas
 	 * @throws VehicleException
 	 * @throws SimulationException
 	 */
@@ -4377,26 +5089,12 @@ public class CarParkTests {
 		carPark.unparkVehicle(motorCycle, defaultDeparture);
 	}
 
-	// /**
-	// * Test method for
-	// * {@link asgn2CarParks.CarPark#unparkVehicle(asgn2Vehicles.Vehicle,
-	// int)}.
-	// * Testing for a vehicle exception, when the vehicle is not parked.
-	// *
-	// * @throws VehicleException
-	// * @throws SimulationException
-	// */
-	// @Test(expected = VehicleException.class)
-	// public void testUnparkVehicleVehicleNotParked() throws VehicleException,
-	// SimulationException {
-	// carPark.unparkVehicle(car, defaultDeparture);
-	// }
-
 	/**
 	 * Test method for
 	 * {@link asgn2CarParks.CarPark#unparkVehicle(asgn2Vehicles.Vehicle, int)}.
 	 * Testing for a vehicle exception, when the vehicle is in the queue.
 	 * 
+	 * @author Lucas
 	 * @throws VehicleException
 	 * @throws SimulationException
 	 */
@@ -4407,44 +5105,28 @@ public class CarParkTests {
 		carPark.unparkVehicle(car, defaultDeparture);
 	}
 
-	// /**
-	// * Test method for
-	// * {@link asgn2CarParks.CarPark#unparkVehicle(asgn2Vehicles.Vehicle,
-	// int)}.
-	// * testing for a vehicle exception, when the vehicle was not parked.
-	// *
-	// * @throws VehicleException
-	// * @throws SimulationException
-	// */
-	// @Test(expected = VehicleException.class)
-	// public void testUnparkVehicleUnparkBeforeTime() throws VehicleException,
-	// SimulationException {
-	// carPark.parkVehicle(car, defaultArrival1, defaultIntendedStay);
-	// carPark.unparkVehicle(car, departureBeforeDefault);
-	// }
-
-	// /**
-	// * Test method for
-	// * {@link asgn2CarParks.CarPark#unparkVehicle(asgn2Vehicles.Vehicle,
-	// int)}.
-	// * Conflicts with timing. The car tries to unpark before it was parked.
-	// *
-	// * @throws VehicleException
-	// * @throws SimulationException
-	// */
-	// @Test(expected = VehicleException.class)
-	// public void testUnparkVehicleUnparkAfterTime() throws VehicleException,
-	// SimulationException {
-	// carPark.parkVehicle(car, defaultArrival1, defaultIntendedStay);
-	// carPark.unparkVehicle(car, departureAfterDeafult);
-	// }
-
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#unparkVehicle(asgn2Vehicles.Vehicle, int)}.
+	 * 
+	 * @author Lucas
+	 * @throws VehicleException
+	 * @throws SimulationException
+	 */
 	@Test(expected = SimulationException.class)
 	public void testUnparkVehicle_SimulationException()
 			throws VehicleException, SimulationException {
 		carPark.unparkVehicle(car, defaultDeparture);
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#unparkVehicle(asgn2Vehicles.Vehicle, int)}.
+	 * 
+	 * @author Lucas
+	 * @throws VehicleException
+	 * @throws SimulationException
+	 */
 	@Test(expected = SimulationException.class)
 	public void testUnparkVehicle_SimulationException_CarInQueue()
 			throws VehicleException, SimulationException {
@@ -4452,12 +5134,26 @@ public class CarParkTests {
 		carPark.unparkVehicle(car, defaultDeparture);
 	}
 
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#unparkVehicle(asgn2Vehicles.Vehicle, int)}.
+	 * 
+	 * @author Lucas
+	 * @throws VehicleException
+	 * @throws SimulationException
+	 */
 	@Test(expected = SimulationException.class)
 	public void testUnparkVehicleSimulationException() throws VehicleException,
 			SimulationException {
 		carPark.unparkVehicle(car, defaultDeparture);
 	}
 
+	/**
+	 * 
+	 * @author Lucas
+	 * @throws VehicleException
+	 * @throws SimulationException
+	 */
 	@Test
 	public void testCarParkObjectsMaintainOwnState_GetNumCars()
 			throws SimulationException, VehicleException {
@@ -4478,6 +5174,12 @@ public class CarParkTests {
 				carPark.getNumCars() < secondCarPark.getNumCars());
 	}
 
+	/**
+	 * 
+	 * @author Lucas
+	 * @throws VehicleException
+	 * @throws SimulationException
+	 */
 	@Test
 	public void testCarParkObjectsMaintainOwnState_GetNumSmallCars()
 			throws SimulationException, VehicleException {
@@ -4499,6 +5201,12 @@ public class CarParkTests {
 				carPark.getNumSmallCars() < secondCarPark.getNumSmallCars());
 	}
 
+	/**
+	 * 
+	 * @author Lucas
+	 * @throws VehicleException
+	 * @throws SimulationException
+	 */
 	@Test
 	public void testCarParkObjectsMaintainOwnState_GetNumMotorCycles()
 			throws SimulationException, VehicleException {
@@ -4521,7 +5229,12 @@ public class CarParkTests {
 				"testCarParkObjectsMaintainOwnState_GetNumMotorCycles() Error",
 				carPark.getNumMotorCycles() < secondCarPark.getNumMotorCycles());
 	}
-
+	
+	/**
+	 * @author Lucas
+	 * @throws SimulationException
+	 * @throws VehicleException
+	 */
 	@Test
 	public void testCarParkObjectsMaintainOwnState_NumVehiclesInQueue()
 			throws SimulationException, VehicleException {
