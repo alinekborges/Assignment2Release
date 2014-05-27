@@ -4,5 +4,7 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="/Users/Lucas/Documents/jUnit/hamcrest-core-1.3.jar"/>
 	<classpathentry kind="lib" path="/Users/Lucas/Documents/jUnit/junit-4.11.jar"/>
+	<classpathentry kind="lib" path="/Users/Lucas/Downloads/jcommon-1.0.21.jar"/>
+	<classpathentry kind="lib" path="/Users/Lucas/Downloads/jfreechart-1.0.17.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
