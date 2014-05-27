@@ -245,8 +245,7 @@ public class CarPark {
 	 * @author Aline Borges
 	 */
 	public boolean carParkFull() {
-		int totalSpaces = this.maxCarSpaces + this.maxMotorCycleSpaces
-				+ this.maxSmallCarSpaces;
+		int totalSpaces = this.maxCarSpaces + this.maxMotorCycleSpaces;
 		int vehicles = this.numCars + this.numMotorCycles;
 		if (vehicles >= totalSpaces) {
 			return true;

@@ -373,7 +373,7 @@ public class CarParkTests {
 			carPark.parkVehicle(motorCycle, k, defaultIntendedStay);
 		}
 
-		assertTrue("CarParkFull() Error", carPark.carParkFull());
+		assertTrue("testCarParkFull() Error", carPark.carParkFull());
 
 	}
 
@@ -801,7 +801,7 @@ public class CarParkTests {
 			carPark.parkVehicle(smallCar, j, defaultIntendedStay);
 		}
 		assertEquals("testGetNumSmallAndNormalCarSpacesFull() Error",
-				maxSmallCarSpaces + maxCarSpaces, carPark.getNumSmallCars());
+				maxSmallCarSpaces, carPark.getNumSmallCars());
 	}
 
 	/**
@@ -3068,12 +3068,15 @@ public class CarParkTests {
 	@Test
 	public void testTryProcessNewVehicles_Park_SmallCar()
 			throws SimulationException, VehicleException {
+		
 		Simulator sim = new Simulator(Constants.DEFAULT_SEED,
 				Constants.DEFAULT_INTENDED_STAY_MEAN,
 				Constants.DEFAULT_INTENDED_STAY_SD, 0, 1, 0);
 
 		int carParkBefore = carPark.getNumCars();
+		
 		carPark.tryProcessNewVehicles(defaultArrival3, sim);
+		
 		assertEquals("testTryProcessNewVehicles_Park_SmallCar() Error",
 				carParkBefore + 1, carPark.getNumCars());
 	}
