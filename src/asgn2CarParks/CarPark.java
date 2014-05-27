@@ -488,15 +488,10 @@ public class CarPark {
 			if (spacesAvailable(v) == true) {
 				vehiclesToPark.add(v);
 			} else {
-				int a = 0;
 				break;
 			}
 		}
-
-		//Vehicle v = 
-		
-		//while()
-		
+	
 		for (int i = 0; i < vehiclesToPark.size(); i++) {
 			Vehicle v = vehiclesToPark.get(i);
 			
