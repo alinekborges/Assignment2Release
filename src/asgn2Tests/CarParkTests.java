@@ -4283,6 +4283,34 @@ public class CarParkTests {
 		carPark.parkVehicle(car, defaultArrival1, defaultIntendedStay);
 		carPark.unparkVehicle(car, defaultDeparture);
 	}
+	
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#unparkVehicle(asgn2Vehicles.Vehicle, int)}.
+	 * 
+	 * @throws VehicleException
+	 * @throws SimulationException
+	 */
+	@Test
+	public void testUnparkVehicle_SmallCar() throws SimulationException,
+			VehicleException {
+		carPark.parkVehicle(smallCar, defaultArrival2, defaultIntendedStay);
+		carPark.unparkVehicle(smallCar, defaultDeparture);
+	}
+	
+	/**
+	 * Test method for
+	 * {@link asgn2CarParks.CarPark#unparkVehicle(asgn2Vehicles.Vehicle, int)}.
+	 * 
+	 * @throws VehicleException
+	 * @throws SimulationException
+	 */
+	@Test
+	public void testUnparkVehicle_MotorCycle() throws SimulationException,
+			VehicleException {
+		carPark.parkVehicle(motorCycle, defaultArrival3, defaultIntendedStay);
+		carPark.unparkVehicle(motorCycle, defaultDeparture);
+	}
 
 	// /**
 	// * Test method for
@@ -4363,5 +4391,89 @@ public class CarParkTests {
 	public void testUnparkVehicleSimulationException() throws VehicleException,
 			SimulationException {
 		carPark.unparkVehicle(car, defaultDeparture);
+	}
+
+	@Test
+	public void testCarParkObjectsMaintainOwnState_GetNumCars()
+			throws SimulationException, VehicleException {
+		CarPark secondCarPark = new CarPark(maxCarSpaces, maxSmallCarSpaces,
+				maxMotorCycleSpaces, maxQueueSize);
+		Car firstCar = new Car(vehicleID1, defaultArrival1, false);
+		Car secondCar = new Car(vehicleID2, defaultArrival2, false);
+		Car thirdCar = new Car(vehicleID3, defaultArrival3, false);
+
+		carPark.parkVehicle(car, defaultArrival1, defaultIntendedStay);
+		secondCarPark.parkVehicle(firstCar, defaultArrival1,
+				defaultIntendedStay);
+		secondCarPark.parkVehicle(secondCar, defaultArrival2,
+				defaultIntendedStay);
+		secondCarPark.parkVehicle(thirdCar, defaultArrival3,
+				defaultIntendedStay);
+		assertTrue("testCarParkObjectsMaintainOwnState_GetNumCars() Error",
+				carPark.getNumCars() < secondCarPark.getNumCars());
+	}
+
+	@Test
+	public void testCarParkObjectsMaintainOwnState_GetNumSmallCars()
+			throws SimulationException, VehicleException {
+		CarPark secondCarPark = new CarPark(maxCarSpaces, maxSmallCarSpaces,
+				maxMotorCycleSpaces, maxQueueSize);
+		Car firstSmallCar = new Car(vehicleID1, defaultArrival1, true);
+		Car secondSmallCar = new Car(vehicleID2, defaultArrival2, true);
+		Car thirdSmallCar = new Car(vehicleID3, defaultArrival3, true);
+
+		carPark.parkVehicle(smallCar, defaultArrival1, defaultIntendedStay);
+		secondCarPark.parkVehicle(firstSmallCar, defaultArrival1,
+				defaultIntendedStay);
+		secondCarPark.parkVehicle(secondSmallCar, defaultArrival2,
+				defaultIntendedStay);
+		secondCarPark.parkVehicle(thirdSmallCar, defaultArrival3,
+				defaultIntendedStay);
+		assertTrue(
+				"testCarParkObjectsMaintainOwnState_GetNumSmallCars() Error",
+				carPark.getNumSmallCars() < secondCarPark.getNumSmallCars());
+	}
+
+	@Test
+	public void testCarParkObjectsMaintainOwnState_GetNumMotorCycles()
+			throws SimulationException, VehicleException {
+		CarPark secondCarPark = new CarPark(maxCarSpaces, maxSmallCarSpaces,
+				maxMotorCycleSpaces, maxQueueSize);
+		MotorCycle firstMotorCycle = new MotorCycle(vehicleID1, defaultArrival1);
+		MotorCycle secondMotorCycle = new MotorCycle(vehicleID2,
+				defaultArrival2);
+		MotorCycle thirdMotorCycle = new MotorCycle(vehicleID3, defaultArrival3);
+
+		secondCarPark.parkVehicle(firstMotorCycle, defaultArrival1,
+				defaultIntendedStay);
+		secondCarPark.parkVehicle(secondMotorCycle, defaultArrival2,
+				defaultIntendedStay);
+		secondCarPark.parkVehicle(thirdMotorCycle, defaultArrival3,
+				defaultIntendedStay);
+		carPark.parkVehicle(motorCycle, defaultArrival3, defaultIntendedStay);
+
+		assertTrue(
+				"testCarParkObjectsMaintainOwnState_GetNumMotorCycles() Error",
+				carPark.getNumMotorCycles() < secondCarPark.getNumMotorCycles());
+	}
+
+	@Test
+	public void testCarParkObjectsMaintainOwnState_NumVehiclesInQueue()
+			throws SimulationException, VehicleException {
+		CarPark secondCarPark = new CarPark(maxCarSpaces, maxSmallCarSpaces,
+				maxMotorCycleSpaces, maxQueueSize);
+		Car firstCar = new Car(vehicleID1, defaultArrival1, false);
+		Car secondCar = new Car(vehicleID2, defaultArrival2, false);
+		Car thirdCar = new Car(vehicleID3, defaultArrival3, false);
+
+		carPark.enterQueue(car);
+		secondCarPark.enterQueue(firstCar);
+		;
+		secondCarPark.enterQueue(secondCar);
+		secondCarPark.enterQueue(thirdCar);
+		assertTrue(
+				"testCarParkObjectsMaintainOwnState_NumVehiclesInQueue() Error",
+				carPark.numVehiclesInQueue() < secondCarPark
+						.numVehiclesInQueue());
 	}
 }
