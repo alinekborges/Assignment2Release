@@ -2179,11 +2179,11 @@ public class CarParkTests {
 			throws SimulationException, VehicleException {
 		simulator = new Simulator();
 
-		for (int i = 1; i <= maxCarSpaces; i++) {
+		for (int i = 1; i <= maxNormalCarSpaces; i++) {
 			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
 			carPark.parkVehicle(car, i, defaultIntendedStay);
 		}
-		for (int j = maxCarSpaces + 1; j < maxSmallCarSpaces + maxCarSpaces; j++) {
+		for (int j = maxNormalCarSpaces + 1; j < maxCarSpaces; j++) {
 			smallCar = new Car((vehicleID2 + Integer.toString(j)), j, true);
 			carPark.parkVehicle(smallCar, j, defaultIntendedStay);
 		}
@@ -3041,17 +3041,14 @@ public class CarParkTests {
 		assertTrue(true);
 	}
 
-	// TODO Start Try Process New Vehicle
 	/**
 	 * Test method for
 	 * {@link asgn2CarParks.CarPark#tryProcessNewVehicles(int, asgn2Simulators.Simulator)}
 	 * .
+	 * 
+	 * @throws SimulationException
+	 * @throws VehicleException
 	 */
-	@Test
-	public void testTryProcessNewVehicles() {
-		fail("Not yet implemented"); // TODO
-	}
-
 	@Test
 	public void testTryProcessNewVehicles_Park_Car() throws VehicleException,
 			SimulationException {
@@ -3071,7 +3068,7 @@ public class CarParkTests {
 
 		Simulator sim = new Simulator(Constants.DEFAULT_SEED,
 				Constants.DEFAULT_INTENDED_STAY_MEAN,
-				Constants.DEFAULT_INTENDED_STAY_SD, 0, 1, 0);
+				Constants.DEFAULT_INTENDED_STAY_SD, 1, 1, 0);
 
 		int carParkBefore = carPark.getNumCars();
 
@@ -3126,7 +3123,7 @@ public class CarParkTests {
 			throws SimulationException, VehicleException {
 		Simulator sim = new Simulator(Constants.DEFAULT_SEED,
 				Constants.DEFAULT_INTENDED_STAY_MEAN,
-				Constants.DEFAULT_INTENDED_STAY_SD, 0, 1, 0);
+				Constants.DEFAULT_INTENDED_STAY_SD, 1, 1, 0);
 
 		for (int i = 1; i <= maxNormalCarSpaces; i++) {
 			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
@@ -3180,7 +3177,7 @@ public class CarParkTests {
 			throws SimulationException, VehicleException {
 		Simulator sim = new Simulator(Constants.DEFAULT_SEED,
 				Constants.DEFAULT_INTENDED_STAY_MEAN,
-				Constants.DEFAULT_INTENDED_STAY_SD, 0, 1, 0);
+				Constants.DEFAULT_INTENDED_STAY_SD, 1, 1, 0);
 
 		for (int i = 1; i < maxNormalCarSpaces; i++) {
 			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
@@ -3260,7 +3257,7 @@ public class CarParkTests {
 			throws VehicleException, SimulationException {
 		Simulator sim = new Simulator(Constants.DEFAULT_SEED,
 				Constants.DEFAULT_INTENDED_STAY_MEAN,
-				Constants.DEFAULT_INTENDED_STAY_SD, 0, 1, 0);
+				Constants.DEFAULT_INTENDED_STAY_SD, 1, 1, 0);
 		// Full Car Park
 		for (int i = 1; i <= maxNormalCarSpaces; i++) {
 			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
@@ -3345,7 +3342,7 @@ public class CarParkTests {
 			throws VehicleException, SimulationException {
 		Simulator sim = new Simulator(Constants.DEFAULT_SEED,
 				Constants.DEFAULT_INTENDED_STAY_MEAN,
-				Constants.DEFAULT_INTENDED_STAY_SD, 0, 1, 0);
+				Constants.DEFAULT_INTENDED_STAY_SD, 1, 1, 0);
 		// Full Car Park
 		for (int i = 1; i <= maxNormalCarSpaces; i++) {
 			car = new Car((vehicleID1 + Integer.toString(i)), i, false);
@@ -3440,7 +3437,7 @@ public class CarParkTests {
 			throws VehicleException, SimulationException {
 		Simulator sim = new Simulator(Constants.DEFAULT_SEED,
 				Constants.DEFAULT_INTENDED_STAY_MEAN,
-				Constants.DEFAULT_INTENDED_STAY_SD, 0, 1, 0);
+				Constants.DEFAULT_INTENDED_STAY_SD, 1, 1, 0);
 
 		// Full Car Park
 		for (int i = 1; i <= maxNormalCarSpaces; i++) {
@@ -3496,8 +3493,6 @@ public class CarParkTests {
 		assertEquals("testTryProcessNewVehicles_Archive_Car() Error",
 				carParkBefore, carPark.getNumMotorCycles());
 	}
-
-	// TODO End Try Process New Vehicle
 
 	/**
 	 * Test method for
@@ -3576,7 +3571,18 @@ public class CarParkTests {
 	// }
 
 	@Test(expected = SimulationException.class)
-	public void testUnparkVehicleSimulationException() {
-		// TODO
+	public void testUnparkVehicle_SimulationException() throws VehicleException, SimulationException {
+		carPark.unparkVehicle(car, defaultDeparture);
+	}
+	
+	@Test(expected = SimulationException.class)
+	public void testUnparkVehicle_SimulationException_CarInQueue() throws VehicleException, SimulationException {
+		carPark.enterQueue(car);
+		carPark.unparkVehicle(car, defaultDeparture);
+	}
+	
+	@Test(expected = SimulationException.class)
+	public void testUnparkVehicleSimulationException() throws VehicleException, SimulationException {
+		carPark.unparkVehicle(car, defaultDeparture);
 	}
 }
